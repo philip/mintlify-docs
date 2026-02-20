@@ -7,8 +7,9 @@ description: >-
   sent via email, with automatic handling of OTP generation and delivery.
 ---
 
-{/* MIGRATION_FLAG: FeatureBetaProps - Parameterized shared content, Mintlify snippets don't support props */}
-<FeatureBetaProps feature_name="Neon Auth with Better Auth" />
+<Note title="Beta">
+The **Neon Auth with Better Auth** is in Beta. Share your feedback on [Discord](https://discord.gg/92vNTzKDGp) or via the [Neon Console](https://console.neon.tech/app/projects?modal=feedback).
+</Note>
 
 Neon Auth is built on [Better Auth](https://www.better-auth.com/) and provides full support for Email OTP plugin APIs through the Neon SDK. You do not need to manually install or configure the Better Auth Email OTP plugin.
 
@@ -43,7 +44,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body className={'antialiased'}>
-        {/* MIGRATION_FLAG: NeonAuthUIProvider - No Mintlify equivalent */}
 <NeonAuthUIProvider
           authClient={authClient}
           emailOTP // [!code ++]

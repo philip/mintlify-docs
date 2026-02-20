@@ -8,8 +8,9 @@ description: >-
 layout: wide
 ---
 
-{/* MIGRATION_FLAG: FeatureBetaProps - Parameterized shared content, Mintlify snippets don't support props */}
-<FeatureBetaProps feature_name="Neon Auth with Better Auth" />
+<Note title="Beta">
+The **Neon Auth with Better Auth** is in Beta. Share your feedback on [Discord](https://discord.gg/92vNTzKDGp) or via the [Neon Console](https://console.neon.tech/app/projects?modal=feedback).
+</Note>
 
 {/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
 <TwoColumnLayout>
@@ -132,7 +133,6 @@ To learn more about applying styles to the Auth UI components, including plain C
 <summary>Example: Adding optional props</summary>
 
 ```tsx
-{/* MIGRATION_FLAG: NeonAuthUIProvider - No Mintlify equivalent */}
 <NeonAuthUIProvider
   authClient={authClient}
   social={{ providers: ['google', 'github', 'vercel'] }}
@@ -159,7 +159,6 @@ import { authClient } from './auth';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    {/* MIGRATION_FLAG: NeonAuthUIProvider - No Mintlify equivalent */}
 <NeonAuthUIProvider authClient={authClient}>
       <BrowserRouter>
         <App />
@@ -214,7 +213,6 @@ function Home() {
           <div style={{ textAlign: 'center' }}>
             <h1>Welcome!</h1>
             <p>You're successfully authenticated.</p>
-            {/* MIGRATION_FLAG: UserButton - No Mintlify equivalent */}
 <UserButton />
           </div>
         </div>
@@ -236,7 +234,6 @@ function Auth() {
         padding: '2rem 1rem',
       }}
     >
-      {/* MIGRATION_FLAG: AuthView - No Mintlify equivalent */}
 <AuthView pathname={pathname} />
     </div>
   );

@@ -22,8 +22,9 @@ redirect_from:
   - /docs/guides/neon-auth-best-practices
 ---
 
-{/* MIGRATION_FLAG: FeatureBetaProps - Parameterized shared content, Mintlify snippets don't support props */}
-<FeatureBetaProps feature_name="Neon Auth with Better Auth" />
+<Note title="Beta">
+The **Neon Auth with Better Auth** is in Beta. Share your feedback on [Discord](https://discord.gg/92vNTzKDGp) or via the [Neon Console](https://console.neon.tech/app/projects?modal=feedback).
+</Note>
 
 Neon Auth is a managed authentication service that stores users, sessions, and auth configuration directly in your Neon database. When you branch your database, your entire auth state branches with it. This lets you test real authentication workflows in preview environments.
 
@@ -105,10 +106,8 @@ import { authClient } from './auth';
 
 export default function App() {
   return (
-    {/* MIGRATION_FLAG: NeonAuthUIProvider - No Mintlify equivalent */}
-<NeonAuthUIProvider authClient={authClient}>
-      {/* MIGRATION_FLAG: AuthView - No Mintlify equivalent */}
-<AuthView pathname="sign-in" />
+    <NeonAuthUIProvider authClient={authClient}>
+      <AuthView pathname="sign-in" />
     </NeonAuthUIProvider>
   );
 }

@@ -7,8 +7,9 @@ description: >-
   configuration of common props for customization.
 ---
 
-{/* MIGRATION_FLAG: FeatureBetaProps - Parameterized shared content, Mintlify snippets don't support props */}
-<FeatureBetaProps feature_name="Neon Auth with Better Auth" />
+<Note title="Beta">
+The **Neon Auth with Better Auth** is in Beta. Share your feedback on [Discord](https://discord.gg/92vNTzKDGp) or via the [Neon Console](https://console.neon.tech/app/projects?modal=feedback).
+</Note>
 
 Quick reference for Neon Auth UI components from `@neondatabase/neon-js`. These components are built with [Better Auth UI](https://better-auth-ui.com/) and work with Neon Auth.
 
@@ -31,7 +32,6 @@ import { authClient } from './auth';
 
 function App() {
   return (
-    {/* MIGRATION_FLAG: NeonAuthUIProvider - No Mintlify equivalent */}
 <NeonAuthUIProvider authClient={authClient}>{/* Your app components */}</NeonAuthUIProvider>
   );
 }
@@ -60,7 +60,6 @@ import { authClient } from './auth';
 
 function App() {
   return (
-    {/* MIGRATION_FLAG: NeonAuthUIProvider - No Mintlify equivalent */}
 <NeonAuthUIProvider
       authClient={authClient}
       social={{
@@ -88,7 +87,6 @@ function App() {
   const navigate = useNavigate();
 
   return (
-    {/* MIGRATION_FLAG: NeonAuthUIProvider - No Mintlify equivalent */}
 <NeonAuthUIProvider
       authClient={authClient}
       navigate={navigate}
@@ -204,7 +202,7 @@ import { AuthView } from '@neondatabase/neon-js/auth/react/ui';
 import '@neondatabase/neon-js/ui/css';
 
 function App() {
-  return {/* MIGRATION_FLAG: AuthView - No Mintlify equivalent */}
+  return 
 <AuthView pathname="sign-in" />;
 }
 ```
@@ -218,7 +216,6 @@ import { authClient } from './auth';
 function Header() {
   return (
     <header>
-      {/* MIGRATION_FLAG: UserButton - No Mintlify equivalent */}
 <UserButton authClient={authClient} />
     </header>
   );

@@ -16,8 +16,9 @@ redirect_from:
   - /docs/guides/neon-auth-demo
 ---
 
-{/* MIGRATION_FLAG: FeatureBetaProps - Parameterized shared content, Mintlify snippets don't support props */}
-<FeatureBetaProps feature_name="Neon Auth with Better Auth" />
+<Note title="Beta">
+The **Neon Auth with Better Auth** is in Beta. Share your feedback on [Discord](https://discord.gg/92vNTzKDGp) or via the [Neon Console](https://console.neon.tech/app/projects?modal=feedback).
+</Note>
 
 This guide shows you the code differences between legacy Neon Auth (Stack Auth) and Neon Auth with Better Auth. Use it as a reference to understand what changes if you decide to upgrade.
 
@@ -137,7 +138,7 @@ export default function SignInPage() {
 import { AuthView } from '@neondatabase/auth/react';
 
 export default function SignInPage() {
-  return {/* MIGRATION_FLAG: AuthView - No Mintlify equivalent */}
+  return 
 <AuthView pathname="sign-in" />;
 }
 ```
@@ -163,7 +164,7 @@ export default function SignUpPage() {
 import { AuthView } from '@neondatabase/auth/react';
 
 export default function SignUpPage() {
-  return {/* MIGRATION_FLAG: AuthView - No Mintlify equivalent */}
+  return 
 <AuthView pathname="sign-up" />;
 }
 ```
@@ -181,7 +182,7 @@ You swap the dedicated `<SignUp />` component for the same `AuthView` component,
 import { UserButton } from '@stackframe/stack';
 
 export function Header() {
-  return {/* MIGRATION_FLAG: UserButton - No Mintlify equivalent */}
+  return 
 <UserButton />;
 }
 ```
@@ -190,7 +191,7 @@ export function Header() {
 import { UserButton } from '@neondatabase/auth/react';
 
 export function Header() {
-  return {/* MIGRATION_FLAG: UserButton - No Mintlify equivalent */}
+  return 
 <UserButton />;
 }
 ```
@@ -260,7 +261,6 @@ export default function RootLayout({ children }) {
   const router = useRouter();
 
   return (
-    {/* MIGRATION_FLAG: NeonAuthUIProvider - No Mintlify equivalent */}
 <NeonAuthUIProvider
       authClient={authClient}
       navigate={router.push}
@@ -501,7 +501,7 @@ import '@neondatabase/auth/ui/css';
 import { authClient } from './auth';
 
 function App() {
-  return {/* MIGRATION_FLAG: NeonAuthUIProvider - No Mintlify equivalent */}
+  return 
 <NeonAuthUIProvider authClient={authClient}>{/* Your app */}</NeonAuthUIProvider>;
 }
 ```
@@ -523,7 +523,7 @@ Delete any `StackHandler` routes. Create custom pages for sign-in and sign-up us
 import { AuthView } from '@neondatabase/auth/react';
 
 export default function SignIn() {
-  return {/* MIGRATION_FLAG: AuthView - No Mintlify equivalent */}
+  return 
 <AuthView pathname="sign-in" />;
 }
 ```
@@ -544,7 +544,6 @@ function App() {
   const navigate = useNavigate();
 
   return (
-    {/* MIGRATION_FLAG: NeonAuthUIProvider - No Mintlify equivalent */}
 <NeonAuthUIProvider authClient={authClient} navigate={navigate} Link={Link}>
       {/* Your app */}
     </NeonAuthUIProvider>

@@ -26,8 +26,7 @@
             "pages": [
               "get-started/signing-up",
               "get-started/connect-neon",
-              "get-started/workflow-primer",
-              "auth/overview"
+              "get-started/workflow-primer"
             ]
           },
           {

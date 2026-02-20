@@ -48,7 +48,6 @@ Enhanced code blocks and external code embedding.
 Embed code from external sources or files.
 
 ```mdx
-{/* MIGRATION_FLAG: ExternalCode - No Mintlify equivalent */}
 <ExternalCode src="https://raw.githubusercontent.com/neondatabase/neon/master/README.md" />
 ```
 
@@ -102,7 +101,6 @@ Embedded YouTube video player.
 Native video player component.
 
 ```mdx
-{/* MIGRATION_FLAG: Video - No Mintlify equivalent */}
 <Video
   sources={[{ src: '/videos/pages/doc/neon-mcp.mp4', type: 'video/mp4' }]}
   width={960}
@@ -158,7 +156,6 @@ Status indicators for features in different stages:
 Status indicator for early access features with custom feature name.
 
 ```mdx
-{/* MIGRATION_FLAG: EarlyAccessProps - Parameterized shared content, Mintlify snippets don't support props */}
 <EarlyAccessProps feature_name="My Feature" />
 ```
 
@@ -176,18 +173,14 @@ Auto-generated components specifically for SDK documentation. These load content
 ### Getting Started
 
 ```mdx
-{/* MIGRATION_FLAG: GetStarted - No Mintlify equivalent */}
 <GetStarted sdkName="Next.js" />
 ```
 
 ### SDK Type Components
 
 ```mdx
-{/* MIGRATION_FLAG: SdkUser - No Mintlify equivalent */}
 <SdkUser sdkName="React" />
-{/* MIGRATION_FLAG: SdkProject - No Mintlify equivalent */}
 <SdkProject sdkName="Node.js" />
-{/* MIGRATION_FLAG: SdkUseUser - No Mintlify equivalent */}
 <SdkUseUser sdkName="Vue" />
 ```
 
@@ -206,7 +199,6 @@ Contact or request submission form.
 There are types (`extension` and `regions`) defined in `src/components/shared/request-form/data.js`. To define a new type, define a new config in `data.js` and register it in `DATA` there.
 
 ```mdx
-{/* MIGRATION_FLAG: RequestForm - No Mintlify equivalent */}
 <RequestForm type="extension" />
 ```
 
@@ -234,7 +226,6 @@ Complex components for specialized functionality and workflows.
 AI-powered rule component for automated documentation features.
 
 ```mdx
-{/* MIGRATION_FLAG: AIRule - Parameterized shared content, Mintlify snippets don't support props */}
 <AIRule name="Example Tool" />
 ```
 
