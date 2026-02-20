@@ -7,9 +7,9 @@ description: >-
   connections using Ecto.
 ---
 
-{/* MIGRATION_FLAG: CopyPrompt - No Mintlify equivalent */}
-<CopyPrompt src="/prompts/phoenix-prompt.md"
-description="Pre-built prompt for connecting Phoenix applications to Neon Postgres"/>
+import PhoenixPrompt from '/snippets/prompts/phoenix-prompt.mdx';
+
+<PhoenixPrompt />
 
 This guide describes how to connect Neon in a [Phoenix](https://www.phoenixframework.org) application. [Ecto](https://hexdocs.pm/ecto/3.11.2/Ecto.html) provides an API and abstractions for interacting databases, enabling Elixir developers to query any database using similar constructs.
 

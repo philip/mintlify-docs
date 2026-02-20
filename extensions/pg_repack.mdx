@@ -7,12 +7,11 @@ description: >-
   minimal locking during the process.
 ---
 
+import Cta from '/snippets/cta.mdx';
+
 Postgres, like any database system, can accumulate bloat over time due to frequent updates and deletes. Bloat refers to wasted space within your tables and indexes, which can lead to decreased query performance and increased storage usage. `pg_repack` is a powerful Postgres extension that allows you to efficiently remove this bloat by rewriting tables and indexes online, with minimal locking. Unlike `VACUUM FULL` or `CLUSTER`, `pg_repack` avoids exclusive locks, ensuring your applications remain available during the reorganization process.
 
-{/* MIGRATION_FLAG: CTA - Empty CTA - needs Neon signup card or removal */}
-<Card title="">
-
-</Card>
+<Cta />
 
 This guide provides an introduction to the `pg_repack` extension and how to leverage it within your Neon database. You'll learn how to install and use `pg_repack` to reclaim disk space and improve database performance by removing bloat from your tables and indexes.
 

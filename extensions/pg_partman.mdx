@@ -7,6 +7,8 @@ description: >-
   maintenance tailored for Neon projects.
 ---
 
+import Cta from '/snippets/cta.mdx';
+
 `pg_partman` is a Postgres extension that simplifies the management of partitioned tables. Partitioning refers to splitting a single table into smaller pieces called `partitions`. This is done based on the values in a key column or set of columns. Even though partitions are stored as separate physical tables, the partitioned table can still be queried as a single logical table. This can significantly enhance query performance and also help you manage the data lifecycle of tables that grow very large.
 
 While Postgres natively supports partitioning a table, `pg_partman` helps set up and manage partitioned tables:
@@ -14,10 +16,7 @@ While Postgres natively supports partitioning a table, `pg_partman` helps set up
 - **Automated partition creation**: `pg_partman` automatically creates new partitions as new records are inserted, based on a specified interval for the partition key.
 - **Automated maintenance**: `pg_partman` bundles a background worker process that manages maintenance tasks without needing an external scheduler or cron job. For example, it can automatically detach old partitions from the main table based on a retention policy, run `analyze` on partitions to update statistics, and more.
 
-{/* MIGRATION_FLAG: CTA - Empty CTA - needs Neon signup card or removal */}
-<Card title="">
-
-</Card>
+<Cta />
 
 In this guide, we’ll learn how to set up and use the `pg_partman` extension with your Neon Postgres project. We'll cover why partitioning is helpful, how to enable `pg_partman`, creating partitioned tables, and automating partition maintenance.
 

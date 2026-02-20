@@ -7,12 +7,11 @@ description: >-
   operations like sorting and counting elements.
 ---
 
+import Cta from '/snippets/cta.mdx';
+
 The `intarray` extension for Postgres provides functions and operators for handling arrays of integers. It's particularly optimized for arrays that do not contain any `NULL` values, offering significant performance advantages for certain operations compared to Postgres's built-in array functions.
 
-{/* MIGRATION_FLAG: CTA - Empty CTA - needs Neon signup card or removal */}
-<Card title="">
-
-</Card>
+<Cta />
 
 This extension is useful when you need to perform set-like operations (unions, intersections), check for containment or overlap, or conduct indexed searches on integer arrays, common in applications like tagging systems, access control lists, or product categorization.
 

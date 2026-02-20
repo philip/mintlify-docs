@@ -8,12 +8,11 @@ description: >-
   analytics.
 ---
 
+import Cta from '/snippets/cta.mdx';
+
 The `wal2json` plugin is a logical replication decoding output plugin for Postgres. It lets you convert the Write-Ahead Log (WAL) changes into JSON format, making it easier to consume and process database changes in various applications, such as data replication, auditing, event-driven services, and real-time analytics.
 
-{/* MIGRATION_FLAG: CTA - Empty CTA - needs Neon signup card or removal */}
-<Card title="">
-
-</Card>
+<Cta />
 
 This guide describes the `wal2json` plugin &#8212; how to enable it in Neon, configure its output, and use it to capture and process database changes in JSON format. WAL decoding is crucial for building robust data pipelines, implementing Change Data Capture (CDC) systems, and maintaining data consistency across distributed systems.
 

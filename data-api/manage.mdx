@@ -123,7 +123,6 @@ If you no longer need HTTP access to your database, you can disable the API enti
 
 Scroll to the **Disable** section at the bottom of the **Settings** tab and click the **Disable** button.
 
-{/* MIGRATION_FLAG: Admonition - Unknown type: danger */}
-<Admonition type="danger" title="Immediate Effect">
+<Warning title="Immediate Effect">
 Disabling the Data API **immediately terminates** all active connections and blocks all incoming HTTP requests. Any applications, edge functions, or websites relying on the API will stop working instantly.
-</Admonition>
+</Warning>

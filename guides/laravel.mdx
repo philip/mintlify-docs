@@ -7,9 +7,9 @@ description: >-
   issues with older Postgres clients.
 ---
 
-{/* MIGRATION_FLAG: CopyPrompt - No Mintlify equivalent */}
-<CopyPrompt src="/prompts/laravel-prompt.md" 
-description="Pre-built prompt for connecting Laravel to Neon Postgres"/>
+import LaravelPrompt from '/snippets/prompts/laravel-prompt.mdx';
+
+<LaravelPrompt />
 
 Laravel is a web application framework with expressive, elegant syntax. Connecting to Neon from Laravel is the same as connecting to a standalone Postgres installation from Laravel. Only the connection details differ.
 

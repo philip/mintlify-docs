@@ -8,16 +8,15 @@ description: >-
   controlling how integers are tokenized and indexed.
 ---
 
+import Cta from '/snippets/cta.mdx';
+
 [Postgres Full-Text Search (FTS)](/postgresql/postgresql-indexes/postgresql-full-text-search) is a powerful tool for searching through textual data. However, when this data includes a significant number of integers like product IDs, serial numbers, or document codes, default FTS behavior can sometimes lead to inefficient indexes and slower search performance.
 
 The `dict_int` extension is designed to address this issue by providing a specialized dictionary template that optimizes how integers are tokenized and indexed. This can lead to more compact indexes and faster, more relevant searches.
 
 Imagine searching a vast product catalog for "ID 1234567890". Without `dict_int`, FTS might break this number down in various ways, or index the entire long string, potentially creating many unique terms that aren't always useful for searching and can bloat the index. `dict_int` allows you to define rules for how these numbers are processed, ensuring they are handled efficiently.
 
-{/* MIGRATION_FLAG: CTA - Empty CTA - needs Neon signup card or removal */}
-<Card title="">
-
-</Card>
+<Cta />
 
 ## Enable the `dict_int` extension
 

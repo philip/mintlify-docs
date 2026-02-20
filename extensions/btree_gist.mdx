@@ -8,14 +8,13 @@ description: >-
   efficient querying and exclusion constraints.
 ---
 
+import Cta from '/snippets/cta.mdx';
+
 The `btree_gist` extension for Postgres provides a specialized set of **GiST operator classes**. These allow common, "B-tree-like" data types (such as integers, text, or timestamps) to be included in **GiST (Generalized Search Tree) indexes**. This is especially useful when you need to create **multicolumn GiST indexes** that combine GiST-native types (like geometric data or range types) with these simpler B-tree types. `btree_gist` also plays a key role in defining **exclusion constraints** involving standard data types.
 
 For example, if an application needs to query for events happening within a specific geographic area (a `geometry` type) _and_ within a certain `event_time` (a timestamp), `btree_gist` allows a single, optimized GiST index to cover both conditions.
 
-{/* MIGRATION_FLAG: CTA - Empty CTA - needs Neon signup card or removal */}
-<Card title="">
-
-</Card>
+<Cta />
 
 ## Enable the `btree_gist` extension
 

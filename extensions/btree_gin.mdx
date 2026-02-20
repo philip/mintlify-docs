@@ -8,14 +8,13 @@ description: >-
   types to optimize query performance.
 ---
 
+import Cta from '/snippets/cta.mdx';
+
 The `btree_gin` extension for Postgres provides a specialized set of **GIN operator classes** that allow common, "B-tree-like" data types to be included in **GIN indexes**. This is particularly useful for scenarios where you need to create **multicolumn GIN indexes** that combine complex data types (like arrays or JSONB) with simpler types such as integers, timestamps, or text. Ultimately, `btree_gin` helps you leverage the power of GIN for a broader range of indexing needs, optimizing queries across diverse data structures.
 
 Consider a scenario where an application needs to query blog posts based on a set of `tags` (an array) and a `publication_date` (a timestamp). The `btree_gin` extension allows for a single, optimized index to service both conditions, potentially offering significant performance gains over alternative indexing strategies.
 
-{/* MIGRATION_FLAG: CTA - Empty CTA - needs Neon signup card or removal */}
-<Card title="">
-
-</Card>
+<Cta />
 
 ## Enable the `btree_gin` extension
 

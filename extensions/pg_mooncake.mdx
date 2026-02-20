@@ -7,6 +7,8 @@ description: >-
   data retrieval and integration with object stores.
 ---
 
+import Cta from '/snippets/cta.mdx';
+
 The [pg_mooncake](https://github.com/Mooncake-Labs/pg_mooncake) extension enables fast analytic workloads in Postgres by adding native columnstore tables and vectorized execution (DuckDB).
 
 Columnstore tables improve analytical queries by storing data vertically, enabling compression and efficient column-specific retrieval with vectorized execution.
@@ -17,10 +19,7 @@ Queries on `pg_mooncake` columnstore tables are executed by DuckDB.
 
 The extension is maintained by [Mooncake Labs](https://www.mooncake.dev/).
 
-{/* MIGRATION_FLAG: CTA - Empty CTA - needs Neon signup card or removal */}
-<Card title="">
-
-</Card>
+<Cta />
 
 You can create and use `pg_mooncake` columnstore tables like regular Postgres heap tables to run:
 

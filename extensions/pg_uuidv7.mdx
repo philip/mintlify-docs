@@ -7,14 +7,13 @@ description: >-
   performance through improved indexing and data locality.
 ---
 
+import Cta from '/snippets/cta.mdx';
+
 The `pg_uuidv7` extension allows you to generate and work with version 7 Universally Unique Identifiers (UUIDs) in Postgres. UUIDv7 is a newer UUID format designed to be time-ordered and sortable, which offers significant benefits for database performance, especially when used as primary keys or in time-series data.
 
 Unlike traditional random UUIDs (like Version 4), UUIDv7 embeds a Unix timestamp in its leading bits, followed by random bits. This structure ensures that newly generated UUIDs are roughly sequential, which is highly beneficial for database indexing (for example, B-trees) and can improve data locality, leading to faster queries and insertions.
 
-{/* MIGRATION_FLAG: CTA - Empty CTA - needs Neon signup card or removal */}
-<Card title="">
-
-</Card>
+<Cta />
 
 ## Enable the `pg_uuidv7` extension
 

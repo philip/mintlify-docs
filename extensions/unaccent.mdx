@@ -7,14 +7,13 @@ description: >-
   multilingual applications on the Neon platform.
 ---
 
+import Cta from '/snippets/cta.mdx';
+
 The `unaccent` extension for Postgres enables handling of text data in a more user-friendly and language-tolerant way. It allows you to remove [accents/stress](<https://en.wikipedia.org/wiki/Stress_(linguistics)>) ([diacritic signs](https://en.wikipedia.org/wiki/Diacritic)) from text strings, making it easier to perform searches and comparisons that are insensitive to accents. This is particularly useful in multilingual applications where users might not consistently use accents when typing search queries.
 
 Imagine a user searching for "Hôtel" but only typing "Hotel". Without `unaccent`, the database might not find the intended results. With `unaccent`, you can ensure that searches are more forgiving and return relevant results regardless of accent variations.
 
-{/* MIGRATION_FLAG: CTA - Empty CTA - needs Neon signup card or removal */}
-<Card title="">
-
-</Card>
+<Cta />
 
 This guide will walk you through the essentials of using the `unaccent` extension. You'll learn how to enable the extension on Neon, understand its key concepts, use it in queries, optimize performance with indexing, and consider its limitations.
 

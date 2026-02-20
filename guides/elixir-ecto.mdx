@@ -7,9 +7,9 @@ description: >-
   instructions.
 ---
 
-{/* MIGRATION_FLAG: CopyPrompt - No Mintlify equivalent */}
-<CopyPrompt src="/prompts/elixir-ecto-prompt.md" 
-description="Pre-built prompt for connecting Elixir applications to Neon with Ecto"/>
+import ElixirEctoPrompt from '/snippets/prompts/elixir-ecto-prompt.mdx';
+
+<ElixirEctoPrompt />
 
 This guide describes how to connect from an Elixir application with Ecto, which is a database wrapper and query generator for Elixir. Ecto provides an API and abstractions for interacting databases, enabling Elixir developers to query any database using similar constructs.
 

@@ -11,6 +11,8 @@ redirect_from:
   - /docs/guides/partner-consumption-metrics
 ---
 
+import ConsumptionApiPrompt from '/snippets/prompts/consumption-api-prompt.mdx';
+
 Using the Neon API, you can query consumption metrics to track your resource usage. This page describes the **project metrics** endpoint, which returns metrics that align with [usage-based billing](/introduction/plans) and match your invoice on usage-based plans.
 
 | API                               | Endpoint                           | Description                                                                                                                            | Plan availability                |
@@ -163,8 +165,7 @@ You can also query individual metrics by specifying only the ones you need in th
 
 For full API details including all parameters and response schema, see [Retrieve project consumption metrics](https://api-docs.neon.tech/reference/getconsumptionhistoryperprojectv2). To build a request for a custom time range, use the prompt below with an AI assistant.
 
-{/* MIGRATION_FLAG: CopyPrompt - No Mintlify equivalent */}
-<CopyPrompt src="/prompts/consumption-api-prompt.md" description="Copy this prompt to have an AI assistant help you build the curl command for your desired time period." />
+<ConsumptionApiPrompt />
 
 The following sections cover paging through many projects, polling behavior, and handling errors.
 
