@@ -12,7 +12,9 @@ Reference documentation for the Neon Auth Next.js server SDK (`@neondatabase/aut
 
 For client-side authentication, see the [Client SDK reference](/reference/javascript-sdk). For UI components, see the [UI Components reference](/auth/reference/ui-components).
 
-## Installation
+## Setup
+
+### Installation
 
 Install the Neon Auth package in your Next.js project using npm, yarn, pnpm, or bun.
 
@@ -20,7 +22,7 @@ Install the Neon Auth package in your Next.js project using npm, yarn, pnpm, or 
 npm install @neondatabase/auth@latest
 ```
 
-## Environment variables
+### Environment variables
 
 Configure these environment variables in your `.env.local` file:
 
@@ -30,34 +32,36 @@ Configure these environment variables in your `.env.local` file:
 Generate a secure secret with: `openssl rand -base64 32`
 
 ```bash
-# Required: Your Neon Auth server URL
 NEON_AUTH_BASE_URL=https://your-neon-auth-url.neon.tech
-
-# Required: Cookie secret for session data signing (32+ characters)
 NEON_AUTH_COOKIE_SECRET=your-secret-at-least-32-characters-long
 ```
 
-## createNeonAuth()
-
-`createNeonAuth(config)`
+### createNeonAuth()
 
 Creates a unified auth instance that provides all server-side authentication functionality.
 
 Returns an `auth` object with:
 
-- `handler()` - Creates API route handlers
-- `middleware()` - Creates Next.js middleware for route protection
-- `getSession()` - Retrieves current session
+- `handler()` — Creates API route handlers
+- `middleware()` — Creates Next.js middleware for route protection
+- `getSession()` — Retrieves current session
 - All Better Auth server methods (signIn, signUp, signOut, etc.)
 
-### Parameters
+<ParamField body="baseUrl" type="string" required>
+  Your Neon Auth server URL from the Neon Console
+</ParamField>
 
-| Parameter                       | Type   | Required | Default |
-| ------------------------------- | ------ | -------- | ------- |
-| <tt>baseUrl</tt>                | string | ✓        | -       |
-| <tt>cookies.secret</tt>         | string | ✓        | -       |
-| <tt>cookies.sessionDataTtl</tt> | number |          | 300     |
-| <tt>cookies.domain</tt>         | string |          | -       |
+<ParamField body="cookies.secret" type="string" required>
+  Secret for HMAC-SHA256 signing (32+ characters)
+</ParamField>
+
+<ParamField body="cookies.sessionDataTtl" type="number" default="300">
+  Cache TTL in seconds
+</ParamField>
+
+<ParamField body="cookies.domain" type="string">
+  For cross-subdomain sessions (for example, `.example.com`)
+</ParamField>
 
 ```typescript
 // lib/auth/server.ts
@@ -71,23 +75,15 @@ export const auth = createNeonAuth({
 });
 ```
 
-## auth.handler()
+## Route handling
 
-`auth.handler()`
+### auth.handler()
 
 Creates GET and POST route handlers for the Neon Auth API proxy.
 
-Create a catch-all route at `app/api/auth/[...path]/route.ts`. This handles all authentication API calls from your client, including:
+Create a catch-all route at `app/api/auth/[...path]/route.ts`. This handles all authentication API calls from your client, including sign in/sign up requests, OAuth callbacks, session management, email verification, and password reset.
 
-- Sign in/sign up requests
-- OAuth callbacks
-- Session management
-- Email verification
-- Password reset
-
-### Returns
-
-Object with `GET` and `POST` Next.js route handlers.
+Returns an object with `GET` and `POST` Next.js route handlers.
 
 ```typescript
 // app/api/auth/[...path]/route.ts
@@ -96,29 +92,15 @@ import { auth } from '@/lib/auth/server';
 export const { GET, POST } = auth.handler();
 ```
 
-## auth.middleware()
-
-`auth.middleware(options)`
+### auth.middleware()
 
 Creates Next.js middleware for session validation and route protection.
 
-The middleware automatically:
+The middleware automatically validates session cookies on each request, provides session data to server components, redirects unauthenticated users to the login page, and refreshes session tokens when needed.
 
-- Validates session cookies on each request
-- Provides session data to server components
-- Redirects unauthenticated users to the login page
-- Refreshes session tokens when needed
-
-### Parameters
-
-<details>
-<summary>View parameters</summary>
-
-| Parameter         | Type   | Required | Default         |
-| ----------------- | ------ | -------- | --------------- |
-| <tt>loginUrl</tt> | string |          | `/auth/sign-in` |
-
-</details>
+<ParamField body="loginUrl" type="string" default="/auth/sign-in">
+  URL to redirect unauthenticated users to
+</ParamField>
 
 ```typescript
 // middleware.ts
@@ -130,15 +112,14 @@ export default auth.middleware({
 
 export const config = {
   matcher: [
-    // Match all paths except static files
     "/((?!_next/static|_next/image|favicon.ico).*)",
   ],
 };
 ```
 
-## auth.getSession()
+## Session management
 
-`auth.getSession()`
+### auth.getSession()
 
 Retrieves the current session in Server Components, Server Actions, and API Routes.
 
@@ -147,8 +128,6 @@ Retrieves the current session in Server Components, Server Actions, and API Rout
 - Returns null if no active session
 
 Server Components that use `auth.getSession()` must export `dynamic = 'force-dynamic'` because session data depends on cookies.
-
-### Returns
 
 | Field   | Type            | Description                                          |
 | ------- | --------------- | ---------------------------------------------------- |
@@ -186,8 +165,6 @@ export async function updateProfile(formData: FormData) {
   if (!session?.user) {
     redirect('/auth/sign-in');
   }
-
-  // Update user profile...
 }
 ```
 
@@ -207,23 +184,50 @@ export async function GET() {
 ```
 
 </CodeGroup>
-## auth.signIn.email()
 
-`auth.signIn.email(credentials)`
+### auth.listSessions()
+
+List all active sessions for the current user.
+
+```typescript
+const { data, error } = await auth.listSessions();
+```
+
+### auth.revokeSession()
+
+Revoke a specific session by ID.
+
+<ParamField body="sessionId" type="string" required>
+  ID of the session to revoke
+</ParamField>
+
+```typescript
+const { data, error } = await auth.revokeSession({
+  sessionId: 'session-id',
+});
+```
+
+### auth.revokeOtherSessions()
+
+Revoke all sessions except the current one.
+
+```typescript
+const { data, error } = await auth.revokeOtherSessions();
+```
+
+## Authentication
+
+### auth.signIn.email()
 
 Sign in with email and password. Use in Server Actions for form-based authentication.
 
-### Parameters
+<ParamField body="email" type="string" required>
+  User's email address
+</ParamField>
 
-<details>
-<summary>View parameters</summary>
-
-| Parameter         | Type   | Required |
-| ----------------- | ------ | -------- |
-| <tt>email</tt>    | string | ✓        |
-| <tt>password</tt> | string | ✓        |
-
-</details>
+<ParamField body="password" type="string" required>
+  Account password
+</ParamField>
 
 ```typescript
 'use server';
@@ -241,23 +245,17 @@ export async function signIn(formData: FormData) {
 }
 ```
 
-## auth.signIn.social()
+### auth.signIn.social()
 
-`auth.signIn.social(options)`
+Sign in with an OAuth provider like Google, GitHub, etc.
 
-Sign in with OAuth provider like Google, GitHub, etc.
+<ParamField body="provider" type="string" required>
+  OAuth provider name (e.g., `"google"`, `"github"`)
+</ParamField>
 
-### Parameters
-
-<details>
-<summary>View parameters</summary>
-
-| Parameter            | Type   | Required |
-| -------------------- | ------ | -------- |
-| <tt>provider</tt>    | string | ✓        |
-| <tt>callbackURL</tt> | string |          |
-
-</details>
+<ParamField body="callbackURL" type="string">
+  URL to redirect to after authorization
+</ParamField>
 
 ```typescript
 const { data, error } = await auth.signIn.social({
@@ -266,23 +264,17 @@ const { data, error } = await auth.signIn.social({
 });
 ```
 
-## auth.signIn.emailOtp()
-
-`auth.signIn.emailOtp(credentials)`
+### auth.signIn.emailOtp()
 
 Sign in with email OTP (one-time password). First call `emailOtp.sendVerificationOtp()` to send the code.
 
-### Parameters
+<ParamField body="email" type="string" required>
+  Email address the OTP was sent to
+</ParamField>
 
-<details>
-<summary>View parameters</summary>
-
-| Parameter      | Type   | Required |
-| -------------- | ------ | -------- |
-| <tt>email</tt> | string | ✓        |
-| <tt>otp</tt>   | string | ✓        |
-
-</details>
+<ParamField body="otp" type="string" required>
+  The one-time password code
+</ParamField>
 
 ```typescript
 const { data, error } = await auth.signIn.emailOtp({
@@ -291,24 +283,21 @@ const { data, error } = await auth.signIn.emailOtp({
 });
 ```
 
-## auth.signUp.email()
-
-`auth.signUp.email(credentials)`
+### auth.signUp.email()
 
 Create a new user account with email and password.
 
-### Parameters
+<ParamField body="email" type="string" required>
+  User's email address
+</ParamField>
 
-<details>
-<summary>View parameters</summary>
+<ParamField body="password" type="string" required>
+  Account password
+</ParamField>
 
-| Parameter         | Type   | Required |
-| ----------------- | ------ | -------- |
-| <tt>email</tt>    | string | ✓        |
-| <tt>password</tt> | string | ✓        |
-| <tt>name</tt>     | string | ✓        |
-
-</details>
+<ParamField body="name" type="string" required>
+  User's display name
+</ParamField>
 
 ```typescript
 const { data, error } = await auth.signUp.email({
@@ -318,9 +307,7 @@ const { data, error } = await auth.signUp.email({
 });
 ```
 
-## auth.signOut()
-
-`auth.signOut()`
+### auth.signOut()
 
 Sign out the current user. Clears session and authentication tokens.
 
@@ -335,23 +322,19 @@ export async function signOut() {
 }
 ```
 
-## auth.updateUser()
+## User management
 
-`auth.updateUser(data)`
+### auth.updateUser()
 
 Update the current user's profile. Password updates require the password reset flow for security.
 
-### Parameters
+<ParamField body="name" type="string">
+  New display name
+</ParamField>
 
-<details>
-<summary>View parameters</summary>
-
-| Parameter      | Type                | Required |
-| -------------- | ------------------- | -------- |
-| <tt>name</tt>  | string \| undefined |          |
-| <tt>image</tt> | string \| undefined |          |
-
-</details>
+<ParamField body="image" type="string">
+  New profile image URL
+</ParamField>
 
 ```typescript
 const { data, error } = await auth.updateUser({
@@ -360,24 +343,21 @@ const { data, error } = await auth.updateUser({
 });
 ```
 
-## auth.changePassword()
-
-`auth.changePassword(passwords)`
+### auth.changePassword()
 
 Change the current user's password.
 
-### Parameters
+<ParamField body="currentPassword" type="string" required>
+  Current password for verification
+</ParamField>
 
-<details>
-<summary>View parameters</summary>
+<ParamField body="newPassword" type="string" required>
+  New password
+</ParamField>
 
-| Parameter                    | Type    | Required |
-| ---------------------------- | ------- | -------- |
-| <tt>currentPassword</tt>     | string  | ✓        |
-| <tt>newPassword</tt>         | string  | ✓        |
-| <tt>revokeOtherSessions</tt> | boolean |          |
-
-</details>
+<ParamField body="revokeOtherSessions" type="boolean">
+  Whether to revoke all other sessions after password change
+</ParamField>
 
 ```typescript
 const { data, error } = await auth.changePassword({
@@ -387,22 +367,13 @@ const { data, error } = await auth.changePassword({
 });
 ```
 
-## auth.sendVerificationEmail()
-
-`auth.sendVerificationEmail(options)`
+### auth.sendVerificationEmail()
 
 Send email verification to the current user.
 
-### Parameters
-
-<details>
-<summary>View parameters</summary>
-
-| Parameter            | Type   | Required |
-| -------------------- | ------ | -------- |
-| <tt>callbackURL</tt> | string |          |
-
-</details>
+<ParamField body="callbackURL" type="string">
+  URL to redirect to after verification
+</ParamField>
 
 ```typescript
 const { data, error } = await auth.sendVerificationEmail({
@@ -410,9 +381,7 @@ const { data, error } = await auth.sendVerificationEmail({
 });
 ```
 
-## auth.deleteUser()
-
-`auth.deleteUser()`
+### auth.deleteUser()
 
 Delete the current user account. This action is irreversible.
 
@@ -420,22 +389,13 @@ Delete the current user account. This action is irreversible.
 const { data, error } = await auth.deleteUser();
 ```
 
-## auth.emailOtp.sendVerificationOtp()
-
-`auth.emailOtp.sendVerificationOtp(options)`
+### auth.emailOtp.sendVerificationOtp()
 
 Send a one-time password via email. Available when Email OTP authentication is enabled.
 
-### Parameters
-
-<details>
-<summary>View parameters</summary>
-
-| Parameter      | Type   | Required |
-| -------------- | ------ | -------- |
-| <tt>email</tt> | string | ✓        |
-
-</details>
+<ParamField body="email" type="string" required>
+  Email address to send the OTP to
+</ParamField>
 
 ```typescript
 const { data, error } = await auth.emailOtp.sendVerificationOtp({
@@ -443,23 +403,17 @@ const { data, error } = await auth.emailOtp.sendVerificationOtp({
 });
 ```
 
-## auth.emailOtp.verifyEmail()
-
-`auth.emailOtp.verifyEmail(credentials)`
+### auth.emailOtp.verifyEmail()
 
 Verify email with OTP code.
 
-### Parameters
+<ParamField body="email" type="string" required>
+  Email address to verify
+</ParamField>
 
-<details>
-<summary>View parameters</summary>
-
-| Parameter      | Type   | Required |
-| -------------- | ------ | -------- |
-| <tt>email</tt> | string | ✓        |
-| <tt>otp</tt>   | string | ✓        |
-
-</details>
+<ParamField body="otp" type="string" required>
+  The verification code
+</ParamField>
 
 ```typescript
 const { data, error } = await auth.emailOtp.verifyEmail({
@@ -468,66 +422,19 @@ const { data, error } = await auth.emailOtp.verifyEmail({
 });
 ```
 
-## auth.listSessions()
+## Organizations
 
-`auth.listSessions()`
-
-List all active sessions for the current user.
-
-```typescript
-const { data, error } = await auth.listSessions();
-```
-
-## auth.revokeSession()
-
-`auth.revokeSession(options)`
-
-Revoke a specific session by ID.
-
-### Parameters
-
-<details>
-<summary>View parameters</summary>
-
-| Parameter          | Type   | Required |
-| ------------------ | ------ | -------- |
-| <tt>sessionId</tt> | string | ✓        |
-
-</details>
-
-```typescript
-const { data, error } = await auth.revokeSession({
-  sessionId: 'session-id',
-});
-```
-
-## auth.revokeOtherSessions()
-
-`auth.revokeOtherSessions()`
-
-Revoke all sessions except the current one.
-
-```typescript
-const { data, error } = await auth.revokeOtherSessions();
-```
-
-## auth.organization.create()
-
-`auth.organization.create(data)`
+### auth.organization.create()
 
 Create a new organization. Available when the organizations plugin is enabled.
 
-### Parameters
+<ParamField body="name" type="string" required>
+  Organization name
+</ParamField>
 
-<details>
-<summary>View parameters</summary>
-
-| Parameter     | Type   | Required |
-| ------------- | ------ | -------- |
-| <tt>name</tt> | string | ✓        |
-| <tt>slug</tt> | string |          |
-
-</details>
+<ParamField body="slug" type="string">
+  URL-friendly identifier
+</ParamField>
 
 ```typescript
 const { data, error } = await auth.organization.create({
@@ -536,9 +443,7 @@ const { data, error } = await auth.organization.create({
 });
 ```
 
-## auth.organization.list()
-
-`auth.organization.list()`
+### auth.organization.list()
 
 List the current user's organizations.
 
@@ -546,24 +451,21 @@ List the current user's organizations.
 const { data, error } = await auth.organization.list();
 ```
 
-## auth.organization.inviteMember()
-
-`auth.organization.inviteMember(options)`
+### auth.organization.inviteMember()
 
 Invite a member to an organization.
 
-### Parameters
+<ParamField body="organizationId" type="string" required>
+  ID of the organization
+</ParamField>
 
-<details>
-<summary>View parameters</summary>
+<ParamField body="email" type="string" required>
+  Email of the user to invite
+</ParamField>
 
-| Parameter               | Type   | Required |
-| ----------------------- | ------ | -------- |
-| <tt>organizationId</tt> | string | ✓        |
-| <tt>email</tt>          | string | ✓        |
-| <tt>role</tt>           | string |          |
-
-</details>
+<ParamField body="role" type="string">
+  Role to assign (defaults to `"member"`)
+</ParamField>
 
 ```typescript
 const { data, error } = await auth.organization.inviteMember({
@@ -573,23 +475,19 @@ const { data, error } = await auth.organization.inviteMember({
 });
 ```
 
-## auth.admin.listUsers()
+## Admin
 
-`auth.admin.listUsers(options)`
+### auth.admin.listUsers()
 
 List all users. Available for users with admin role.
 
-### Parameters
+<ParamField body="limit" type="number">
+  Maximum number of users to return
+</ParamField>
 
-<details>
-<summary>View parameters</summary>
-
-| Parameter       | Type   | Required |
-| --------------- | ------ | -------- |
-| <tt>limit</tt>  | number |          |
-| <tt>offset</tt> | number |          |
-
-</details>
+<ParamField body="offset" type="number">
+  Number of users to skip
+</ParamField>
 
 ```typescript
 const { data, error } = await auth.admin.listUsers({
@@ -598,23 +496,17 @@ const { data, error } = await auth.admin.listUsers({
 });
 ```
 
-## auth.admin.banUser()
-
-`auth.admin.banUser(options)`
+### auth.admin.banUser()
 
 Ban a user. Available for users with admin role.
 
-### Parameters
+<ParamField body="userId" type="string" required>
+  ID of the user to ban
+</ParamField>
 
-<details>
-<summary>View parameters</summary>
-
-| Parameter       | Type   | Required |
-| --------------- | ------ | -------- |
-| <tt>userId</tt> | string | ✓        |
-| <tt>reason</tt> | string |          |
-
-</details>
+<ParamField body="reason" type="string">
+  Reason for the ban
+</ParamField>
 
 ```typescript
 const { data, error } = await auth.admin.banUser({
@@ -623,23 +515,17 @@ const { data, error } = await auth.admin.banUser({
 });
 ```
 
-## auth.admin.setRole()
-
-`auth.admin.setRole(options)`
+### auth.admin.setRole()
 
 Set a user's role. Available for users with admin role.
 
-### Parameters
+<ParamField body="userId" type="string" required>
+  ID of the user
+</ParamField>
 
-<details>
-<summary>View parameters</summary>
-
-| Parameter       | Type   | Required |
-| --------------- | ------ | -------- |
-| <tt>userId</tt> | string | ✓        |
-| <tt>role</tt>   | string | ✓        |
-
-</details>
+<ParamField body="role" type="string" required>
+  Role to assign
+</ParamField>
 
 ```typescript
 const { data, error } = await auth.admin.setRole({
@@ -669,50 +555,15 @@ Multiple concurrent `getSession()` calls are automatically deduplicated:
 - Reduces server load
 
 ```typescript
-// First call: Fetches from Auth Server
 const { data: session } = await auth.getSession();
 
 // Subsequent calls within TTL: Uses cached data (no API call)
 const { data: session2 } = await auth.getSession();
 ```
 
-## Configuration reference
-
-Complete configuration options for `createNeonAuth()`:
-
-| Option                   | Type   | Required | Default   |
-| ------------------------ | ------ | -------- | --------- |
-| `baseUrl`                | string | Yes      | -         |
-| `cookies.secret`         | string | Yes      | -         |
-| `cookies.sessionDataTtl` | number | No       | 300       |
-| `cookies.domain`         | string | No       | undefined |
-
-- **baseUrl**: Your Neon Auth server URL from the Neon Console
-- **cookies.secret**: Secret for HMAC-SHA256 signing (32+ characters)
-- **cookies.sessionDataTtl**: Cache TTL in seconds
-- **cookies.domain**: For cross-subdomain sessions (for example, ".example.com")
-
-```typescript
-import { createNeonAuth } from '@neondatabase/auth/next/server';
-
-export const auth = createNeonAuth({
-  baseUrl: process.env.NEON_AUTH_BASE_URL!,
-  cookies: {
-    secret: process.env.NEON_AUTH_COOKIE_SECRET!,
-  },
-});
-```
-
 ## Project structure
 
 Recommended file structure for Next.js with Neon Auth:
-
-- `app/api/auth/[...path]/route.ts` - Auth API handlers
-- `app/auth/[path]/page.tsx` - Auth views (sign-in, sign-up)
-- `app/dashboard/page.tsx` - Protected pages
-- `lib/auth/server.ts` - Server auth instance
-- `lib/auth/client.ts` - Client auth instance
-- `middleware.ts` - Next.js middleware
 
 ```
 app/
