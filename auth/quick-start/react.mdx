@@ -5,109 +5,59 @@ description: >-
   Step-by-step guide for integrating Neon Auth into a React application,
   covering project setup, SDK installation, environment variable configuration,
   and client setup for authentication methods.
-layout: wide
 ---
 
 <Note title="Beta">
 The **Neon Auth with Better Auth** is in Beta. Share your feedback on [Discord](https://discord.gg/92vNTzKDGp) or via the [Neon Console](https://console.neon.tech/app/projects?modal=feedback).
 </Note>
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout>
+<Steps>
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Step title="Create a Neon project with Auth enabled">
-<TwoColumnLayout.Block>
-
+<Step title="Create a Neon project with Auth enabled">
 If you don't have a Neon project yet, create one at [console.neon.tech](https://console.neon.tech).
 
 Go to the **Auth** page in your project dashboard and click **Enable Auth**.
 
 You can then find your Auth **Base URL** on the Configuration tab. Copy this URL - you'll need it in the next step.
 
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block label="Console">
-
 ![Neon Auth Base URL](/images/docs/auth/neon-auth-base-url.png)
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Step>
+</Step>
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Step title="Create a React app">
-<TwoColumnLayout.Block>
-
+<Step title="Create a React app">
 Create a React app using Vite.
-
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block label="Terminal">
 
 ```bash
 npm create vite@latest my-app -- --template react
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Step>
+</Step>
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Step title="Install the Neon SDK">
-<TwoColumnLayout.Block>
-
+<Step title="Install the Neon SDK">
 The Neon SDK provides authentication methods like `signUp()`, `getSession()`, and `signOut()` for your React app.
-
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block label="Terminal">
 
 ```bash
 cd my-app
 npm install @neondatabase/neon-js@latest
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Step>
+</Step>
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Step title="Set up environment variables">
-<TwoColumnLayout.Block>
-
+<Step title="Set up environment variables">
 Create a `.env` file in your project root and add your Auth Base URL:
 
 <Note>
 Replace the URL with your actual Auth Base URL from the Neon Console.
 </Note>
 
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block label=".env">
-
 ```bash
 VITE_NEON_AUTH_URL=https://ep-xxx.neonauth.us-east-2.aws.neon.build/neondb/auth
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Step>
+</Step>
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Step title="Configure the Neon client">
-<TwoColumnLayout.Block>
-
+<Step title="Configure the Neon client">
 Create a `src/auth.js` file to configure your auth client:
-
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block label="src/auth.js">
 
 ```javascript
 import { createAuthClient } from '@neondatabase/neon-js/auth';
@@ -115,22 +65,12 @@ import { createAuthClient } from '@neondatabase/neon-js/auth';
 export const authClient = createAuthClient(import.meta.env.VITE_NEON_AUTH_URL);
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Step>
+</Step>
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Step title="Build your authentication UI">
-<TwoColumnLayout.Block>
-
+<Step title="Build your authentication UI">
 Neon JS uses a programmatic approach for managing auth state. You'll use React hooks like `useEffect` to check the session and handle auth changes.
 
 Replace the contents of `src/App.jsx` with the following code to implement [sign-up](/reference/javascript-sdk#auth-signup), [sign-in](/reference/javascript-sdk#auth-signinwithpassword), and [sign-out](/reference/javascript-sdk#auth-signout):
-
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block label="src/App.jsx">
 
 ```jsx
 import { useState, useEffect } from 'react';
@@ -242,52 +182,31 @@ export default function App() {
 }
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Step>
+</Step>
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Step title="Start your app">
-<TwoColumnLayout.Block>
-
+<Step title="Start your app">
 Start the development server:
 
 Open your browser to `http://localhost:5173` and create a test user.
-
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block label="Terminal">
 
 ```bash
 npm run dev
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Step>
+</Step>
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Step title="See your users in the database">
-<TwoColumnLayout.Block>
-
+<Step title="See your users in the database">
 As users sign up, their profiles are synced to your Neon database in the `neon_auth.user` table.
 
 Query your users table in the SQL Editor to see your new users:
-
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block label="SQL Editor">
 
 ```sql
 SELECT * FROM neon_auth.user;
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Step>
+</Step>
 
-</TwoColumnLayout>
+</Steps>
 
 ## Next steps
 

@@ -6,38 +6,21 @@ description: >-
   server-side authentication in Next.js applications, detailing installation,
   environment variable configuration, and core functionalities like session
   management and middleware creation.
-layout: wide
 ---
 
 Reference documentation for the Neon Auth Next.js server SDK (`@neondatabase/auth/next/server`). This package provides server-side authentication for Next.js applications using React Server Components, API routes, middleware, and server actions.
 
 For client-side authentication, see the [Client SDK reference](/reference/javascript-sdk). For UI components, see the [UI Components reference](/auth/reference/ui-components).
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout>
-
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="Installation" id="installation">
-<TwoColumnLayout.Block>
+## Installation {#installation}
 
 Install the Neon Auth package in your Next.js project using npm, yarn, pnpm, or bun.
-
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
 
 ```bash
 npm install @neondatabase/auth@latest
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
-
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="Environment variables" id="environment-variables">
-<TwoColumnLayout.Block>
+## Environment variables {#environment-variables}
 
 Configure these environment variables in your `.env.local` file:
 
@@ -45,11 +28,6 @@ Configure these environment variables in your `.env.local` file:
 - **NEON_AUTH_COOKIE_SECRET** (required): Secret for signing session cookies (must be 32+ characters for HMAC-SHA256 security)
 
 Generate a secure secret with: `openssl rand -base64 32`
-
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
 
 ```bash
 # Required: Your Neon Auth server URL
@@ -59,13 +37,9 @@ NEON_AUTH_BASE_URL=https://your-neon-auth-url.neon.tech
 NEON_AUTH_COOKIE_SECRET=your-secret-at-least-32-characters-long
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
+## createNeonAuth() {#createneonauth}
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="createNeonAuth()" method="createNeonAuth(config)" id="createneonauth">
-<TwoColumnLayout.Block>
+`createNeonAuth(config)`
 
 Creates a unified auth instance that provides all server-side authentication functionality.
 
@@ -85,11 +59,6 @@ Returns an `auth` object with:
 | <tt>cookies.sessionDataTtl</tt> | number |          | 300     |
 | <tt>cookies.domain</tt>         | string |          | -       |
 
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
-
 ```typescript
 // lib/auth/server.ts
 import { createNeonAuth } from '@neondatabase/auth/next/server';
@@ -102,13 +71,9 @@ export const auth = createNeonAuth({
 });
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
+## auth.handler() {#auth-handler}
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="auth.handler()" method="auth.handler()" id="auth-handler">
-<TwoColumnLayout.Block>
+`auth.handler()`
 
 Creates GET and POST route handlers for the Neon Auth API proxy.
 
@@ -124,11 +89,6 @@ Create a catch-all route at `app/api/auth/[...path]/route.ts`. This handles all 
 
 Object with `GET` and `POST` Next.js route handlers.
 
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
-
 ```typescript
 // app/api/auth/[...path]/route.ts
 import { auth } from '@/lib/auth/server';
@@ -136,13 +96,9 @@ import { auth } from '@/lib/auth/server';
 export const { GET, POST } = auth.handler();
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
+## auth.middleware() {#auth-middleware}
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="auth.middleware()" method="auth.middleware(options)" id="auth-middleware">
-<TwoColumnLayout.Block>
+`auth.middleware(options)`
 
 Creates Next.js middleware for session validation and route protection.
 
@@ -164,11 +120,6 @@ The middleware automatically:
 
 </details>
 
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
-
 ```typescript
 // middleware.ts
 import { auth } from '@/lib/auth/server';
@@ -185,13 +136,9 @@ export const config = {
 };
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
+## auth.getSession() {#auth-getsession}
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="auth.getSession()" method="auth.getSession()" id="auth-getsession">
-<TwoColumnLayout.Block>
+`auth.getSession()`
 
 Retrieves the current session in Server Components, Server Actions, and API Routes.
 
@@ -208,10 +155,6 @@ Server Components that use `auth.getSession()` must export `dynamic = 'force-dyn
 | `data`  | Session \| null | Session with user data, or null if not authenticated |
 | `error` | Error \| null   | Error object if session retrieval failed             |
 
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
 <CodeGroup>
 
 ```typescript Server Component
@@ -264,13 +207,9 @@ export async function GET() {
 ```
 
 </CodeGroup>
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
+## auth.signIn.email() {#auth-signin-email}
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="auth.signIn.email()" method="auth.signIn.email(credentials)" id="auth-signin-email">
-<TwoColumnLayout.Block>
+`auth.signIn.email(credentials)`
 
 Sign in with email and password. Use in Server Actions for form-based authentication.
 
@@ -285,11 +224,6 @@ Sign in with email and password. Use in Server Actions for form-based authentica
 | <tt>password</tt> | string | ✓        |
 
 </details>
-
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
 
 ```typescript
 'use server';
@@ -307,13 +241,9 @@ export async function signIn(formData: FormData) {
 }
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
+## auth.signIn.social() {#auth-signin-social}
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="auth.signIn.social()" method="auth.signIn.social(options)" id="auth-signin-social">
-<TwoColumnLayout.Block>
+`auth.signIn.social(options)`
 
 Sign in with OAuth provider like Google, GitHub, etc.
 
@@ -329,11 +259,6 @@ Sign in with OAuth provider like Google, GitHub, etc.
 
 </details>
 
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
-
 ```typescript
 const { data, error } = await auth.signIn.social({
   provider: 'google',
@@ -341,13 +266,9 @@ const { data, error } = await auth.signIn.social({
 });
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
+## auth.signIn.emailOtp() {#auth-signin-emailotp}
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="auth.signIn.emailOtp()" method="auth.signIn.emailOtp(credentials)" id="auth-signin-emailotp">
-<TwoColumnLayout.Block>
+`auth.signIn.emailOtp(credentials)`
 
 Sign in with email OTP (one-time password). First call `emailOtp.sendVerificationOtp()` to send the code.
 
@@ -363,11 +284,6 @@ Sign in with email OTP (one-time password). First call `emailOtp.sendVerificatio
 
 </details>
 
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
-
 ```typescript
 const { data, error } = await auth.signIn.emailOtp({
   email: 'user@example.com',
@@ -375,13 +291,9 @@ const { data, error } = await auth.signIn.emailOtp({
 });
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
+## auth.signUp.email() {#auth-signup-email}
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="auth.signUp.email()" method="auth.signUp.email(credentials)" id="auth-signup-email">
-<TwoColumnLayout.Block>
+`auth.signUp.email(credentials)`
 
 Create a new user account with email and password.
 
@@ -398,11 +310,6 @@ Create a new user account with email and password.
 
 </details>
 
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
-
 ```typescript
 const { data, error } = await auth.signUp.email({
   email: 'user@example.com',
@@ -411,20 +318,11 @@ const { data, error } = await auth.signUp.email({
 });
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
+## auth.signOut() {#auth-signout}
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="auth.signOut()" method="auth.signOut()" id="auth-signout">
-<TwoColumnLayout.Block>
+`auth.signOut()`
 
 Sign out the current user. Clears session and authentication tokens.
-
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
 
 ```typescript
 'use server';
@@ -437,13 +335,9 @@ export async function signOut() {
 }
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
+## auth.updateUser() {#auth-updateuser}
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="auth.updateUser()" method="auth.updateUser(data)" id="auth-updateuser">
-<TwoColumnLayout.Block>
+`auth.updateUser(data)`
 
 Update the current user's profile. Password updates require the password reset flow for security.
 
@@ -459,11 +353,6 @@ Update the current user's profile. Password updates require the password reset f
 
 </details>
 
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
-
 ```typescript
 const { data, error } = await auth.updateUser({
   name: 'Jane Doe',
@@ -471,13 +360,9 @@ const { data, error } = await auth.updateUser({
 });
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
+## auth.changePassword() {#auth-changepassword}
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="auth.changePassword()" method="auth.changePassword(passwords)" id="auth-changepassword">
-<TwoColumnLayout.Block>
+`auth.changePassword(passwords)`
 
 Change the current user's password.
 
@@ -494,11 +379,6 @@ Change the current user's password.
 
 </details>
 
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
-
 ```typescript
 const { data, error } = await auth.changePassword({
   currentPassword: 'old-password',
@@ -507,13 +387,9 @@ const { data, error } = await auth.changePassword({
 });
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
+## auth.sendVerificationEmail() {#auth-sendverificationemail}
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="auth.sendVerificationEmail()" method="auth.sendVerificationEmail(options)" id="auth-sendverificationemail">
-<TwoColumnLayout.Block>
+`auth.sendVerificationEmail(options)`
 
 Send email verification to the current user.
 
@@ -528,43 +404,25 @@ Send email verification to the current user.
 
 </details>
 
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
-
 ```typescript
 const { data, error } = await auth.sendVerificationEmail({
   callbackURL: '/dashboard',
 });
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
+## auth.deleteUser() {#auth-deleteuser}
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="auth.deleteUser()" method="auth.deleteUser()" id="auth-deleteuser">
-<TwoColumnLayout.Block>
+`auth.deleteUser()`
 
 Delete the current user account. This action is irreversible.
-
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
 
 ```typescript
 const { data, error } = await auth.deleteUser();
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
+## auth.emailOtp.sendVerificationOtp() {#auth-emailotp-sendverificationotp}
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="auth.emailOtp.sendVerificationOtp()" method="auth.emailOtp.sendVerificationOtp(options)" id="auth-emailotp-sendverificationotp">
-<TwoColumnLayout.Block>
+`auth.emailOtp.sendVerificationOtp(options)`
 
 Send a one-time password via email. Available when Email OTP authentication is enabled.
 
@@ -579,24 +437,15 @@ Send a one-time password via email. Available when Email OTP authentication is e
 
 </details>
 
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
-
 ```typescript
 const { data, error } = await auth.emailOtp.sendVerificationOtp({
   email: 'user@example.com',
 });
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
+## auth.emailOtp.verifyEmail() {#auth-emailotp-verifyemail}
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="auth.emailOtp.verifyEmail()" method="auth.emailOtp.verifyEmail(credentials)" id="auth-emailotp-verifyemail">
-<TwoColumnLayout.Block>
+`auth.emailOtp.verifyEmail(credentials)`
 
 Verify email with OTP code.
 
@@ -612,11 +461,6 @@ Verify email with OTP code.
 
 </details>
 
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
-
 ```typescript
 const { data, error } = await auth.emailOtp.verifyEmail({
   email: 'user@example.com',
@@ -624,32 +468,19 @@ const { data, error } = await auth.emailOtp.verifyEmail({
 });
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
+## auth.listSessions() {#auth-listsessions}
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="auth.listSessions()" method="auth.listSessions()" id="auth-listsessions">
-<TwoColumnLayout.Block>
+`auth.listSessions()`
 
 List all active sessions for the current user.
-
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
 
 ```typescript
 const { data, error } = await auth.listSessions();
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
+## auth.revokeSession() {#auth-revokesession}
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="auth.revokeSession()" method="auth.revokeSession(options)" id="auth-revokesession">
-<TwoColumnLayout.Block>
+`auth.revokeSession(options)`
 
 Revoke a specific session by ID.
 
@@ -664,43 +495,25 @@ Revoke a specific session by ID.
 
 </details>
 
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
-
 ```typescript
 const { data, error } = await auth.revokeSession({
   sessionId: 'session-id',
 });
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
+## auth.revokeOtherSessions() {#auth-revokeothersessions}
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="auth.revokeOtherSessions()" method="auth.revokeOtherSessions()" id="auth-revokeothersessions">
-<TwoColumnLayout.Block>
+`auth.revokeOtherSessions()`
 
 Revoke all sessions except the current one.
-
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
 
 ```typescript
 const { data, error } = await auth.revokeOtherSessions();
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
+## auth.organization.create() {#auth-organization-create}
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="auth.organization.create()" method="auth.organization.create(data)" id="auth-organization-create">
-<TwoColumnLayout.Block>
+`auth.organization.create(data)`
 
 Create a new organization. Available when the organizations plugin is enabled.
 
@@ -716,11 +529,6 @@ Create a new organization. Available when the organizations plugin is enabled.
 
 </details>
 
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
-
 ```typescript
 const { data, error } = await auth.organization.create({
   name: 'My Organization',
@@ -728,32 +536,19 @@ const { data, error } = await auth.organization.create({
 });
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
+## auth.organization.list() {#auth-organization-list}
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="auth.organization.list()" method="auth.organization.list()" id="auth-organization-list">
-<TwoColumnLayout.Block>
+`auth.organization.list()`
 
 List the current user's organizations.
-
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
 
 ```typescript
 const { data, error } = await auth.organization.list();
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
+## auth.organization.inviteMember() {#auth-organization-invitemember}
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="auth.organization.inviteMember()" method="auth.organization.inviteMember(options)" id="auth-organization-invitemember">
-<TwoColumnLayout.Block>
+`auth.organization.inviteMember(options)`
 
 Invite a member to an organization.
 
@@ -770,11 +565,6 @@ Invite a member to an organization.
 
 </details>
 
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
-
 ```typescript
 const { data, error } = await auth.organization.inviteMember({
   organizationId: 'org-id',
@@ -783,13 +573,9 @@ const { data, error } = await auth.organization.inviteMember({
 });
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
+## auth.admin.listUsers() {#auth-admin-listusers}
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="auth.admin.listUsers()" method="auth.admin.listUsers(options)" id="auth-admin-listusers">
-<TwoColumnLayout.Block>
+`auth.admin.listUsers(options)`
 
 List all users. Available for users with admin role.
 
@@ -805,11 +591,6 @@ List all users. Available for users with admin role.
 
 </details>
 
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
-
 ```typescript
 const { data, error } = await auth.admin.listUsers({
   limit: 100,
@@ -817,13 +598,9 @@ const { data, error } = await auth.admin.listUsers({
 });
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
+## auth.admin.banUser() {#auth-admin-banuser}
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="auth.admin.banUser()" method="auth.admin.banUser(options)" id="auth-admin-banuser">
-<TwoColumnLayout.Block>
+`auth.admin.banUser(options)`
 
 Ban a user. Available for users with admin role.
 
@@ -839,11 +616,6 @@ Ban a user. Available for users with admin role.
 
 </details>
 
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
-
 ```typescript
 const { data, error } = await auth.admin.banUser({
   userId: 'user-id',
@@ -851,13 +623,9 @@ const { data, error } = await auth.admin.banUser({
 });
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
+## auth.admin.setRole() {#auth-admin-setrole}
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="auth.admin.setRole()" method="auth.admin.setRole(options)" id="auth-admin-setrole">
-<TwoColumnLayout.Block>
+`auth.admin.setRole(options)`
 
 Set a user's role. Available for users with admin role.
 
@@ -873,11 +641,6 @@ Set a user's role. Available for users with admin role.
 
 </details>
 
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
-
 ```typescript
 const { data, error } = await auth.admin.setRole({
   userId: 'user-id',
@@ -885,13 +648,7 @@ const { data, error } = await auth.admin.setRole({
 });
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
-
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="Performance features" id="performance-features">
-<TwoColumnLayout.Block>
+## Performance features {#performance-features}
 
 ### Session caching
 
@@ -911,11 +668,6 @@ Multiple concurrent `getSession()` calls are automatically deduplicated:
 - 10x faster cold starts
 - Reduces server load
 
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
-
 ```typescript
 // First call: Fetches from Auth Server
 const { data: session } = await auth.getSession();
@@ -924,13 +676,7 @@ const { data: session } = await auth.getSession();
 const { data: session2 } = await auth.getSession();
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
-
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="Configuration reference" id="configuration-reference">
-<TwoColumnLayout.Block>
+## Configuration reference {#configuration-reference}
 
 Complete configuration options for `createNeonAuth()`:
 
@@ -946,11 +692,6 @@ Complete configuration options for `createNeonAuth()`:
 - **cookies.sessionDataTtl**: Cache TTL in seconds
 - **cookies.domain**: For cross-subdomain sessions (for example, ".example.com")
 
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
-
 ```typescript
 import { createNeonAuth } from '@neondatabase/auth/next/server';
 
@@ -962,13 +703,7 @@ export const auth = createNeonAuth({
 });
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
-
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Item title="Project structure" id="project-structure">
-<TwoColumnLayout.Block>
+## Project structure {#project-structure}
 
 Recommended file structure for Next.js with Neon Auth:
 
@@ -978,11 +713,6 @@ Recommended file structure for Next.js with Neon Auth:
 - `lib/auth/server.ts` - Server auth instance
 - `lib/auth/client.ts` - Client auth instance
 - `middleware.ts` - Next.js middleware
-
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block>
 
 ```
 app/
@@ -1006,11 +736,6 @@ lib/
 middleware.ts
 .env.local
 ```
-
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Item>
-
-</TwoColumnLayout>
 
 ## Migration from v0.1
 

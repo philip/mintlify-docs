@@ -5,7 +5,6 @@ description: >-
   Covers the setup of Neon Auth in a Next.js application using pre-built UI
   components, including enabling authentication, installing the SDK, configuring
   environment variables, and creating an auth server instance.
-layout: wide
 ---
 
 <Note title="Beta">
@@ -16,32 +15,18 @@ The **Neon Auth with Better Auth** is in Beta. Share your feedback on [Discord](
 Upgrading from Neon Auth SDK v0.1? See the [migration guide](/auth/migrate/from-auth-v0.1) for step-by-step instructions.
 </Note>
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout>
+<Steps>
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Step title="Enable Auth in your Neon project">
-<TwoColumnLayout.Block>
-
+<Step title="Enable Auth in your Neon project">
 Enable Auth in your [Neon project](https://console.neon.tech) and copy your Auth URL from Configuration.
 
 **Console path:** Project → Branch → Auth → Configuration
 
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block label="Console">
-
 ![Neon Auth Base URL](/images/docs/auth/neon-auth-base-url.png)
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Step>
+</Step>
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Step title="Install the Neon Auth SDK">
-<TwoColumnLayout.Block>
-
+<Step title="Install the Neon Auth SDK">
 Install the Neon SDK into your Next.js app.
 
 <details>
@@ -52,47 +37,27 @@ cd my-app
 ```
 </details>
 
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block label="Terminal">
-
 ```bash
 npm install @neondatabase/auth@latest
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Step>
+</Step>
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Step title="Set up environment variables">
-<TwoColumnLayout.Block>
-
+<Step title="Set up environment variables">
 Create a `.env` file in your project root and add your Auth URL and a cookie secret:
 
 <Note>
 Replace the Auth URL with your actual Auth URL from the Neon Console. Generate a secure cookie secret with `openssl rand -base64 32`.
 </Note>
 
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block label=".env">
-
 ```bash
 NEON_AUTH_BASE_URL=https://ep-xxx.neonauth.us-east-1.aws.neon.tech/neondb/auth
 NEON_AUTH_COOKIE_SECRET=your-secret-at-least-32-characters-long
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Step>
+</Step>
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Step title="Create auth server instance">
-<TwoColumnLayout.Block>
-
+<Step title="Create auth server instance">
 Create a unified auth instance in `lib/auth/server.ts`. This single instance provides all server-side auth functionality:
 
 - `.handler()` for API routes
@@ -100,11 +65,6 @@ Create a unified auth instance in `lib/auth/server.ts`. This single instance pro
 - `.getSession()` and all Better Auth server methods
 
 See the [Next.js Server SDK reference](/auth/reference/nextjs-server) for complete API documentation.
-
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block label="lib/auth/server.ts">
 
 ```typescript
 import { createNeonAuth } from '@neondatabase/auth/next/server';
@@ -117,20 +77,10 @@ export const auth = createNeonAuth({
 });
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Step>
+</Step>
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Step title="Set up auth API routes">
-<TwoColumnLayout.Block>
-
+<Step title="Set up auth API routes">
 Create an API route handler that proxies auth requests. All Neon Auth APIs will be routed through this handler. Create a route file inside `/api/auth/[...path]` directory:
-
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block label="app/api/auth/[...path]/route.ts">
 
 ```typescript
 import { auth } from '@/lib/auth/server';
@@ -138,20 +88,10 @@ import { auth } from '@/lib/auth/server';
 export const { GET, POST } = auth.handler();
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Step>
+</Step>
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Step title="Add authentication middleware">
-<TwoColumnLayout.Block>
-
+<Step title="Add authentication middleware">
 The middleware ensures users are authenticated before accessing protected routes. Create `proxy.ts` file in your project root:
-
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block label="proxy.ts">
 
 ```typescript
 import { auth } from '@/lib/auth/server';
@@ -169,33 +109,20 @@ export const config = {
 };
 ```
 
-</TwoColumnLayout.Block>
-
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
 <TwoColumnLayout.Footer>
 <Note>
 Your Next.js project is now fully configured to use Neon Auth. Now, lets proceed with setting up the Auth UI Provider and wrap your layout with auth context.
 </Note>
 </TwoColumnLayout.Footer>
 
-</TwoColumnLayout.Step>
+</Step>
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Step title="Configure the auth client">
-<TwoColumnLayout.Block>
-
+<Step title="Configure the auth client">
 The Auth UI components need access to auth APIs. Create the auth client in `lib/auth/client.ts` file, which you'll pass to `NeonAuthUIProvider`.
 
 <Note>
 The server-side `auth` instance was already created in a previous step. The client is separate and handles browser-side auth operations.
 </Note>
-
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block label="lib/auth/client.ts">
 
 ```tsx
 'use client';
@@ -205,12 +132,9 @@ import { createAuthClient } from '@neondatabase/auth/next';
 export const authClient = createAuthClient();
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Step>
+</Step>
 
-<TwoColumnLayout.Step title="Wrap app layout with auth provider">
-<TwoColumnLayout.Block>
-
+<Step title="Wrap app layout with auth provider">
 The `NeonAuthUIProvider` component wraps your application with authentication context and provides essential hooks and auth methods required by auth components throughout your app. To make authentication globally accessible, wrap your entire app with `NeonAuthUIProvider`.
 
 <Warning title="Hydration Warning">
@@ -244,9 +168,6 @@ The `NeonAuthUIProvider` can be fully customized with settings you have configur
 ```
 
 </details>
-
-</TwoColumnLayout.Block>
-<TwoColumnLayout.Block label="app/layout.tsx">
 
 ```tsx
 import { authClient } from '@/lib/auth/client'; // [!code ++]
@@ -296,23 +217,13 @@ export default function RootLayout({
 }
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Step>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Step title="Add Neon Auth styles">
-<TwoColumnLayout.Block>
-
+</Step>
+<Step title="Add Neon Auth styles">
 Import the Neon Auth UI styles in your `app/globals.css` file. Add this line at the top of the file:
 
 <Tip title="Not using Tailwind?">
 See [UI Component Styles](/auth/reference/ui-components#styling) for alternative setup options.
 </Tip>
-
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block label="app/globals.css">
 
 ```css
 @import "tailwindcss";
@@ -320,19 +231,13 @@ See [UI Component Styles](/auth/reference/ui-components#styling) for alternative
 
 ```
 
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
 <TwoColumnLayout.Footer>
 <Note>
 Now that the Auth provider and styles are set up, let's build the pages for signing up and signing in
 </Note>
 </TwoColumnLayout.Footer>
-</TwoColumnLayout.Step>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Step title="Create the Auth & Account pages">
-<TwoColumnLayout.Block>
+</Step>
+<Step title="Create the Auth & Account pages">
 Create a dynamic route segment for authentication and account views in `app/auth/[path]/page.tsx` and `app/account/[path]/page.tsx` respectively.
 
 - `AuthView` - with dynamic route segment covers the following paths:
@@ -342,9 +247,6 @@ Create a dynamic route segment for authentication and account views in `app/auth
 - `AccountView` - with dynamic route segment covers the following paths:
   - `/account/settings` - User can manage their profile details
   - `/account/security` - Change password and list active session
-
-</TwoColumnLayout.Block>
-<TwoColumnLayout.Block label="create app & account page">
 
 <Tabs>
 
@@ -398,14 +300,9 @@ export default async function AccountPage({ params }: { params: Promise<{ path: 
 </Tab>
 </Tabs>
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Step>
+</Step>
 
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Step title="Access user data on server and client">
-<TwoColumnLayout.Block>
-
+<Step title="Access user data on server and client">
 **Server Components:**
 
 - Use the `auth` instance from `lib/auth/server.ts` to access session data and call auth methods in server components and server actions.
@@ -413,11 +310,6 @@ export default async function AccountPage({ params }: { params: Promise<{ path: 
 **Client Components:**
 
 - Use the `authClient` from `lib/auth/client.ts` to access session data and call auth methods in client components.
-
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block label="Access user data">
 
 <Tabs>
 
@@ -517,13 +409,8 @@ export async function GET() {
 </Tab>
 </Tabs>
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Step>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Step title="Start your app">
-<TwoColumnLayout.Block>
-
+</Step>
+<Step title="Start your app">
 Start the development server, and then open http://localhost:3000/
 
 - Visit `/auth/sign-in` to sign in or sign up
@@ -536,19 +423,13 @@ Start the development server, and then open http://localhost:3000/
 Safari blocks third-party cookies on non-HTTPS connections. Use `npm run dev -- --experimental-https` and open `https://localhost:3000` instead.
 </Note>
 
-</TwoColumnLayout.Block>
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-{/* MIGRATION_FLAG: TwoColumnLayout - No Mintlify equivalent */}
-<TwoColumnLayout.Block label="Terminal">
-
 ```bash
 npm run dev
 ```
 
-</TwoColumnLayout.Block>
-</TwoColumnLayout.Step>
+</Step>
 
-</TwoColumnLayout>
+</Steps>
 
 ## Next steps
 
