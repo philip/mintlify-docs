@@ -27,9 +27,12 @@
 
 ## Migration notes
 
-This site was migrated from `~/git/neon-website/content/docs/`. Some pages
-contain `MIGRATION_FLAG` comments marking components that need manual review.
-Search for `MIGRATION_FLAG` to find them.
+This site was migrated from `~/git/neon-website/content/docs/`. The source
+content lives at `~/git/neon-website/content/docs/` — always check there for
+the original file when something is missing or seems wrong in this repo.
+
+Some pages contain `MIGRATION_FLAG` comments marking components that need
+manual review. Search for `MIGRATION_FLAG` to find them.
 
 Snippets in `snippets/` were converted from Neon shared-content files.
 Migration scripts live in `scripts/` (ignored by Mintlify).

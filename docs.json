@@ -1276,6 +1276,12 @@
       }
     ]
   },
+  "redirects": [
+    {
+      "source": "/introduction",
+      "destination": "/"
+    }
+  ],
   "logo": {
     "light": "/logo/light.svg",
     "dark": "/logo/dark.svg"
