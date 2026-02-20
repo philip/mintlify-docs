@@ -215,9 +215,10 @@
       },
       {
         "tab": "Connect",
-        "groups": [
+        "menu": [
           {
-            "group": "Connect to Neon",
+            "item": "Connect to Neon",
+            "icon": "plug",
             "pages": [
               "connect/connect-intro",
               "connect/choose-connection",
@@ -231,7 +232,8 @@
             ]
           },
           {
-            "group": "Clients & tools",
+            "item": "Clients & tools",
+            "icon": "screwdriver-wrench",
             "pages": [
               "connect/query-with-psql-editor",
               "connect/connect-pgcli",
@@ -240,7 +242,8 @@
             ]
           },
           {
-            "group": "Troubleshooting",
+            "item": "Troubleshooting",
+            "icon": "triangle-exclamation",
             "pages": [
               "connect/connection-errors",
               "connect/connection-latency"
@@ -1259,12 +1262,7 @@
             "item": "Neon for AI Agents",
             "pages": [
               "introduction/agent-plan",
-              "guides/ai-agent-integration"
-            ]
-          },
-          {
-            "item": "Guides",
-            "pages": [
+              "guides/ai-agent-integration",
               "workflows/claimable-database-integration"
             ]
           }
