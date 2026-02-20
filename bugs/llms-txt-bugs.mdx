@@ -15,6 +15,7 @@ The bloated description bug is not contrived. This site pulls in the real [Neon 
 | [Bloated descriptions from OpenAPI specs](#bug-2-bloated-descriptions-in-llmstxt-from-openapi-specs) | Medium | Truncate/sanitize llms.txt descriptions; warn on long OpenAPI operation descriptions |
 | [Theme config leaks into code blocks](#bug-3-internal-theme-config-leaks-into-code-blocks) | Low | Strip internal theme props before generating `.md` output |
 | [Default-ignored files leak with seo.indexing](#bug-4-default-ignored-files-leak-into-llmstxt-with-seoindexing-all) | Medium | Skip files without frontmatter; document the side effect |
+| [llms.txt ignores navigation structure](#bug-5-llmstxt-ignores-navigation-structure) | Medium | Group entries by tab/section instead of flat alphabetical list |
 
 ---
 
@@ -282,6 +283,46 @@ We tested all exclusion mechanisms:
 
 1. When `seo.indexing: "all"` is enabled, still skip files that lack YAML frontmatter. These are clearly not documentation pages.
 2. Document the side effect: the `seo.indexing: "all"` docs should warn that it re-includes default-ignored files in AI context.
+
+---
+
+## Bug 5: llms.txt ignores navigation structure
+
+**Severity:** Medium
+
+The `llms.txt` output is a single flat alphabetical list of all pages. It does not reflect the tab or group structure defined in `docs.json`.
+
+### Observed behavior
+
+All pages are listed under one `## Docs` heading, sorted by URL path. Pages from separate tabs (e.g., "API Reference", "Bug Repros", "AI") are interleaved alphabetically rather than grouped.
+
+For example, auto-generated pages from a second OpenAPI spec under a "Bug Repros" tab appear between `api-reference/endpoint/` and `api-reference/operation/` entries because the generated paths (`api-reference/get-plants*`) sort there alphabetically.
+
+### Expected behavior
+
+The `llms.txt` should reflect the navigation hierarchy. Each tab or top-level group should be a separate `##` section:
+
+```
+## Docs
+- ...
+
+## AI
+- ...
+
+## API Reference
+- ...
+
+## Bug Repros
+- ...
+```
+
+### Why this matters
+
+The `llms.txt` format exists to help LLMs understand site structure. A flat alphabetical list provides no structural context. The navigation hierarchy is already defined in `docs.json` and should be reused.
+
+### Suggested fix
+
+Group `llms.txt` entries by tab (and optionally by group within each tab) instead of outputting a single flat list.
 
 ---
 
