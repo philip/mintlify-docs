@@ -1269,6 +1269,10 @@
             ]
           }
         ]
+      },
+      {
+        "tab": "API Reference",
+        "openapi": "https://neon.com/api_spec/release/v2.json"
       }
     ]
   },
