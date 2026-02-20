@@ -87,9 +87,10 @@
       },
       {
         "tab": "About",
-        "groups": [
+        "menu": [
           {
-            "group": "Architecture",
+            "item": "Architecture",
+            "icon": "building",
             "pages": [
               "introduction/architecture-overview",
               "introduction/compute-lifecycle",
@@ -97,7 +98,8 @@
             ]
           },
           {
-            "group": "Autoscaling",
+            "item": "Autoscaling",
+            "icon": "arrows-up-down",
             "pages": [
               "introduction/autoscaling",
               "introduction/autoscaling-architecture",
@@ -106,14 +108,16 @@
             ]
           },
           {
-            "group": "Scale to zero",
+            "item": "Scale to zero",
+            "icon": "power-off",
             "pages": [
               "introduction/scale-to-zero",
               "guides/scale-to-zero-guide"
             ]
           },
           {
-            "group": "Branching",
+            "item": "Branching",
+            "icon": "code-branch",
             "pages": [
               "guides/branching-intro",
               "introduction/branching",
@@ -125,10 +129,16 @@
             ]
           },
           {
-            "group": "Read replicas",
-            "pages": [
-              "introduction/read-replicas",
-              "guides/read-replica-guide",
+            "item": "Read replicas",
+            "icon": "clone",
+            "groups": [
+              {
+                "group": "Read replicas",
+                "pages": [
+                  "introduction/read-replicas",
+                  "guides/read-replica-guide"
+                ]
+              },
               {
                 "group": "Use cases",
                 "pages": [
@@ -147,7 +157,8 @@
             ]
           },
           {
-            "group": "Logical replication",
+            "item": "Logical replication",
+            "icon": "arrows-rotate",
             "pages": [
               "guides/logical-replication-guide",
               "guides/logical-replication-concepts",
@@ -158,11 +169,17 @@
             ]
           },
           {
-            "group": "Data recovery",
-            "pages": [
-              "guides/backup-restore",
-              "introduction/restore-window",
-              "introduction/branch-restore",
+            "item": "Data recovery",
+            "icon": "clock-rotate-left",
+            "groups": [
+              {
+                "group": "Data recovery",
+                "pages": [
+                  "guides/backup-restore",
+                  "introduction/restore-window",
+                  "introduction/branch-restore"
+                ]
+              },
               {
                 "group": "Time Travel",
                 "pages": [
@@ -180,7 +197,8 @@
             ]
           },
           {
-            "group": "Data protection",
+            "item": "Data protection",
+            "icon": "shield-halved",
             "pages": [
               "introduction/ip-allow",
               "guides/neon-private-networking",
@@ -188,7 +206,8 @@
             ]
           },
           {
-            "group": "High availability",
+            "item": "High availability",
+            "icon": "server",
             "pages": [
               "introduction/high-availability"
             ]
@@ -232,9 +251,10 @@
       },
       {
         "tab": "Develop",
-        "groups": [
+        "menu": [
           {
-            "group": "Frameworks",
+            "item": "Frameworks",
+            "icon": "layer-group",
             "pages": [
               "get-started/frameworks",
               "guides/astro",
@@ -264,7 +284,8 @@
             ]
           },
           {
-            "group": "Languages",
+            "item": "Languages",
+            "icon": "code",
             "pages": [
               "get-started/languages",
               "guides/dotnet-npgsql",
@@ -277,7 +298,8 @@
             ]
           },
           {
-            "group": "ORMs",
+            "item": "ORMs",
+            "icon": "database",
             "pages": [
               "get-started/orms",
               "guides/django",
@@ -293,8 +315,9 @@
             ]
           },
           {
-            "group": "Data API",
-            "pages": [
+            "item": "Data API",
+            "icon": "globe",
+            "groups": [
               {
                 "group": "Introduction",
                 "pages": [
@@ -329,8 +352,9 @@
             ]
           },
           {
-            "group": "Neon Auth",
-            "pages": [
+            "item": "Neon Auth",
+            "icon": "lock",
+            "groups": [
               {
                 "group": "Introduction",
                 "pages": [
@@ -406,16 +430,23 @@
             ]
           },
           {
-            "group": "Postgres RLS",
+            "item": "Postgres RLS",
+            "icon": "user-shield",
             "pages": [
               "guides/row-level-security",
               "guides/rls-drizzle"
             ]
           },
           {
-            "group": "AI for Agents",
-            "pages": [
-              "ai/ai-agents-tools",
+            "item": "AI for Agents",
+            "icon": "robot",
+            "groups": [
+              {
+                "group": "AI for Agents",
+                "pages": [
+                  "ai/ai-agents-tools"
+                ]
+              },
               {
                 "group": "MCP integration",
                 "pages": [
@@ -485,8 +516,15 @@
             ]
           },
           {
-            "group": "AI App Starter Kit",
-            "pages": [
+            "item": "AI App Starter Kit",
+            "icon": "wand-magic-sparkles",
+            "groups": [
+              {
+                "group": "AI App Starter Kit",
+                "pages": [
+                  "ai/ai-google-colab"
+                ]
+              },
               {
                 "group": "Core concepts",
                 "pages": [
@@ -510,13 +548,13 @@
                   "ai/ai-vector-search-optimization",
                   "ai/ai-scale-with-neon"
                 ]
-              },
-              "ai/ai-google-colab"
+              }
             ]
           },
           {
-            "group": "API, CLI & SDKs",
-            "pages": [
+            "item": "API, CLI & SDKs",
+            "icon": "terminal",
+            "groups": [
               {
                 "group": "API",
                 "pages": [
@@ -566,16 +604,23 @@
             ]
           },
           {
-            "group": "Local development",
+            "item": "Local development",
+            "icon": "laptop-code",
             "pages": [
               "local/vscode-extension",
               "local/neon-local"
             ]
           },
           {
-            "group": "Integrations (3rd party)",
-            "pages": [
-              "guides/integrations",
+            "item": "Integrations (3rd party)",
+            "icon": "puzzle-piece",
+            "groups": [
+              {
+                "group": "Integrations (3rd party)",
+                "pages": [
+                  "guides/integrations"
+                ]
+              },
               {
                 "group": "Authentication",
                 "pages": [
@@ -723,13 +768,19 @@
             ]
           },
           {
-            "group": "Workflows & CI/CD",
-            "pages": [
-              "guides/branching-neon-cli",
-              "guides/branching-neon-api",
-              "guides/branching-github-actions",
-              "reference/instagres",
-              "reference/terraform",
+            "item": "Workflows & CI/CD",
+            "icon": "gears",
+            "groups": [
+              {
+                "group": "Workflows & CI/CD",
+                "pages": [
+                  "guides/branching-neon-cli",
+                  "guides/branching-neon-api",
+                  "guides/branching-github-actions",
+                  "reference/instagres",
+                  "reference/terraform"
+                ]
+              },
               {
                 "group": "Neon Twin",
                 "pages": [
@@ -749,33 +800,35 @@
             ]
           },
           {
-            "group": "Tools & Workflows",
-            "pages": [
-              {
-                "title": "Templates",
-                "href": "https://neon.com/templates"
-              }
-            ]
+            "item": "Templates",
+            "icon": "swatchbook",
+            "href": "https://neon.com/templates"
           },
           {
-            "group": "Tools & Workflows",
-            "pages": [
-              {
-                "title": "Examples repo",
-                "href": "https://github.com/neondatabase/examples"
-              }
-            ]
+            "item": "Examples repo",
+            "icon": "github",
+            "href": "https://github.com/neondatabase/examples"
           }
         ]
       },
       {
         "tab": "Manage",
-        "groups": [
+        "menu": [
           {
-            "group": "Access & collaboration",
-            "pages": [
-              "manage/accounts",
-              "manage/user-permissions",
+            "item": "Access & collaboration",
+            "icon": "users",
+            "groups": [
+              {
+                "group": "Access & collaboration",
+                "pages": [
+                  "manage/accounts",
+                  "manage/user-permissions",
+                  "guides/project-collaboration-guide",
+                  "manage/database-access",
+                  "manage/api-keys",
+                  "manage/account-recovery"
+                ]
+              },
               {
                 "group": "Organizations",
                 "pages": [
@@ -797,15 +850,12 @@
                     ]
                   }
                 ]
-              },
-              "guides/project-collaboration-guide",
-              "manage/database-access",
-              "manage/api-keys",
-              "manage/account-recovery"
+              }
             ]
           },
           {
-            "group": "Projects & resources",
+            "item": "Projects & resources",
+            "icon": "folder-open",
             "pages": [
               "manage/overview",
               "manage/projects",
@@ -819,13 +869,19 @@
             ]
           },
           {
-            "group": "Monitoring & observability",
-            "pages": [
-              "introduction/monitoring",
-              "introduction/monitoring-page",
-              "manage/operations",
-              "introduction/monitor-active-queries",
-              "introduction/monitor-query-performance",
+            "item": "Monitoring & observability",
+            "icon": "chart-line",
+            "groups": [
+              {
+                "group": "Monitoring & observability",
+                "pages": [
+                  "introduction/monitoring",
+                  "introduction/monitoring-page",
+                  "manage/operations",
+                  "introduction/monitor-active-queries",
+                  "introduction/monitor-query-performance"
+                ]
+              },
               {
                 "group": "Third-party monitoring",
                 "pages": [
@@ -840,9 +896,16 @@
             ]
           },
           {
-            "group": "Operations & maintenance",
-            "pages": [
-              "get-started/production-checklist",
+            "item": "Operations & maintenance",
+            "icon": "screwdriver-wrench",
+            "groups": [
+              {
+                "group": "Operations & maintenance",
+                "pages": [
+                  "get-started/production-checklist",
+                  "introduction/regions"
+                ]
+              },
               {
                 "group": "Backup & restore",
                 "pages": [
@@ -868,12 +931,12 @@
                   "manage/platform-maintenance",
                   "manage/updates"
                 ]
-              },
-              "introduction/regions"
+              }
             ]
           },
           {
-            "group": "Plans and billing",
+            "item": "Plans and billing",
+            "icon": "credit-card",
             "pages": [
               "introduction/about-billing",
               "introduction/plans",
@@ -886,7 +949,8 @@
             ]
           },
           {
-            "group": "Neon on Azure",
+            "item": "Neon on Azure",
+            "icon": "cloud",
             "pages": [
               "import/migrate-from-azure-native",
               "azure/azure-deploy",
@@ -895,7 +959,8 @@
             ]
           },
           {
-            "group": "Security & compliance",
+            "item": "Security & compliance",
+            "icon": "lock",
             "pages": [
               "security/security-overview",
               "security/security-reporting",
@@ -909,9 +974,10 @@
       },
       {
         "tab": "Postgres",
-        "groups": [
+        "menu": [
           {
-            "group": "Extensions",
+            "item": "Extensions",
+            "icon": "puzzle-piece",
             "pages": [
               "extensions/extension-explorer",
               "extensions/postgresql-anonymizer",
@@ -958,7 +1024,8 @@
             ]
           },
           {
-            "group": "Data types",
+            "item": "Data types",
+            "icon": "table",
             "pages": [
               "data-types/introduction",
               "data-types/array",
@@ -974,9 +1041,15 @@
             ]
           },
           {
-            "group": "Functions",
-            "pages": [
-              "functions/introduction",
+            "item": "Functions",
+            "icon": "function",
+            "groups": [
+              {
+                "group": "Functions",
+                "pages": [
+                  "functions/introduction"
+                ]
+              },
               {
                 "group": "Aggregate functions",
                 "pages": [
@@ -1063,7 +1136,8 @@
             ]
           },
           {
-            "group": "Postgres guides",
+            "item": "Postgres guides",
+            "icon": "book",
             "pages": [
               "postgresql/index-types",
               "postgresql/query-performance",
@@ -1071,69 +1145,68 @@
             ]
           },
           {
-            "group": "Compatibility",
+            "item": "Compatibility",
+            "icon": "check-double",
             "pages": [
               "reference/compatibility"
             ]
           },
           {
-            "group": "Version support",
+            "item": "Version support",
+            "icon": "code-branch",
             "pages": [
               "postgresql/postgres-version-policy"
             ]
           },
           {
-            "group": "Upgrade",
+            "item": "Upgrade",
+            "icon": "arrow-up",
             "pages": [
               "postgresql/postgres-upgrade"
             ]
           },
           {
-            "group": "PostgreSQL Tutorial",
-            "pages": [
-              {
-                "title": "PostgreSQL Tutorial",
-                "href": "https://neon.com/postgresql/tutorial"
-              }
-            ]
+            "item": "PostgreSQL Tutorial",
+            "icon": "graduation-cap",
+            "href": "https://neon.com/postgresql/tutorial"
           }
         ]
       },
       {
         "tab": "Resources",
-        "groups": [
+        "menu": [
           {
-            "group": "Status",
+            "item": "Status",
             "pages": [
               "introduction/status"
             ]
           },
           {
-            "group": "Support",
+            "item": "Support",
             "pages": [
               "introduction/support"
             ]
           },
           {
-            "group": "Changelog",
+            "item": "Changelog",
             "pages": [
               "changelog"
             ]
           },
           {
-            "group": "Roadmap",
+            "item": "Roadmap",
             "pages": [
               "introduction/roadmap"
             ]
           },
           {
-            "group": "Early access",
+            "item": "Early access",
             "pages": [
               "introduction/early-access"
             ]
           },
           {
-            "group": "Community",
+            "item": "Community",
             "pages": [
               "community/community-intro",
               "community/contribution-guide",
@@ -1146,13 +1219,13 @@
             ]
           },
           {
-            "group": "Glossary",
+            "item": "Glossary",
             "pages": [
               "reference/glossary"
             ]
           },
           {
-            "group": "RSS feeds",
+            "item": "RSS feeds",
             "pages": [
               "reference/feeds"
             ]
@@ -1161,21 +1234,21 @@
       },
       {
         "tab": "Platform integration",
-        "groups": [
+        "menu": [
           {
-            "group": "Overview",
+            "item": "Overview",
             "pages": [
               "guides/platform-integration-overview"
             ]
           },
           {
-            "group": "OAuth integration",
+            "item": "OAuth integration",
             "pages": [
               "guides/oauth-integration"
             ]
           },
           {
-            "group": "Embedded Postgres",
+            "item": "Embedded Postgres",
             "pages": [
               "guides/embedded-postgres",
               "guides/consumption-limits",
@@ -1184,14 +1257,14 @@
             ]
           },
           {
-            "group": "Neon for AI Agents",
+            "item": "Neon for AI Agents",
             "pages": [
               "introduction/agent-plan",
               "guides/ai-agent-integration"
             ]
           },
           {
-            "group": "Guides",
+            "item": "Guides",
             "pages": [
               "workflows/claimable-database-integration"
             ]
