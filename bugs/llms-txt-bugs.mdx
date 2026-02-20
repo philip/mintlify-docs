@@ -1,0 +1,320 @@
+---
+title: "llms.txt bug report"
+description: "Documented issues in Mintlify's llms.txt and .md generation system"
+---
+
+All four bugs were reproduced on `me-8e8b8f86.mintlify.app`, a test Neon docs migration site.
+
+View the live [llms.txt output](https://me-8e8b8f86.mintlify.app/llms.txt) to see these issues. Look for `[null]` titles, empty `[]` titles, and bloated multi-paragraph descriptions on API reference entries.
+
+The bloated description bug is not contrived. This site pulls in the real [Neon API spec](https://neon.com/api_spec/release/v2.json), and many of its operation descriptions end up dumped verbatim into `llms.txt`.
+
+| Bug | Severity | Suggested fix |
+| --- | -------- | ------------- |
+| [Null titles in llms.txt](#bug-1-null-titles-in-llmstxt) | High | Validate OpenAPI-derived titles; apply same rules as MDX pages |
+| [Bloated descriptions from OpenAPI specs](#bug-2-bloated-descriptions-in-llmstxt-from-openapi-specs) | Medium | Truncate/sanitize llms.txt descriptions; warn on long OpenAPI operation descriptions |
+| [Theme config leaks into code blocks](#bug-3-internal-theme-config-leaks-into-code-blocks) | Low | Strip internal theme props before generating `.md` output |
+| [Default-ignored files leak with seo.indexing](#bug-4-default-ignored-files-leak-into-llmstxt-with-seoindexing-all) | Medium | Skip files without frontmatter; document the side effect |
+
+---
+
+## Bug 1: Null titles in llms.txt
+
+**Severity:** High
+
+Pages can end up with `[null]` as their title in `llms.txt`. This happens when an MDX page uses the `openapi` frontmatter field but has **no `title`** field. Mintlify resolves the title from the OpenAPI operation's `summary`. When `summary` is missing, the title becomes the literal string `null`.
+
+### How to reproduce
+
+1. Add an operation without a `summary` field to your OpenAPI spec:
+
+```json
+{
+  "openapi": "3.1.0",
+  "info": { "title": "Test API", "version": "1.0.0" },
+  "paths": {
+    "/plants/ghost": {
+      "get": {
+        "responses": {
+          "200": { "description": "OK" }
+        }
+      }
+    }
+  }
+}
+```
+
+2. Create an MDX page with `openapi` frontmatter but no `title`:
+
+```yaml
+---
+openapi: 'GET /plants/ghost'
+---
+```
+
+3. Build and deploy. The `llms.txt` entry will be:
+
+```
+- [null](https://example.com/bug-demos/null-title-c.md)
+```
+
+The `.md` output will literally contain `# null` as the page heading.
+
+<Note>`mint openapi-check` passes for this spec. The validation does not flag missing `summary` fields, so there is no build-time warning before the `[null]` title appears in llms.txt.</Note>
+
+### Variants tested
+
+| MDX file | OpenAPI operation | llms.txt title | Realistic? |
+| -------- | ----------------- | -------------- | ---------- |
+| `openapi: 'GET /plants'`, no `title` | Has `description`, no `summary` | `[null]` | **Yes, common.** Many real specs omit `summary` and only use `description`. |
+| `openapi: 'GET /nonexistent'`, no `title` | Doesn't exist in spec | `[null]` | Edge case. |
+| `openapi: 'GET /plants/ghost'`, no `title` | No `summary`, no `description` | `[null]` | Edge case. |
+| `openapi: 'GET /plants/minimal'`, no `title` | `summary: ""` (empty string) | `[]` (empty) | Edge case. |
+
+The first variant is the high-impact case. It is common for OpenAPI specs to have a `description` but no `summary` on operations.
+
+<Accordion title="MDX approach vs auto-generated approach">
+When operations are referenced directly in `docs.json` navigation (without MDX files), Mintlify has a fallback that derives the title from the HTTP method and path:
+
+```json
+{
+  "group": "Auto-generated",
+  "openapi": "api-reference/openapi.json",
+  "pages": [
+    "GET /plants/ghost",
+    "GET /plants/minimal"
+  ]
+}
+```
+
+| Approach | Spec `summary` | Title in llms.txt |
+| -------- | --------------- | ----------------- |
+| MDX file with `openapi` frontmatter, no `title` | missing | `[null]` |
+| MDX file with `openapi` frontmatter, no `title` | `""` | `[]` (empty) |
+| Auto-generated (operation in navigation) | missing | `[Get plantsghost]` (path-derived fallback) |
+| Auto-generated (operation in navigation) | `""` | `[]` (empty) |
+
+The auto-generated approach avoids `[null]` by falling back to the path. The MDX approach has no such fallback.
+</Accordion>
+
+<Accordion title="Why plain MDX pages can't trigger this">
+Mintlify's build validation requires a `title` field in frontmatter for non-OpenAPI MDX pages. Omitting `title`, setting `title: ""`, and removing frontmatter entirely all fail `mint validate`. Only the `openapi` frontmatter field bypasses this requirement.
+</Accordion>
+
+### Suggested fixes
+
+1. Apply the same title validation to OpenAPI pages that already exists for plain MDX pages. If `summary` is missing or empty and no `title` is provided, either fail the build or fall back to the path-derived title.
+2. Flag or fail the build if `[null]` or `[]` appears as a title in the generated `llms.txt`.
+
+---
+
+## Bug 2: Bloated descriptions in llms.txt from OpenAPI specs
+
+**Severity:** Medium
+
+Some pages have massive multi-paragraph descriptions dumped into `llms.txt`, including Markdown headings, bullet lists, and code examples. This content belongs in the page body, not in a one-line summary.
+
+### Root cause
+
+The `llms.txt` description comes from the **frontmatter `description` field**. For OpenAPI-generated pages, Mintlify populates this from the operation's `description` field in the OpenAPI spec. When spec authors put extensive Markdown content (with `###` headings, lists, etc.) in the operation `description`, it all ends up verbatim in `llms.txt`.
+
+<Note>The OpenAPI `summary` field is already used as the page title (link text in llms.txt). The `description` field is used as the llms.txt description (text after the colon). These are separate concerns.</Note>
+
+### How to reproduce
+
+Set a large frontmatter `description` containing Markdown structure:
+
+```yaml
+---
+title: "Webhook events"
+description: "Fires webhooks for all lifecycle events.\n\n### Event Types\n\n**Events**:\n- item.registered\n- item.match.found\n- item.match.confirmed\n\n### Webhook Signature Verification\nAll webhooks include cryptographic signatures.\n\n### Retry Policy\nFailed deliveries are retried with exponential backoff."
+---
+```
+
+The entire `description` value (including `###` headings, bullet lists, and multiple paragraphs) is dumped verbatim into `llms.txt` as a single line.
+
+### Why this happens in practice
+
+- API engineers write comprehensive `description` fields in OpenAPI specs (it's the natural place for endpoint documentation)
+- Mintlify auto-generates pages from the spec, using `description` as the frontmatter description
+- The HTML pages look fine (Markdown renders nicely), but `llms.txt` dumps it all inline
+- Nobody reviews `llms.txt` output since it's auto-generated and only produced on deploy, not locally
+
+<Accordion title="Real-world example (Coinbase)">
+The Coinbase docs at `https://docs.cdp.coinbase.com/llms.txt` exhibited this at time of writing (may have since been updated). Their `create-webhook-subscription` endpoint's OpenAPI spec contains:
+
+```yaml
+paths:
+  /v2/data/webhooks/subscriptions:
+    post:
+      summary: Create webhook subscription
+      description: >
+        Subscribe to real-time transfer status events.
+
+        ### Event Types
+
+        **Payments Transfers Events** - Transfer lifecycle notifications:
+        - payments.transfers.quoted
+        - payments.transfers.processing
+        - payments.transfers.completed
+        - payments.transfers.failed
+
+        ### Webhook Signature Verification
+        All webhooks include cryptographic signatures for security.
+```
+
+This entire `description` field ends up as the page's `llms.txt` entry description: hundreds of characters of structured Markdown content on a single line.
+</Accordion>
+
+### Suggested fixes
+
+1. Truncate the `description` to a reasonable length (first sentence or ~200 chars) when generating llms.txt. The full content is available in the `.md` file.
+2. Strip Markdown structure (headings, lists, code blocks) from the description before inserting into llms.txt.
+3. Warn during build when an OpenAPI operation `description` exceeds a threshold or contains heading syntax.
+4. `npx mint openapi-check` should flag operations with oversized or Markdown-heavy `description` fields that will produce bloated llms.txt entries.
+
+---
+
+## Bug 3: Internal theme config leaks into code blocks
+
+**Severity:** Low
+
+Every code block in the `.md` output has a `theme=...` directive appended to the info string. This is a Mintlify-internal rendering prop with no meaning in standard Markdown.
+
+### Observed behavior
+
+Source MDX:
+
+````markdown
+```python
+import mylib
+client = mylib.Client(api_key="sk_live_abc123")
+```
+````
+
+Generated `.md` output:
+
+````markdown
+```python Python theme={"system"}
+import mylib
+client = mylib.Client(api_key="sk_live_abc123")
+```
+````
+
+The value changes based on `docs.json` configuration:
+
+- **No codeblocks config:** `theme={null}`
+- **With `"codeblocks": "system"`:** `theme={"system"}`
+
+The generated `.md` also inserts the **language label** (e.g., `Python`) into the info string. Any LLM or tool consuming the `.md` output will see `python Python theme={"system"}` as the code fence info string, which could confuse language detection and parsing.
+
+### How to reproduce
+
+Deploy any Mintlify site with code blocks and check the `.md` output for any page (e.g., `https://your-site.mintlify.app/any-page.md`). Every code block will have `theme={...}` appended.
+
+### Suggested fix
+
+Strip internal theme props before generating `.md` output.
+
+---
+
+## Bug 4: Default-ignored files leak into llms.txt with seo.indexing: all
+
+**Severity:** Medium
+**Active on this site:** Yes (`seo.indexing: "all"` is enabled in `docs.json`)
+
+Mintlify auto-ignores certain files from publishing: `AGENTS.md`, `README.md`, `LICENSE.md`, `CHANGELOG.md`, `CONTRIBUTING.md`, and others. However, setting `seo.indexing: "all"` in `docs.json` overrides this and pulls them into `llms.txt`.
+
+### How to reproduce
+
+1. Add `seo.indexing: "all"` to `docs.json`:
+
+```json
+{
+  "seo": {
+    "indexing": "all"
+  }
+}
+```
+
+2. Have an `AGENTS.md` (or `README.md`, etc.) in your docs directory without YAML frontmatter.
+
+3. Build and deploy. The `llms.txt` will include:
+
+```
+- [null](https://example.com/AGENTS.md)
+```
+
+### What seo.indexing: all does and doesn't do
+
+| Page type | Default | With `seo.indexing: "all"` |
+| --------- | ------- | -------------------------- |
+| Default-ignored files (`AGENTS.md`, `README.md`, etc.) | Excluded from llms.txt | **Included**, often as `[null]` (no frontmatter) |
+| `hidden: true` in frontmatter | Excluded from llms.txt | Still excluded |
+| Hidden nav group (`"hidden": true`) | Excluded from llms.txt | Still excluded |
+| `.mintignore` files | Excluded entirely | Still excluded |
+
+<Accordion title="Additional findings on hidden pages">
+We tested all exclusion mechanisms:
+
+- **`hidden: true` in frontmatter:** Correctly excluded from `llms.txt` in all cases
+- **Hidden navigation group (`"hidden": true` on group):** Correctly excluded from `llms.txt`
+- **`.mintignore`:** Completely excluded from the site (404), but does NOT remove `docs.json` nav entries. You'll get a broken nav link if you reference a `.mintignore`d file in navigation.
+- **`seo.indexing: "all"`:** Only re-includes default-ignored files (like `AGENTS.md`), does NOT override `hidden: true`
+</Accordion>
+
+### Suggested fixes
+
+1. When `seo.indexing: "all"` is enabled, still skip files that lack YAML frontmatter. These are clearly not documentation pages.
+2. Document the side effect: the `seo.indexing: "all"` docs should warn that it re-includes default-ignored files in AI context.
+
+---
+
+## Test site
+
+All bugs were reproduced on `me-8e8b8f86.mintlify.app`. The test site used:
+
+- Mintlify's standard MDX documentation setup
+- An OpenAPI spec with deliberately malformed operations (missing `summary`, empty `summary`, no `description`)
+- MDX pages with `openapi` frontmatter referencing those operations
+- `docs.json` navigation mixing MDX pages and auto-generated OpenAPI pages
+- `hidden: true` frontmatter, hidden navigation groups, and `.mintignore` for exclusion testing
+- `seo.indexing: "all"` to test override behavior
+
+<Accordion title="Reproduction spec">
+A standalone reproduction spec is available at `bugs/openapi-bug-repro.json`. This spec passes `npx mint openapi-check` with no warnings.
+
+```json
+{
+  "openapi": "3.1.0",
+  "info": { "title": "Bug Repro API", "version": "1.0.0" },
+  "paths": {
+    "/plants": {
+      "get": {
+        "description": "Returns all plants from the system that the user has access to",
+        "responses": {
+          "200": { "description": "OK" }
+        }
+      }
+    },
+    "/plants/ghost": {
+      "get": {
+        "responses": {
+          "200": { "description": "OK" }
+        }
+      }
+    },
+    "/plants/minimal": {
+      "get": {
+        "summary": "",
+        "description": "",
+        "responses": {
+          "200": { "description": "OK" }
+        }
+      }
+    }
+  }
+}
+```
+</Accordion>
+

@@ -1,0 +1,33 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Bug Repro API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/plants": {
+      "get": {
+        "description": "Returns all plants from the system that the user has access to",
+        "responses": {
+          "200": { "description": "OK" }
+        }
+      }
+    },
+    "/plants/ghost": {
+      "get": {
+        "responses": {
+          "200": { "description": "OK" }
+        }
+      }
+    },
+    "/plants/minimal": {
+      "get": {
+        "summary": "",
+        "description": "",
+        "responses": {
+          "200": { "description": "OK" }
+        }
+      }
+    }
+  }
+}

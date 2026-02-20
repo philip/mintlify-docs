@@ -2,6 +2,9 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
   "name": "Neon Docs",
+  "seo": {
+    "indexing": "all"
+  },
   "colors": {
     "primary": "#00E599",
     "light": "#00E599",
@@ -1271,6 +1274,26 @@
       {
         "tab": "API Reference",
         "openapi": "https://neon.com/api_spec/release/v2.json"
+      },
+      {
+        "tab": "Bug Repros",
+        "groups": [
+          {
+            "group": "Bug Reports",
+            "pages": [
+              "bugs/llms-txt-bugs"
+            ]
+          },
+          {
+            "group": "Null title bug",
+            "openapi": "bugs/openapi-bug-repro.json",
+            "pages": [
+              "GET /plants",
+              "GET /plants/ghost",
+              "GET /plants/minimal"
+            ]
+          }
+        ]
       }
     ]
   },
