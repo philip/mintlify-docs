@@ -32,7 +32,7 @@ import { authClient } from './auth';
 
 function App() {
   return (
-<NeonAuthUIProvider authClient={authClient}>{/* Your app components */}</NeonAuthUIProvider>
+    <NeonAuthUIProvider authClient={authClient}>{/* Your app components */}</NeonAuthUIProvider>
   );
 }
 ```
@@ -60,7 +60,7 @@ import { authClient } from './auth';
 
 function App() {
   return (
-<NeonAuthUIProvider
+    <NeonAuthUIProvider
       authClient={authClient}
       social={{
         providers: ['google', 'github', 'vercel'], // Enable Google, GitHub, and Vercel sign-in
@@ -87,7 +87,7 @@ function App() {
   const navigate = useNavigate();
 
   return (
-<NeonAuthUIProvider
+    <NeonAuthUIProvider
       authClient={authClient}
       navigate={navigate}
       Link={RouterLink}
@@ -202,8 +202,7 @@ import { AuthView } from '@neondatabase/neon-js/auth/react/ui';
 import '@neondatabase/neon-js/ui/css';
 
 function App() {
-  return 
-<AuthView pathname="sign-in" />;
+  return <AuthView pathname="sign-in" />;
 }
 ```
 
@@ -216,7 +215,7 @@ import { authClient } from './auth';
 function Header() {
   return (
     <header>
-<UserButton authClient={authClient} />
+      <UserButton authClient={authClient} />
     </header>
   );
 }

@@ -176,7 +176,7 @@ import { authClient } from '../auth';
 
 export const Route = createRootRoute({
   component: () => (
-<NeonAuthUIProvider authClient={authClient}>
+    <NeonAuthUIProvider authClient={authClient}>
       <Outlet />
       <TanStackDevtools
         config={{
@@ -226,7 +226,7 @@ function Auth() {
         minHeight: '100vh',
       }}
     >
-<AuthView pathname={pathname} />
+      <AuthView pathname={pathname} />
     </div>
   );
 }
@@ -315,7 +315,7 @@ function Home() {
           <div style={{ textAlign: 'center' }}>
             <h1>Welcome!</h1>
             <p>You're successfully authenticated.</p>
-<UserButton />
+            <UserButton />
             <p className="font-medium text-gray-700 dark:text-gray-200 mt-4">
               Session and User Data:
             </p>

@@ -159,7 +159,7 @@ import { authClient } from './auth';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-<NeonAuthUIProvider authClient={authClient}>
+    <NeonAuthUIProvider authClient={authClient}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
@@ -213,7 +213,7 @@ function Home() {
           <div style={{ textAlign: 'center' }}>
             <h1>Welcome!</h1>
             <p>You're successfully authenticated.</p>
-<UserButton />
+            <UserButton />
           </div>
         </div>
       </SignedIn>
@@ -234,7 +234,7 @@ function Auth() {
         padding: '2rem 1rem',
       }}
     >
-<AuthView pathname={pathname} />
+      <AuthView pathname={pathname} />
     </div>
   );
 }

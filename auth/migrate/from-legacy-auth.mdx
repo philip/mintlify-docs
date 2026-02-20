@@ -138,8 +138,7 @@ export default function SignInPage() {
 import { AuthView } from '@neondatabase/auth/react';
 
 export default function SignInPage() {
-  return 
-<AuthView pathname="sign-in" />;
+  return <AuthView pathname="sign-in" />;
 }
 ```
 
@@ -164,8 +163,7 @@ export default function SignUpPage() {
 import { AuthView } from '@neondatabase/auth/react';
 
 export default function SignUpPage() {
-  return 
-<AuthView pathname="sign-up" />;
+  return <AuthView pathname="sign-up" />;
 }
 ```
 
@@ -182,8 +180,7 @@ You swap the dedicated `<SignUp />` component for the same `AuthView` component,
 import { UserButton } from '@stackframe/stack';
 
 export function Header() {
-  return 
-<UserButton />;
+  return <UserButton />;
 }
 ```
 
@@ -191,8 +188,7 @@ export function Header() {
 import { UserButton } from '@neondatabase/auth/react';
 
 export function Header() {
-  return 
-<UserButton />;
+  return <UserButton />;
 }
 ```
 
@@ -261,7 +257,7 @@ export default function RootLayout({ children }) {
   const router = useRouter();
 
   return (
-<NeonAuthUIProvider
+    <NeonAuthUIProvider
       authClient={authClient}
       navigate={router.push}
       replace={router.replace}
@@ -501,8 +497,7 @@ import '@neondatabase/auth/ui/css';
 import { authClient } from './auth';
 
 function App() {
-  return 
-<NeonAuthUIProvider authClient={authClient}>{/* Your app */}</NeonAuthUIProvider>;
+  return <NeonAuthUIProvider authClient={authClient}>{/* Your app */}</NeonAuthUIProvider>;
 }
 ```
 
@@ -523,8 +518,7 @@ Delete any `StackHandler` routes. Create custom pages for sign-in and sign-up us
 import { AuthView } from '@neondatabase/auth/react';
 
 export default function SignIn() {
-  return 
-<AuthView pathname="sign-in" />;
+  return <AuthView pathname="sign-in" />;
 }
 ```
 
@@ -544,7 +538,7 @@ function App() {
   const navigate = useNavigate();
 
   return (
-<NeonAuthUIProvider authClient={authClient} navigate={navigate} Link={Link}>
+    <NeonAuthUIProvider authClient={authClient} navigate={navigate} Link={Link}>
       {/* Your app */}
     </NeonAuthUIProvider>
   );

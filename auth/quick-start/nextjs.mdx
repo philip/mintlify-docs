@@ -286,7 +286,7 @@ export default function RootLayout({
           emailOTP // [!code ++]
         > // [!code ++]
           <header className='flex justify-end items-center p-4 gap-4 h-16'> // [!code ++]
-<UserButton size="icon" /> // [!code ++]
+            <UserButton size="icon" /> // [!code ++]
           </header> // [!code ++]
           {children} // [!code ++]
         </NeonAuthUIProvider> // [!code ++]
@@ -362,7 +362,7 @@ export default async function AuthPage({ params }: { params: Promise<{ path: str
 
   return (
     <main className="container mx-auto flex grow flex-col items-center justify-center gap-3 self-center p-4 md:p-6">
-<AuthView path={path} />
+      <AuthView path={path} />
     </main>
   );
 }
