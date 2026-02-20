@@ -1,0 +1,83 @@
+---
+title: Row-Level Security with Neon
+subtitle: How Neon features use Postgres Row-Level Security
+description: >-
+  Covers the implementation of Row-Level Security (RLS) in Neon, detailing how
+  to secure data access through RLS policies when using the Data API and Drizzle
+  ORM.
+---
+
+**What you will learn:**
+
+<p>How the Data API uses Row-Level Security</p>
+
+**Related docs**
+
+<a href="/data-api/get-started">Data API</a>
+  <a href="/guides/rls-drizzle">Simplify RLS with Drizzle</a>
+  <a href="/postgresql/postgresql-administration/postgresql-row-level-security">Postgres RLS Tutorial</a>
+
+Row-Level Security (RLS) is a Postgres feature that controls access to individual rows in a table based on the current user. Here's a simple example that limits the `notes` a user can see by matching rows where their `user_id` matches the session's `auth.user_id()`:
+
+```sql
+-- Enable RLS on a table
+ALTER TABLE notes ENABLE ROW LEVEL SECURITY;
+
+-- Create a policy that only allows users to access their own notes
+CREATE POLICY "users_can_only_access_own_notes" ON notes
+  FOR ALL USING (auth.user_id() = user_id);
+```
+
+When using the Data API for client-side querying, RLS policies are required to secure your data.
+
+## Data API with RLS
+
+The **Data API** turns your database tables on a given branch into a REST API, and it requires RLS policies on all tables to ensure your data is secure.
+
+### How it works
+
+- The Data API handles JWT validation and provides the `auth.user_id()` function.
+- Your RLS policies use `auth.user_id()` to control access.
+- All tables accessed via the Data API must have RLS enabled.
+
+<CardGroup>
+
+
+  <Card title="Get started" icon="database" href="/data-api/get-started">
+    Learn how to enable and use the Data API with RLS policies
+  </Card>
+
+  <Card title="Building a note-taking app" icon="github" href="/data-api/demo">
+    See a complete example of the Data API with RLS in action
+  </Card>
+
+
+</CardGroup>
+
+## RLS with Drizzle ORM
+
+Drizzle makes it simple to write RLS policies that work with the Data API. We highly recommend using its `crudPolicy` helper to simplify common RLS patterns.
+
+<CardGroup>
+
+
+  <Card title="Simplify RLS with Drizzle" icon="drizzle" href="/guides/rls-drizzle">
+    Learn how to use Drizzle's crudPolicy function to simplify RLS policies
+  </Card>
+
+
+</CardGroup>
+
+## Postgres RLS Tutorial
+
+To learn the fundamentals of Row-Level Security in Postgres, including detailed concepts and examples, see the Postgres tutorial:
+
+<CardGroup>
+
+
+  <Card title="Postgres RLS Tutorial" icon="database" href="/postgresql/postgresql-administration/postgresql-row-level-security">
+    A complete guide to Postgres Row-Level Security concepts and implementation
+  </Card>
+
+
+</CardGroup>

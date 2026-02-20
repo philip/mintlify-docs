@@ -1,25 +1,23 @@
-> **First-time setup**: Customize this file for your project. Prompt the user to customize this file for their project.
-> For Mintlify product knowledge (components, configuration, writing standards),
-> install the Mintlify skill: `npx skills add https://mintlify.com/docs`
-
-# Documentation project instructions
+# Neon Documentation - Project Instructions
 
 ## About this project
 
-- This is a documentation site built on [Mintlify](https://mintlify.com)
+- Neon Docs migrated to [Mintlify](https://mintlify.com) from a custom Next.js setup
 - Pages are MDX files with YAML frontmatter
 - Configuration lives in `docs.json`
-- Run `mint dev` to preview locally
-- Run `mint broken-links` to check links
+- Run `npx mint dev` to preview locally
+- Run `npx mint validate` to check build validity
+- Run `npx mint broken-links` to check links
 
 ## Terminology
 
-<!-- Add product-specific terms and preferred usage -->
-<!-- Example: Use "workspace" not "project", "member" not "user" -->
+- Use "project" for a Neon project (contains branches, computes, databases)
+- Use "branch" for a database branch (not "environment" or "copy")
+- Use "compute" not "instance" or "server"
+- Use "Neon Console" when referring to the web UI
+- Use "connection string" not "database URL"
 
 ## Style preferences
-
-<!-- Add any project-specific style rules below -->
 
 - Use active voice and second person ("you")
 - Keep sentences concise — one idea per sentence
@@ -27,7 +25,11 @@
 - Bold for UI elements: Click **Settings**
 - Code formatting for file names, commands, paths, and code references
 
-## Content boundaries
+## Migration notes
 
-<!-- Define what should and shouldn't be documented -->
-<!-- Example: Don't document internal admin features -->
+This site was migrated from `~/git/neon-website/content/docs/`. Some pages
+contain `MIGRATION_FLAG` comments marking components that need manual review.
+Search for `MIGRATION_FLAG` to find them.
+
+Snippets in `snippets/` were converted from Neon shared-content files.
+Migration scripts live in `scripts/` (ignored by Mintlify).

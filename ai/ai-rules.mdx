@@ -1,0 +1,109 @@
+---
+title: AI rules and prompts
+subtitle: Enhance your AI development experience with Neon-specific context rules
+description: >-
+  Covers the setup of AI context rules for Neon, including installation
+  instructions for Claude Code and Cursor plugins plus individual context rule
+  files for other AI tools, enhancing code suggestions and reducing errors.
+---
+
+Boost your productivity with AI context rules for Neon. These rules help AI assistants understand Neon's features, leading to more accurate code suggestions and fewer common mistakes.
+
+If you're using **Claude Code** or **Cursor**, install the Neon plugin to bundle Skills and MCP integration in one package. For other AI tools, use the individual `.mdc` context rule files.
+
+<Note title="AI Rules are in Beta">
+AI Rules are currently in beta. We're actively improving them and would love to hear your feedback. Join us on [Discord](https://discord.gg/92vNTzKDGp) to share your experience and suggestions.
+</Note>
+
+## Plugin install
+
+If you're using Claude Code or Cursor, install a Neon plugin to get Skills and MCP integration:
+
+<CardGroup>
+
+
+  <Card title="Claude Code plugin for Neon" icon="github" href="/ai/ai-claude-code-plugin">
+    Install the Neon Claude Code plugin to give Claude access to Neon's APIs, Postgres workflows, and built-in Skills
+  </Card>
+  <Card title="Cursor plugin for Neon" icon="github" href="/ai/ai-cursor-plugin">
+    Install the Neon Cursor plugin to use Neon Skills and Neon MCP integration directly in Cursor
+  </Card>
+
+
+</CardGroup>
+
+## Individual AI rules
+
+For other AI tools like Cursor, you can use these individual `.mdc` context rule files. Copy them to your AI tool's custom rules directory; the format is tool-agnostic and works with any AI assistant that supports context rules.
+
+<CardGroup>
+
+
+  <Card title="Neon Auth" icon="lock-landscape" href="/ai/ai-rules-neon-auth">
+    AI rules for implementing authentication with Neon
+  </Card>
+
+  <Card title="Neon Serverless Driver" icon="network" href="/ai/ai-rules-neon-serverless">
+    AI rules for serverless database connections
+  </Card>
+
+  <Card title="Neon Drizzle" icon="drizzle" href="/ai/ai-rules-neon-drizzle">
+    AI rules for using Drizzle ORM with Neon
+  </Card>
+
+  <Card title="Neon API TypeScript SDK" icon="code" href="/ai/ai-rules-neon-typescript-sdk">
+    AI rules for using the Neon API TypeScript SDK
+  </Card>
+
+  <Card title="Neon Python SDK" icon="code" href="/ai/ai-rules-neon-python-sdk">
+    AI rules for using the Neon Python SDK
+  </Card>
+
+  <Card title="Neon API" icon="code" href="/ai/ai-rules-neon-api">
+    AI rules for using the Neon API
+  </Card>
+
+  <Card title="Neon Toolkit" icon="database" href="/ai/ai-rules-neon-toolkit">
+    AI rules for using the Neon Toolkit
+  </Card>
+
+
+</CardGroup>
+
+## How it works
+
+AI rules are `.mdc` files that specify which types of files they apply to (such as `*.tsx` or `schema.sql`). When you're working with a matching file, your AI tool automatically applies the relevant rules to provide better suggestions.
+
+### Example: AI rules in action
+
+Here's a practical example using [Cursor](https://www.cursor.so). A developer has implemented authentication in their server-rendered page and wants to confirm best practices:
+
+**Developer query**: _"Using the neon-auth.mdc rule, how do I secure a server-rendered page?"_
+
+![Screenshot of Cursor applying the neon-auth.mdc rule](/images/docs/ai/ai-rules.png)
+
+The AI confirms that using `stackServerApp.getUser({ or: "redirect" })` is the correct approach for server-side authentication, providing additional context and explanation.
+
+## Add rules to your project
+
+All `.mdc` files are available in the [Neon AI Rules toolkit repository](https://github.com/neondatabase-labs/ai-rules). Copy the files you need to your project's `.cursor/rules` folder (or your AI tool's equivalent):
+
+```text
+.cursor/
+  rules/
+    neon-auth.mdc
+    neon-serverless.mdc
+    neon-drizzle.mdc
+    neon-toolkit.mdc
+    neon-typescript-sdk.mdc
+    neon-python-sdk.mdc
+    neon-api-guidelines.mdc
+    neon-api-projects.mdc
+    neon-api-branches.mdc
+    neon-api-endpoints.mdc
+    neon-api-organizations.mdc
+    neon-api-keys.mdc
+    neon-api-operations.mdc
+```
+
+Most AI tools will automatically apply these rules when you're working with Neon-related code. You can also reference them explicitly in prompts for more targeted assistance.

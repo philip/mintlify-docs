@@ -1,0 +1,538 @@
+---
+title: "Changelog"
+description: "Product updates and announcements"
+rss: true
+---
+
+<Update label="February 13, 2026" description="Add org members by domain, Neon MCP Server updates, and the Compute Autoscaling Report">
+
+## Add organization members by domain
+
+You can now add members to your organization by email domain. Organization admins can add and verify one or more domains (for example, `yourcompany.com`) in your Neon organization **Settings**, under **Domains**.
+
+When a user signs up or logs in to Neon with an email that matches a verified domain, they're automatically added to your Neon organization as a Member, no invite email required. They see your organization in the org switcher in the Neon Console.
+
+This is useful for teams that want everyone within the company email domain to have access without needing to send individual invites. You simply add your domain in the Neon Console, add a TXT record at your DNS provider to verify ownership, then click **Verify** in the Neon Console.
+
+![Domain section on the Organization Settings page](/images/docs/changelog/org_domains.png)
+
+Colleagues who already have Neon accounts are added to the organization the next time they log in. For the full flow and behavior (roles, multiple domains), see [Add members by domain](/manage/orgs-add-members-by-domain).
+
+## Neon MCP Server updates
+
+This week's Neon MCP Server release brings new tools for pulling Neon documentation and setup guidance into your development environment, plus a new guide for connecting [Google Jules](https://jules.google.com) to the Neon MCP Server.
+
+**New documentation retrieval tools**
+
+The MCP Server now includes two tools so your AI agent or MCP client can fetch Neon docs on demand:
+
+- **`list_docs_resources`** – Lists all available Neon documentation pages from the docs index. Returns page URLs and titles so you can choose which page to load.
+- **`get_doc_resource`** – Fetches a specific Neon documentation page as markdown. Use `list_docs_resources` first to discover page slugs, then pass the slug to this tool to load the content.
+
+Together, these tools let your agent or assistant look up setup, configuration, and how-to content from the Neon docs without leaving the chat.
+
+**Neon MCP Server on Google Jules**
+
+The Neon MCP Server is now available in [Google Jules](https://jules.google.com), Google's AI-powered coding assistant. Create a Neon API key, add the server in Jules settings, and you're set. Full setup steps are in [Connect MCP clients to Neon](/ai/connect-mcp-clients-to-neon#jules).
+
+![Neon MCP Server in Google Jules](/images/docs/changelog/jules_mcp.png)
+
+## Compute Autoscaling Report
+
+We've published a [Compute Autoscaling Report](https://neon.com/autoscaling-report) that breaks down how Neon's autoscaling compute compares to provisioned, fixed compute sizes, based on real production workloads that run on Neon.
+
+<Info title="Key Findings">
+- Production databases on Neon use 2.4x less compute and 50% less cost than if they were running on provisioned, fixed compute sizes.
+- Putting the same production workloads on provisioned, fixed compute sizes would result in 55 performance degradations per database per month.
+- Read replicas on Neon use 4x less compute than if they were running on provisioned, fixed compute sizes.
+- Running the same small scale-to-zero workloads on provisioned, fixed compute sizes would cost 7.5x more.
+</Info>
+
+The report walks through what happens when you use provisioned, fixed compute sizes vs. autoscaling compute, and how that impacts cost and performance. If you've ever wondered how much autoscaling actually saves you (or how it behaves under real traffic), the report lays it out with real data and the full methodology.
+
+![Autoscaling report graph](/images/docs/changelog/autoscaling_report_image.png)
+
+To learn more about Neon's autoscaling feature and how to enable it for your projects, see [Autoscaling](/introduction/autoscaling).
+
+## Custom API key header for OpenTelemetry
+
+You can now specify a custom header name for API key authentication when configuring OpenTelemetry integrations. The header defaults to `X-API-Key` if not specified. This makes it easier to integrate with services like Honeycomb that expect a different header name for API keys.
+
+![OpenTelemetry custom header name configuration](/images/docs/changelog/otel_custom_header.png)
+
+</Update>
+
+<Update label="February 6, 2026" description="Track usage programmatically, simpler MCP Server setup, and new PG18 extension support">
+
+## Track your usage programmatically on paid plans
+
+A new consumption history API for current usage-based plans is now available on all paid plans, including Launch. The metrics returned align directly with [usage-based billing](/introduction/plans), so what you query matches what you see on your invoice.
+
+Use this API to build custom dashboards, integrate with your reporting tools, or set up usage alerts. Query at hourly, daily, or monthly granularity for metrics like compute usage, storage (root and child branches), instant restore, data transfer, and extra branches.
+
+This example retrieves month-to-date usage for all metrics:
+
+```bash
+curl --request GET \
+     --url 'https://console.neon.tech/api/v2/consumption_history/v2/projects?from=2026-02-01T00:00:00Z&to=2026-02-06T00:00:00Z&granularity=daily&org_id=$ORG_ID&metrics=compute_unit_seconds,root_branch_bytes_month,child_branch_bytes_month,instant_restore_bytes_month,public_network_transfer_bytes,private_network_transfer_bytes,extra_branches_month' \
+     --header 'Accept: application/json' \
+     --header 'Authorization: Bearer $NEON_API_KEY' | jq
+```
+
+For API details, see [Retrieve project consumption metrics](https://api-docs.neon.tech/reference/getconsumptionhistoryperprojectv2). For more information, see [Querying consumption metrics](/guides/consumption-metrics).
+
+**Try it with your AI agent:**
+
+<Prompt description="Copy this prompt to have an AI assistant help you build the curl command for your desired time period." actions={["copy", "cursor"]}>
+Help me build a curl command to query my Neon usage using the Consumption History API for usage-based plans.
+
+IMPORTANT: Use the correct API endpoint for usage-based plans, NOT the legacy endpoint.
+- Usage-based plans: /api/v2/consumption_history/v2/projects — for Launch, Scale, Agent, and Enterprise plans
+- Legacy plans: /api/v2/consumption_history/projects — do NOT use for usage-based plans
+
+Ask me what time period I want to query (see examples below), then generate a curl command with these placeholders that I'll replace when I run it:
+- $NEON_API_KEY — my API key (create at https://console.neon.tech/app/settings/api-keys)
+- $ORG_ID — my organization ID (found in Organization Settings in the Neon Console)
+
+API endpoint: GET https://console.neon.tech/api/v2/consumption_history/v2/projects
+
+Required parameters:
+- from: Start date-time in ISO 8601 format (e.g., 2026-02-01T00:00:00Z)
+- to: End date-time in ISO 8601 format
+- granularity: One of "hourly", "daily", or "monthly"
+- org_id: My organization ID
+- metrics: compute_unit_seconds,root_branch_bytes_month,child_branch_bytes_month,instant_restore_bytes_month,public_network_transfer_bytes,private_network_transfer_bytes,extra_branches_month
+
+Granularity constraints:
+- hourly: max 168 hours (7 days)
+- daily: max 60 days
+- monthly: max 12 months
+
+Example time period requests:
+- "Month to date" — from the 1st of this month to today
+- "Last 7 days" — from 7 days ago to today
+- "Last 24 hours" — hourly breakdown for the past day
+- "Year to date" — from January 1 to today (use monthly granularity)
+
+Please ask me what time period I want to query, then generate the complete curl command with $NEON_API_KEY and $ORG_ID as placeholders.
+</Prompt>
+
+## Simpler MCP Server setup
+
+You can now configure the Neon MCP Server for all detected AI agents and editors in your workspace with a single command:
+
+```bash
+npx add-mcp https://mcp.neon.tech/mcp
+```
+
+This adds the MCP config to your editor; restart your editor (or enable the MCP server in settings). When you use the connection, an OAuth window will open in your browser to authorize access. For the full setup (MCP server plus agent skills and VS Code extension), use `npx neonctl@latest init` instead. It configures the MCP server for Cursor, VS Code, Claude Code, and others using API key authentication.
+
+With OAuth, the MCP server uses your personal Neon account by default. To use organization projects, provide `org_id` or `project_id` in your prompt. For API key-based authentication (e.g., remote agents), use:
+
+```bash
+npx add-mcp https://mcp.neon.tech/mcp --header "Authorization: Bearer $NEON_API_KEY"
+```
+
+For more setup options (including global vs project-level), see [Connect MCP clients to Neon](/ai/connect-mcp-clients-to-neon) and the [add-mcp repository](https://github.com/neondatabase/add-mcp).
+
+## Postgres extension updates
+
+We've expanded extension support for Postgres 18:
+
+| Extension                                         | Version | Description                                                                 |
+| :------------------------------------------------ | :------ | :-------------------------------------------------------------------------- |
+| [pg_graphql](/extensions/pg_graphql)         | 1.5.12  | Adds a GraphQL API layer directly to your Postgres database                 |
+| [pgx_ulid](https://github.com/pksunkara/pgx_ulid) | 0.2.2   | Generates universally unique lexicographically sortable identifiers (ULIDs) |
+
+To install these extensions, run:
+
+```sql
+CREATE EXTENSION pg_graphql;
+CREATE EXTENSION pgx_ulid;
+```
+
+For a complete list of Postgres extensions supported by Neon, see [Postgres extensions](/extensions/pg-extensions).
+
+<AccordionGroup>
+<Accordion title="Neon API">
+You can now set your project's default branch using the [Update Project API](https://api-docs.neon.tech/reference/updateproject) by passing the `default_branch_id` parameter. This makes it easier to automate branch management in CI/CD pipelines and scripts, for example, after a recovery operation or when promoting a development branch to production. The previous default branch is automatically unset.
+
+```bash
+curl --request PATCH \
+     --url 'https://console.neon.tech/api/v2/projects/{project_id}' \
+     --header 'Authorization: Bearer $NEON_API_KEY' \
+     --header 'Content-Type: application/json' \
+     --data '{"project": {"default_branch_id": "br-example-123456"}}'
+```
+</Accordion>
+<Accordion title="Tables page">
+The Drizzle Studio integration that powers the **Tables** page in the Neon Console has been updated to version 1.3.0. This release fixes issues with uppercase letters in enum column types and adding foreign keys. For the full list of improvements, see the [Neon Drizzle Studio Integration Changelog](https://github.com/neondatabase/neon-drizzle-studio-changelog/blob/main/CHANGELOG.md).
+
+*The **Tables** page lets you view, edit, and manage your database tables and data directly from the console. For more, see [Tables page](/guides/tables).*
+</Accordion>
+</AccordionGroup>
+
+</Update>
+
+<Update label="January 30, 2026" description="Neon Auth SDK simplified, Instagres REST API, and more">
+
+## Neon Auth SDK simplified
+
+We've released a major update to the server-side Neon Auth SDK (`@neondatabase/auth/next/server`) for Next.js applications.
+
+**Unified entry point**
+
+The SDK now uses a single `createNeonAuth()` function that replaces the previous separate functions (`neonAuth()`, `authApiHandler()`, `neonAuthMiddleware()`, `createAuthServer()`). Configure authentication once and access all functionality from a single object:
+
+```typescript
+// lib/auth/server.ts
+import { createNeonAuth } from '@neondatabase/auth/next/server';
+
+export const auth = createNeonAuth({
+  baseUrl: process.env.NEON_AUTH_BASE_URL!,
+  cookies: { secret: process.env.NEON_AUTH_COOKIE_SECRET! },
+});
+
+// Use everywhere in your app
+export const { GET, POST } = auth.handler();           // API routes
+export default auth.middleware({ loginUrl: '...' });   // Middleware
+const { data: session } = await auth.getSession();     // Server components
+await auth.signIn.email({ email, password });          // Server actions
+```
+
+**Explicit configuration**
+
+Configuration is now explicit rather than implicit. You must pass `baseUrl` and `cookies.secret` directly to `createNeonAuth()` instead of relying on automatic environment variable reading, making dependencies clear and eliminating "magic" behavior.
+
+**Session caching**
+
+Session data is now automatically cached in a signed cookie, reducing API calls to the Auth Server by 95-99%. Sessions are cached for 5 minutes by default (configurable) and automatically refresh as needed.
+
+**Breaking changes**
+
+This release includes breaking changes. If you're using Neon Auth and want to upgrade to the latest SDK version, you will need to update your application code. Key changes include replacing separate auth functions with the unified `createNeonAuth()` API, adding a required `NEON_AUTH_COOKIE_SECRET` environment variable, and adding `dynamic = 'force-dynamic'` to server components that use auth methods.
+
+For detailed migration instructions, see the [migration guide](/auth/migrate/from-auth-v0.1). For complete API documentation, see the [Next.js Server SDK reference](/auth/reference/nextjs-server).
+
+**Getting started**
+
+To see the latest SDK in action, check out the [demo applications](https://github.com/neondatabase/neon-js/tree/main/examples), including a Next.js demo with server components, a React + Vite demo with external UI, and a React demo with the full `neon-js` SDK. The repository also includes [AI coding assistant skills](https://github.com/neondatabase/neon-js/tree/main/skills) for Cursor and Claude Code with updated setup guides and code examples. See the [Neon Auth quickstart guide](/auth/quick-start/nextjs) and [Server SDK reference](/auth/reference/nextjs-server) to get started.
+
+*Neon Auth is a managed authentication service that branches with your database. See the [Neon Auth overview](/auth/overview) to learn more.*
+
+## Instagres adds REST API
+
+[Instagres](https://instagres.com/) now offers a REST API for programmatic database provisioning, making it easy to integrate Postgres into your platform, CI/CD pipelines, testing frameworks, and automation workflows.
+
+The new API enables you to create databases with a single HTTP request:
+
+```bash
+curl -X POST https://instagres.com/api/v1/database \
+  -H 'Content-Type: application/json' \
+  -d '{"ref": "your-app-name"}'
+```
+
+The API returns the ID, status, Neon project ID, connection string, claim URL, expiration timestamp, and creation/update timestamps. You can also retrieve database details using `GET /api/v1/database/:id`. Unclaimed databases have a 100 MB storage limit and expire after 72 hours. Claim your database to a Neon account to remove the expiration and get full Free plan limits.
+
+The `get-db` CLI also adds a new `--logical-replication` flag to enable logical replication for real-time sync with tools like [ElectricSQL](https://electric-sql.com/).
+
+*Instagres provides instant cloud-hosted Postgres that spins up in seconds. No signup or registration required. See the [Instagres documentation](/reference/instagres) for more information.*
+
+## New NAT gateway IP addresses
+
+We've added new NAT gateway IP addresses in the AWS US East (N. Virginia), US East (Ohio), and US West (Oregon) regions to expand infrastructure capacity. If you have IP allowlists on external systems that Neon connects to, **update those allowlists to include the new addresses**. Connections may be affected intermittently if traffic routes through non-allowlisted NAT gateways.
+
+See our [Regions documentation](/introduction/regions#aws-nat-gateway-ip-addresses) for the complete list of NAT gateway IPs for all regions.
+
+## New VPC endpoint services for Private Networking
+
+We've added new VPC endpoint service addresses for Private Networking in the AWS US East (N. Virginia), US East (Ohio), and US West (Oregon) regions. If you've set up Private Networking in these regions, you can now use the additional endpoint service addresses for enhanced infrastructure capacity and reliability.
+
+For the complete list of VPC endpoint service addresses by region, see our [Private Networking guide](/guides/neon-private-networking).
+
+<AccordionGroup>
+<Accordion title="Data anonymization">
+You can now anonymize columns that are part of primary keys when creating [anonymized branches](/workflows/data-anonymization). Neon automatically handles foreign key constraints during the anonymization process, ensuring referential integrity is maintained across related tables.
+</Accordion>
+<Accordion title="Neon CLI">
+The `neon init` command now requires authentication before running. If you're not already authenticated, the CLI will automatically open your browser to log in. Additionally, `neon init` now installs agent skills from the [Neon skills repository](https://github.com/neondatabase/agent-skills) for Cursor, Claude, and Copilot, providing AI agent capabilities for database development workflows.
+
+To access these new features, upgrade to the latest version of the Neon CLI (version 2.20.2). For upgrade instructions, see [Neon CLI upgrade](/reference/cli-install#upgrade).
+</Accordion>
+<Accordion title="Neon MCP Server">
+The `provision_neon_auth` tool in the [Neon MCP Server](/ai/ai-mcp-neon) is now idempotent and returns your Neon Auth configuration details (base URL and JWKS URL) even when Neon Auth is already provisioned. This makes it easier to retrieve your authentication configuration without needing to make separate API calls.
+</Accordion>
+<Accordion title="Neon Skills">
+You can now install Neon agent skills as a Claude Code plugin, which bundles both the skills and the Neon MCP Server for natural language database management. See [Neon Agent Skills](https://github.com/neondatabase/agent-skills).
+
+```bash
+/plugin marketplace add neondatabase/agent-skills
+/plugin install using-neon@neon-agent-skills
+```
+
+*Agent Skills are resources that AI agents can discover and reference to help you work more accurately and efficiently with Neon.*
+</Accordion>
+<Accordion title="Neon VS Code Extension">
+The [Neon VS Code Extension](/local/vscode-extension) now automatically focuses on the Databases view after connecting to a branch, making it easier to immediately see your database schema and objects. The extension also includes performance improvements with smart caching and background data refresh for faster load times. Upgrade to the latest version to access these improvements.
+</Accordion>
+<Accordion title="OpenTelemetry integration">
+The [OpenTelemetry monitoring integration](/guides/opentelemetry) now validates gRPC OTLP endpoints when configuring an integration. Previously, only HTTP/HTTPS endpoints were validated before saving the configuration.
+</Accordion>
+<Accordion title="SQL Editor">
+Added a copy button to the [SQL Editor](/get-started-with-neon/query-with-neon-sql-editor) that lets you copy query results as JSON directly to your clipboard without downloading a file. The copy button appears alongside the download button in the query results view.
+
+![copy json SQL Editor](/images/docs/changelog/copy_json.png)
+</Accordion>
+<Accordion title="Fixes">
+- Fixed an issue in the Neon consumption history API endpoint that caused errors when retrieving project consumption data.
+- Fixed an issue where deleting a Postgres role would fail if the role had been granted specific privileges (such as SELECT or INSERT) by another role. Role deletion now properly revokes all individual privileges before removing the role, ensuring successful deletion in all scenarios.
+</Accordion>
+</AccordionGroup>
+
+</Update>
+
+<Update label="January 23, 2026" description="Agent Skills, Data API provisioning, and faster docs">
+
+## Give your AI assistant Neon expertise
+
+Install our [Agent Skills](https://github.com/neondatabase/agent-skills) to teach your AI coding assistant about Neon best practices, connection methods, ORM setup, and branching workflows. Works across Claude Code, Cursor, VS Code, and other AI tools.
+
+```bash
+npx skills add neondatabase/agent-skills
+```
+
+Agent Skills work alongside the [Neon MCP Server](/ai/connect-mcp-clients-to-neon). The skill provides reasoning and guidance while the MCP server provides capabilities like creating branches and running queries. Learn more in our [blog post on Agent Skills](https://neon.com/blog/agent-skills-in-2026).
+
+### MCP Server provisions Data API
+
+The [Neon MCP Server](/ai/neon-mcp-server) now supports provisioning the [Neon Data API](/data-api/overview) for your databases with optional JWT authentication. Ask your AI assistant:
+
+```
+Can you provision Data API access for my database with Neon Auth authentication?
+```
+
+The `provision_neon_data_api` tool enables HTTP-based access to your Neon databases and supports multiple authentication options: unauthenticated access, Neon Auth, or external providers (Clerk, Auth0, Stytch, and others). This makes it easier to set up [Data API](/data-api/overview) access directly from your AI assistant without switching to the Neon Console.
+
+To get started with the Neon MCP Server, run `npx neonctl@latest init` to install and configure it automatically. Learn more in [Neon MCP Server](/ai/neon-mcp-server).
+
+## Postgres protocol 3.2 support
+
+Neon now supports [Postgres 18's protocol 3.2](https://www.postgresql.org/docs/current/protocol-overview.html#PROTOCOL-VERSIONS) with enhanced cancellation keys. This protocol support applies retroactively to all Postgres versions (14, 15, 16, 17, and 18). Clients that support the new protocol will automatically benefit from these improvements without any configuration changes needed.
+
+## Get started with Neon faster
+
+We've added quick actions to the [Neon docs](/introduction). Everything you need to go from docs to working code is now just a click away.
+
+Quick actions available on every doc page:
+
+- Copy page as markdown
+- Open in ChatGPT or Claude
+- Copy `neon init` command for MCP Server setup
+- Connect MCP on Cursor or VS Code
+
+Here are a couple of examples — over 30 framework-specific prompts are available on the [documentation homepage](/index):
+
+<Prompt description="Connect **Next.js** to Neon Postgres" actions={["copy", "cursor"]}>
+You are an expert software agent specializing in TypeScript and the Next.js framework. Your task is to configure the current Next.js project to connect to a Neon Postgres database, demonstrating modern data fetching and mutation patterns.
+
+Scope:
+- Must be run inside an existing Next.js App Router project directory.
+- Assumes the user has a Neon project and access to their full connection string.
+
+Steps:
+1. Prompt the user to select a PostgreSQL driver: @neondatabase/serverless (recommended), postgres (postgres.js), or pg (node-postgres).
+2. Install the selected driver.
+3. Configure DATABASE_URL in .env.local (prompt user for their Neon connection string).
+4. Create a centralized database module at app/lib/db.ts.
+5. Create examples: Server Component (app/page.tsx), Server Action (app/action/page.tsx), API Route (app/api/version/route.ts).
+6. Start the dev server and verify all three patterns work.
+
+Do not hardcode credentials. Do not output the user's connection string. Apply changes directly to the codebase.
+</Prompt>
+
+<Prompt description="Connect **Django** to Neon Postgres" actions={["copy", "cursor"]}>
+You are an expert software agent responsible for configuring the current Django project to connect to a Neon Postgres database.
+
+Steps:
+1. Install required packages: psycopg2-binary (or psycopg[binary]), dj-database-url, python-dotenv.
+2. Configure DATABASE_URL in .env (prompt user for their Neon connection string from Neon Console → Connect).
+3. Update settings.py to load DATABASE_URL using dj-database-url and python-dotenv.
+4. Create a sample Django app with a model, view, and URL pattern to verify the connection.
+5. Run migrations and start the dev server.
+
+Do not hardcode credentials. Do not output the user's connection string. Apply changes directly to the codebase.
+</Prompt>
+
+<AccordionGroup>
+<Accordion title="Consumption API">
+We increased the burst limit for our [Consumption API](/guides/consumption-metrics) endpoints. The higher limit allows for temporary spikes in request volume, making it easier to handle periods of high activity without hitting rate limits.
+
+*The Consumption API lets Neon Scale and Enterprise plan users track resource usage (compute time, storage, data transfer) across projects programmatically.*
+</Accordion>
+<Accordion title="Import Data Assistant">
+Fixed an issue where the [Import Data Assistant](/import/import-data-assistant) would get stuck after creating a new project, preventing users from completing their database import.
+
+*The Import Data Assistant, available from the Neon Console, helps you move an existing Postgres database to Neon using just a connection string.*
+</Accordion>
+<Accordion title="Neon VS Code Extension">
+Added support for configuring the Neon MCP Server in read-only mode. You can now restrict the MCP Server to read-only tools and read-only SQL transactions directly from the VS Code extension settings. See [Neon VS Code Extension](/local/vscode-extension).
+</Accordion>
+</AccordionGroup>
+
+</Update>
+
+<Update label="January 16, 2026" description="Neon Auth on Vercel previews, neon init enhancements, and more">
+
+## Neon Auth on Vercel previews
+
+Both the [Vercel-managed](/guides/vercel-managed-integration) and [Neon-managed](/guides/neon-managed-vercel-integration) integrations now automatically provision Neon Auth on preview branches when enabled on your production branch. Preview deployments get the `NEON_AUTH_BASE_URL` and `VITE_NEON_AUTH_URL` environment variables configured automatically.
+
+![Neon Auth Vercel variables](/images/docs/changelog/neon_auth_vercel.png)
+
+Neon Auth provides managed authentication that stores user profiles in your database. When your database branches, auth data branches with it, making it easy to test authentication in isolated preview environments. [Learn more](/auth/overview).
+
+## One command for Neon MCP Server and VS Code Extension
+
+The `neon init` command now configures both the Neon MCP Server and the Neon VS Code Extension in a single step:
+
+```bash
+npx neonctl@latest init
+```
+
+This command authenticates via OAuth, creates a Neon API key, and sets up:
+
+- **Neon MCP Server**: Lets AI assistants manage your Neon projects, branches, and databases through natural language commands
+- **Neon VS Code Extension**: Brings database schema browsing, SQL editing, and table data management directly into your IDE
+
+For more information, see [Connect MCP clients to Neon](/ai/connect-mcp-clients-to-neon) and [Get started with the Neon VS Code Extension](/local/vscode-extension).
+
+## New Neon logo
+
+You might notice a new Neon logo across the site, dashboard, and docs. Same Neon. New mark.
+
+The logo is refreshed while staying true to the elephant and N we founded the company with. This update brings Neon's visual identity into the Databricks universe as we continue growing together, helping more than a million developers ship faster with Postgres.
+
+If you reference Neon in your product, docs, or integrations, download the official assets at [neon.com/brand](https://neon.com/brand). The page includes logo files, usage guidelines, and brand-safe variants for light and dark backgrounds.
+
+For more on the design thinking behind the new logo, see the [blog post](https://neon.com/blog/new-neon-logo).
+
+<AccordionGroup>
+<Accordion title="Data anonymization">
+- [Data anonymization](/workflows/data-anonymization) now supports custom masking rules defined via SQL or the Neon API. Custom masking rules appear as text in the data anonymization UI and are preserved when running anonymization, allowing you to safely mix Console, API, and SQL workflows.
+- Foreign key columns can no longer be masked directly to maintain referential consistency. Instead of showing masking rule suggestions, the data anonymization UI now displays an alert with an action to navigate to the corresponding primary key column. Clicking "Go to primary key" scrolls to and highlights the relevant primary key where you can set masking rules.
+</Accordion>
+<Accordion title="Data API">
+Fixed an issue where project-scoped API keys could not read [Data API](/data-api/overview) status on organization-owned projects. The endpoint now uses project-level permissions instead of requiring organization-level access.
+</Accordion>
+<Accordion title="Monitoring integrations">
+Error messages returned by Neon's [monitoring integrations](/guides/integrations) now display on integration cards on the Integrations page in your Neon project, making it easier to identify and troubleshoot integration issues.
+</Accordion>
+<Accordion title="Neon Auth">
+- Added a toggle in the Create Project dialog in the Neon Console that lets you enable [Neon Auth](/auth/overview) when creating new projects.
+- OAuth provider credentials (client ID and client secret) are now hidden from organization members and collaborators. Only admin users can view these credentials in the Console.
+</Accordion>
+<Accordion title="Neon MCP Server">
+- Fixed read-only mode detection in OAuth flows for the [Neon MCP Server](/ai/ai-intro). Read-only mode now properly restricts access based on OAuth scopes.
+- Added scope selection UI to the OAuth authorization flow, letting users optionally deselect write permissions when authorizing MCP clients.
+- Fixed account resolution when using project-scoped API keys. Previously, project-scoped API keys would cause errors when attempting to access account-level endpoints since these keys are restricted to project-level operations.
+- Fixed OAuth token verification regression that was causing authentication failures for users who authenticated via OAuth. The server now correctly checks OAuth tokens before falling back to API key verification.
+</Accordion>
+</AccordionGroup>
+
+</Update>
+
+<Update label="January 9, 2026" description="Connection pooling graphs, GitHub Action enhancements, and Neon VS Code Extension">
+
+## New graphs for monitoring pooled connections
+
+Neon uses PgBouncer for [connection pooling](/connect/connection-pooling), allowing thousands of client connections to share a smaller pool of actual Postgres connections. The monitoring page in the Neon Console now includes **Pooler client connections** and **Pooler server connections** graphs (these display data when you use a pooled connection). The **Pooler client connections** graph shows connections from your applications to PgBouncer, while **Pooler server connections** displays the actual connections from PgBouncer to Postgres. These graphs help you understand connection usage patterns, identify bottlenecks, and determine when to adjust your pool size or compute resources. For more information, see [Monitoring dashboard](/introduction/monitoring-page).
+
+<Tabs>
+  <Tab title="Pooler client connections">
+    ![Pooler client connections graph](/images/docs/changelog/pooler_client_connections.png)
+  </Tab>
+  <Tab title="Pooler server connections">
+    ![Pooler server connections graph](/images/docs/changelog/pooler_server_connections.png)
+  </Tab>
+</Tabs>
+
+Additionally, the [OpenTelemetry](/guides/opentelemetry) and [Datadog](/guides/datadog) integrations now export PgBouncer connection pooling metrics, giving you visibility into pooler client and server connections in your observability platform alongside the new charts in the Neon Console. New integrations automatically include these metrics. To enable them for existing integrations, you can either edit the integration settings to trigger a collector upgrade or delete and recreate the integration.
+
+## GitHub Action support for Neon Auth and Data API
+
+The [Neon Create Branch GitHub Action](https://github.com/marketplace/actions/neon-create-branch-github-action) now supports retrieving branch-specific URLs for Neon Auth and the Neon Data API. This makes it easy to run integration tests against isolated branch environments with the same auth and data access patterns you use in production. Set `get_auth_url: true` or `get_data_api_url: true` in your workflow to access the `auth_url` and `data_api_url` outputs for your test branch.
+
+```yaml
+- name: Create Neon Branch
+  uses: neondatabase/create-branch-action@v6
+  id: create-branch
+  with:
+    project_id: ${{ vars.NEON_PROJECT_ID }}
+    branch_name: feature-branch
+    api_key: ${{ secrets.NEON_API_KEY }}
+    get_auth_url: true
+    get_data_api_url: true
+- name: Use outputs
+  run: |
+    echo "Auth URL: ${{ steps.create-branch.outputs.auth_url }}"
+    echo "Data API URL: ${{ steps.create-branch.outputs.data_api_url }}"
+```
+
+## Introducing the new Neon VS Code Extension
+
+The Neon VS Code Extension brings a revamped database development experience directly into your IDE. Connect to your Neon organizations, projects, and branches, browse schemas in a rich tree view, run SQL queries, and view or edit table data in a spreadsheet-like interface, all without leaving your editor.
+
+This release replaces the previous Neon Local extension. The new extension no longer uses a local proxy or localhost connection strings. Instead, it helps you manage direct Neon connection strings for your branches.
+
+The extension also automatically configures the Neon MCP Server, enabling AI-powered workflows for managing projects, branches, and databases from your coding agent.
+
+Available for VS Code, Cursor, Windsurf, and other VS Code-compatible editors. [Get started with the Neon VS Code Extension](/local/vscode-extension).
+
+![Neon VS Code Extension](/images/docs/changelog/neon_code_extension.png)
+
+<AccordionGroup>
+<Accordion title="Instagres">
+Added a `logical_replication` option to [Instagres](/reference/instagres) databases (default is `false`). This lets sync engines spin up Postgres databases with logical replication enabled without needing to sign up for a Neon account to manually enable it.
+</Accordion>
+<Accordion title="Monitoring">
+- Fixed monitoring graph x-axis labels to dynamically adjust based on the selected time range. When you zoom into a custom range on the graph, the labels now show more granular time information (hours instead of just day names) making it easier to read detailed metrics.
+- Fixed an issue on the monitoring page where clicking once on a chart would cause empty charts to display. Clicking on a chart now has no effect, preventing unintended empty range selections.
+</Accordion>
+<Accordion title="Neon CLI">
+Fixed a misleading "org_id is required" error in the Neon CLI when running `neon branches list` without specifying a project. The CLI now provides clearer guidance when you have multiple projects, and automatically selects your project if you only have one. Upgrade your Neon CLI installation to get this fix. See [upgrade instructions](/reference/cli-install#upgrade).
+</Accordion>
+<Accordion title="Neon Console">
+- Added a project count display to the Projects page in the Neon Console, making it easier to see how many projects you have at a glance.
+- Projects created from the Neon Console are now created with a production branch only. Previously, projects created in the Neon console included both production and development branches. Projects created via the Neon CLI or API are unaffected by this change.
+</Accordion>
+<Accordion title="OpenTelemetry">
+You can now edit endpoint and authentication credentials for existing [OpenTelemetry integrations](/guides/opentelemetry), enabling you to fix configuration issues without having to delete and recreate the integration.
+</Accordion>
+<Accordion title="Postgres extensions">
+Updated the `anon` extension (PostgreSQL Anonymizer) to version 2.5.1, which fixes a table name escaping bug that could cause anonymization failures.
+</Accordion>
+</AccordionGroup>
+
+</Update>
+
+<Update label="January 2, 2026" description="Help shape what we build in 2026">
+
+## Help shape what we build in 2026
+
+From the Neon team, we'd like to extend a warm and heartfelt Happy New Year to every member of our community.
+
+What a year 2025 was. In May, [Neon joined Databricks](https://www.databricks.com/company/newsroom/press-releases/databricks-agrees-acquire-neon-help-developers-deliver-ai-systems), but our mission hasn't changed. We're still focused on delivering the best Postgres experience for developers and AI agents.
+
+Beyond that, we shipped a ton of features in 2025. You can see [everything we built here](/introduction/roadmap#what-weve-shipped-recently).
+
+Here's the thing though, none of this happens without you. Your feedback, whether you chat with us in Discord, ping us on Twitter, or drop it in the console, that's what shapes what we build. Every suggestion, bug report, and feature request matters to us.
+
+So as we kick off 2026, we want to ask **What should we ship next?**
+
+Got a feature you're waiting for? A bug that's causing you trouble? An idea that would take things to the next level? We want to hear it.
+
+You can share your feedback on [Discord](https://discord.com/channels/1176467419317940276/1176788564890112042), [Twitter/X](https://x.com/neondatabase), or via the **Send Feedback** modal in the Neon Console.
+
+Thank you for being part of this journey with us. Let's build great things together in 2026!
+
+</Update>

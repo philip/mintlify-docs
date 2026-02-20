@@ -1,97 +1,129 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: Neon documentation
+description: >-
+  How to set up Neon, a serverless Postgres solution, with commands for
+  launching, signing up, connecting to tech stacks, and integrating branching
+  into workflows.
 ---
 
-## Setting up
+Neon is serverless Postgres designed to help you build faster. **Autoscaling**, **branching**, **instant restore**, and more. Get started with our [Free plan](https://console.neon.tech)
 
-Get your documentation site up and running in minutes.
+<Card title="Set up Neon in one command">
+Run this command to launch AI-guided setup. <a href='https://neon.com/blog/one-command-to-bridge-cursor-and-neon'>Learn more →</a>
 
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
+```bash
+npx neonctl@latest init
+```
 </Card>
 
-## Make it yours
+## Get started
 
-Design a docs site that looks great and empowers your users.
+<CardGroup>
 
-<Columns cols={2}>
-  <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
-  >
-    Edit your docs locally and preview them in real time.
-  </Card>
-  <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
-  >
-    Customize the design and colors of your site to match your brand.
-  </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
-  </Card>
-  <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
-  >
-    Auto-generate API documentation from OpenAPI specifications.
-  </Card>
-</Columns>
 
-## Create beautiful pages
-
-Everything you need to create world-class documentation.
-
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
+  <Card title="Learn the basics" href="/get-started/signing-up">
+    Sign up and learn database branching basics
   </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
 
-## Need inspiration?
+  <Card title="Connect your stack" href="/get-started/connect-neon">
+    Connect to your tech stack
+  </Card>
 
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+  <Card title="Learn about branching" href="/get-started/workflow-primer">
+    Integrate branching into your workflow
+  </Card>
+
+  <Card title="Set up Neon Auth" icon="lock-landscape" href="/auth/overview">
+    Set up managed auth that branches with your database
+  </Card>
+
+
+</CardGroup>
+
+## Quickstart prompts
+
+Copy a setup prompt to your AI assistant, or browse our [framework](/get-started/frameworks), [language](/get-started/languages), and [ORM](/get-started/orms) guides.
+
+<Prompt description="Connect **Next.js** to Neon Postgres" actions={["copy", "cursor"]}>
+You are an expert software agent specializing in TypeScript and the Next.js framework. Configure the current Next.js project to connect to a Neon Postgres database.
+
+Steps:
+1. Prompt the user to select a PostgreSQL driver: @neondatabase/serverless (recommended for serverless/edge), postgres (postgres.js for long-running servers), or pg (node-postgres).
+2. Install the selected driver.
+3. Configure DATABASE_URL in .env.local — prompt the user for their Neon connection string (found in Neon Console → Connect).
+4. Create a centralized database module at app/lib/db.ts.
+5. Create examples: Server Component (app/page.tsx), Server Action (app/action/page.tsx), API Route (app/api/version/route.ts).
+6. Start the dev server and verify all three patterns work.
+
+Do not hardcode credentials. Do not output the user's connection string. Apply changes directly to the codebase.
+</Prompt>
+
+<Prompt description="Connect **Django** to Neon Postgres" actions={["copy", "cursor"]}>
+You are an expert software agent responsible for configuring the current Django project to connect to a Neon Postgres database.
+
+Steps:
+1. Install required packages: psycopg2-binary (or psycopg[binary]), dj-database-url, python-dotenv.
+2. Configure DATABASE_URL in .env — prompt the user for their Neon connection string (found in Neon Console → Connect).
+3. Update settings.py to load DATABASE_URL using dj-database-url and python-dotenv.
+4. Create a sample Django app with a model, view, and URL pattern to verify the connection.
+5. Run migrations and start the dev server.
+
+Do not hardcode credentials. Do not output the user's connection string. Apply changes directly to the codebase.
+</Prompt>
+
+<Prompt description="Integrate **Drizzle ORM** with Neon Postgres" actions={["copy", "cursor"]}>
+You are an expert software agent responsible for configuring the current TypeScript/Node.js project to connect to a Neon Postgres database using Drizzle ORM.
+
+Steps:
+1. Install packages: drizzle-orm, @neondatabase/serverless, drizzle-kit.
+2. Configure DATABASE_URL in .env — prompt the user for their Neon connection string (found in Neon Console → Connect).
+3. Create drizzle.config.ts with the Neon driver configuration.
+4. Create a database schema file with a sample table.
+5. Create db.ts module using neon() from @neondatabase/serverless with drizzle-orm/neon-http.
+6. Generate and run migrations with drizzle-kit.
+7. Create a demo script showing CRUD operations.
+
+Do not hardcode credentials. Do not output the user's connection string. Apply changes directly to the codebase.
+</Prompt>
+
+Browse all quickstart prompts in our [framework](/get-started/frameworks), [language](/get-started/languages), and [ORM](/get-started/orms) guides — available for Express, Laravel, Rails, Python, Go, Java, Rust, Prisma, and 20+ more.
+
+## Explore the docs
+
+<CardGroup>
+
+
+  <Card title="Connect" icon="audio-jack" href="/connect/connect-intro">
+    Connect from any application
+  </Card>
+
+  <Card title="Import data" icon="import" href="/import/import-intro">
+    Migrate your data to Neon
+  </Card>
+
+  <Card title="AI & embeddings" icon="openai" href="/ai/ai-intro">
+    Build AI apps with pgvector
+  </Card>
+
+  <Card title="Branching" icon="split-branch" href="/guides/branching-intro">
+    Optimize development workflows
+  </Card>
+
+  <Card title="Extensions" icon="app-store" href="/extensions/pg-extensions">
+    Extend Postgres capabilities
+  </Card>
+
+  <Card title="Neon CLI" icon="transactions" href="/reference/neon-cli">
+    Manage from the terminal
+  </Card>
+
+
+</CardGroup>
+
+## Join the community
+
+Questions about Neon or Postgres? Join our [Discord Server](https://discord.com/invite/92vNTzKDGp)
+
+<Note>
+Welcome to the Neon Discord Server!
+</Note>

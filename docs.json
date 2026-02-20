@@ -1,87 +1,1204 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "Neon Docs",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#00E599",
+    "light": "#00E599",
+    "dark": "#00E599"
   },
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Get started",
         "groups": [
           {
-            "group": "Getting started",
+            "group": "Why Neon?",
             "pages": [
-              "index",
-              "quickstart",
-              "development"
+              "get-started/why-neon",
+              "get-started/dev-experience",
+              "get-started/built-to-scale"
             ]
           },
           {
-            "group": "Customization",
+            "group": "Start with Neon",
             "pages": [
-              "essentials/settings",
-              "essentials/navigation"
+              "get-started/signing-up",
+              "get-started/connect-neon",
+              "get-started/workflow-primer",
+              "auth/overview"
             ]
           },
           {
-            "group": "Writing content",
+            "group": "Migrate to Neon",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
-            "group": "AI tools",
-            "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "import/migrate-intro",
+              {
+                "group": "Utilities",
+                "pages": [
+                  "import/import-data-assistant",
+                  "import/migrate-from-postgres",
+                  "import/pgcopydb"
+                ]
+              },
+              {
+                "group": "Migrate from",
+                "pages": [
+                  "guides/logical-replication-rds-to-neon",
+                  "guides/logical-replication-alloydb",
+                  "import/migrate-from-azure-postgres",
+                  "guides/logical-replication-cloud-sql",
+                  "import/migrate-from-digital-ocean",
+                  "import/migrate-from-firebase",
+                  "import/migrate-from-heroku",
+                  "import/migrate-mssql",
+                  "import/migrate-sqlite",
+                  "import/migrate-mysql",
+                  "import/migrate-from-render",
+                  "import/migrate-from-supabase",
+                  "import/migrate-from-neon",
+                  "import/migrate-schema-only"
+                ]
+              },
+              {
+                "group": "Logical replication",
+                "pages": [
+                  "guides/logical-replication-postgres-to-neon",
+                  "guides/logical-replication-neon-to-neon",
+                  "guides/logical-replication-supabase-to-neon",
+                  "guides/logical-replication-rds-to-neon",
+                  "guides/logical-replication-alloydb",
+                  "import/migrate-from-azure-postgres",
+                  "guides/logical-replication-cloud-sql"
+                ]
+              },
+              {
+                "group": "Migration services",
+                "pages": [
+                  "import/migrate-aws-dms"
+                ]
+              },
+              "import/import-from-csv",
+              "import/import-sample-data"
             ]
           }
         ]
       },
       {
-        "tab": "API reference",
+        "tab": "About",
         "groups": [
           {
-            "group": "API documentation",
+            "group": "Architecture",
             "pages": [
-              "api-reference/introduction"
+              "introduction/architecture-overview",
+              "introduction/compute-lifecycle",
+              "introduction/serverless"
             ]
           },
           {
-            "group": "Endpoint examples",
+            "group": "Autoscaling",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "introduction/autoscaling",
+              "introduction/autoscaling-architecture",
+              "guides/autoscaling-algorithm",
+              "guides/autoscaling-guide"
+            ]
+          },
+          {
+            "group": "Scale to zero",
+            "pages": [
+              "introduction/scale-to-zero",
+              "guides/scale-to-zero-guide"
+            ]
+          },
+          {
+            "group": "Branching",
+            "pages": [
+              "guides/branching-intro",
+              "introduction/branching",
+              "guides/branching-test-queries",
+              "guides/branch-archiving",
+              "guides/branch-expiration",
+              "guides/branching-schema-only",
+              "guides/reset-from-parent"
+            ]
+          },
+          {
+            "group": "Read replicas",
+            "pages": [
+              "introduction/read-replicas",
+              "guides/read-replica-guide",
+              {
+                "group": "Use cases",
+                "pages": [
+                  "guides/read-only-access-read-replicas",
+                  "guides/read-replica-adhoc-queries",
+                  "guides/read-replica-data-analysis",
+                  "guides/read-replica-integrations"
+                ]
+              },
+              {
+                "group": "With ORMs",
+                "pages": [
+                  "guides/read-replica-prisma"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Logical replication",
+            "pages": [
+              "guides/logical-replication-guide",
+              "guides/logical-replication-concepts",
+              "guides/logical-replication-neon",
+              "guides/logical-replication-manage",
+              "guides/logical-replication-schema-changes",
+              "guides/logical-replication-tips"
+            ]
+          },
+          {
+            "group": "Data recovery",
+            "pages": [
+              "guides/backup-restore",
+              "introduction/restore-window",
+              "introduction/branch-restore",
+              {
+                "group": "Time Travel",
+                "pages": [
+                  "guides/time-travel-assist",
+                  "guides/time-travel-tutorial"
+                ]
+              },
+              {
+                "group": "Schema diff",
+                "pages": [
+                  "guides/schema-diff",
+                  "guides/schema-diff-tutorial"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Data protection",
+            "pages": [
+              "introduction/ip-allow",
+              "guides/neon-private-networking",
+              "guides/protected-branches"
+            ]
+          },
+          {
+            "group": "High availability",
+            "pages": [
+              "introduction/high-availability"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Connect",
+        "groups": [
+          {
+            "group": "Connect to Neon",
+            "pages": [
+              "connect/connect-intro",
+              "connect/choose-connection",
+              "connect/connect-from-any-app",
+              "serverless/serverless-driver",
+              "get-started/query-with-neon-sql-editor",
+              "connect/passwordless-connect",
+              "connect/connect-securely",
+              "connect/connection-pooling",
+              "guides/benchmarking-latency"
+            ]
+          },
+          {
+            "group": "Clients & tools",
+            "pages": [
+              "connect/query-with-psql-editor",
+              "connect/connect-pgcli",
+              "connect/connect-postgres-gui",
+              "connect/connect-looker-studio"
+            ]
+          },
+          {
+            "group": "Troubleshooting",
+            "pages": [
+              "connect/connection-errors",
+              "connect/connection-latency"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Develop",
+        "groups": [
+          {
+            "group": "Frameworks",
+            "pages": [
+              "get-started/frameworks",
+              "guides/astro",
+              "guides/bun",
+              "guides/dotnet-entity-framework",
+              "guides/encore",
+              "guides/express",
+              "guides/medusajs",
+              "guides/micronaut-kotlin",
+              "guides/nestjs",
+              "guides/nextjs",
+              "guides/node",
+              "guides/nuxt",
+              "guides/phoenix",
+              "guides/quarkus-jdbc",
+              "guides/quarkus-reactive",
+              "guides/react",
+              "guides/react-router",
+              "guides/reflex",
+              "guides/remix",
+              "guides/solid-start",
+              "guides/sveltekit",
+              "guides/symfony",
+              "guides/hono",
+              "guides/redwoodsdk",
+              "guides/vue"
+            ]
+          },
+          {
+            "group": "Languages",
+            "pages": [
+              "get-started/languages",
+              "guides/dotnet-npgsql",
+              "guides/elixir",
+              "guides/go",
+              "guides/java",
+              "guides/javascript",
+              "guides/python",
+              "guides/rust"
+            ]
+          },
+          {
+            "group": "ORMs",
+            "pages": [
+              "get-started/orms",
+              "guides/django",
+              "guides/drizzle",
+              "guides/elixir-ecto",
+              "guides/kysely",
+              "guides/knex",
+              "guides/laravel",
+              "guides/prisma",
+              "guides/ruby-on-rails",
+              "guides/sqlalchemy",
+              "guides/typeorm"
+            ]
+          },
+          {
+            "group": "Data API",
+            "pages": [
+              {
+                "group": "Introduction",
+                "pages": [
+                  "data-api/overview",
+                  "data-api/get-started"
+                ]
+              },
+              {
+                "group": "Guides",
+                "pages": [
+                  "data-api/access-control",
+                  "guides/rls-tutorial",
+                  "data-api/custom-authentication-providers"
+                ]
+              },
+              {
+                "group": "Tools",
+                "pages": [
+                  "reference/javascript-sdk",
+                  "data-api/sql-to-rest",
+                  "data-api/generate-types"
+                ]
+              },
+              {
+                "group": "Using the Data API",
+                "pages": [
+                  "data-api/demo",
+                  "data-api/manage",
+                  "data-api/troubleshooting"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Neon Auth",
+            "pages": [
+              {
+                "group": "Introduction",
+                "pages": [
+                  "auth/overview",
+                  "auth/authentication-flow",
+                  "auth/branching-authentication",
+                  "auth/roadmap"
+                ]
+              },
+              {
+                "group": "Quickstarts",
+                "pages": [
+                  {
+                    "group": "Next.js",
+                    "pages": [
+                      "auth/quick-start/nextjs",
+                      "auth/quick-start/nextjs-api-only"
+                    ]
+                  },
+                  {
+                    "group": "React",
+                    "pages": [
+                      "auth/quick-start/react-router-components",
+                      "auth/quick-start/react"
+                    ]
+                  },
+                  "auth/quick-start/tanstack-router"
+                ]
+              },
+              {
+                "group": "Guides",
+                "pages": [
+                  "auth/guides/email-verification",
+                  "auth/guides/setup-oauth",
+                  "auth/guides/password-reset",
+                  "auth/guides/user-management",
+                  "auth/guides/configure-domains",
+                  "auth/production-checklist"
+                ]
+              },
+              {
+                "group": "Plugins",
+                "pages": [
+                  {
+                    "group": "Supported plugins",
+                    "pages": [
+                      "auth/guides/plugins",
+                      "auth/guides/plugins/admin",
+                      "auth/guides/plugins/email-otp",
+                      "auth/guides/plugins/jwt",
+                      "auth/guides/plugins/openapi",
+                      "auth/guides/plugins/organization"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Reference",
+                "pages": [
+                  "reference/javascript-sdk",
+                  "auth/reference/nextjs-server",
+                  "auth/reference/ui-components"
+                ]
+              },
+              {
+                "group": "Migration Guides",
+                "pages": [
+                  "auth/migrate/from-auth-v0.1",
+                  "auth/migrate/from-legacy-auth",
+                  "auth/migrate/from-supabase"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Postgres RLS",
+            "pages": [
+              "guides/row-level-security",
+              "guides/rls-drizzle"
+            ]
+          },
+          {
+            "group": "AI for Agents",
+            "pages": [
+              "ai/ai-agents-tools",
+              {
+                "group": "MCP integration",
+                "pages": [
+                  "ai/neon-mcp-server",
+                  "ai/connect-mcp-clients-to-neon"
+                ]
+              },
+              {
+                "group": "AI rules & prompts",
+                "pages": [
+                  "ai/ai-rules",
+                  "ai/ai-claude-code-plugin",
+                  "ai/ai-cursor-plugin",
+                  "ai/ai-github-copilot-agents",
+                  "ai/ai-rules-neon-auth",
+                  "ai/ai-rules-neon-drizzle",
+                  "ai/ai-rules-neon-serverless",
+                  "ai/ai-rules-neon-typescript-sdk",
+                  "ai/ai-rules-neon-python-sdk",
+                  "ai/ai-rules-neon-api",
+                  "ai/ai-rules-neon-toolkit"
+                ]
+              },
+              {
+                "group": "Build AI agents",
+                "pages": [
+                  {
+                    "title": "Neon for Agent platforms",
+                    "href": "https://neon.com/use-cases/ai-agents"
+                  },
+                  "ai/ai-database-versioning",
+                  {
+                    "title": "Neon Toolkit",
+                    "href": "https://github.com/neondatabase/toolkit"
+                  },
+                  {
+                    "title": "Neon API reference",
+                    "href": "https://api-docs.neon.tech/reference/getting-started-with-neon-api"
+                  }
+                ]
+              },
+              {
+                "group": "Agent frameworks",
+                "pages": [
+                  {
+                    "title": "AgentStack",
+                    "href": "https://neon.com/guides/agentstack-neon"
+                  },
+                  {
+                    "title": "AutoGen",
+                    "href": "https://neon.com/guides/autogen-neon"
+                  },
+                  {
+                    "title": "Azure AI Agent Service",
+                    "href": "https://neon.com/guides/azure-ai-agent-service"
+                  },
+                  {
+                    "title": "Composio + CrewAI",
+                    "href": "https://neon.com/guides/composio-crewai-neon"
+                  },
+                  {
+                    "title": "LangGraph",
+                    "href": "https://neon.com/guides/langgraph-neon"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "group": "AI App Starter Kit",
+            "pages": [
+              {
+                "group": "Core concepts",
+                "pages": [
+                  "ai/ai-intro",
+                  "ai/ai-concepts",
+                  "extensions/pgvector"
+                ]
+              },
+              {
+                "group": "AI frameworks",
+                "pages": [
+                  "ai/langchain",
+                  "ai/llamaindex",
+                  "ai/semantic-kernel",
+                  "ai/inngest"
+                ]
+              },
+              {
+                "group": "Optimize & scale",
+                "pages": [
+                  "ai/ai-vector-search-optimization",
+                  "ai/ai-scale-with-neon"
+                ]
+              },
+              "ai/ai-google-colab"
+            ]
+          },
+          {
+            "group": "API, CLI & SDKs",
+            "pages": [
+              {
+                "group": "API",
+                "pages": [
+                  "reference/api-reference"
+                ]
+              },
+              {
+                "group": "CLI",
+                "pages": [
+                  "reference/neon-cli",
+                  "reference/cli-quickstart",
+                  "reference/cli-install",
+                  "reference/cli-auth",
+                  "reference/cli-me",
+                  "reference/cli-orgs",
+                  "reference/cli-projects",
+                  "reference/cli-ip-allow",
+                  "reference/cli-vpc",
+                  "reference/cli-branches",
+                  "reference/cli-databases",
+                  "reference/cli-roles",
+                  "reference/cli-operations",
+                  "reference/cli-connection-string",
+                  "reference/cli-set-context",
+                  "reference/cli-init",
+                  "reference/cli-completion"
+                ]
+              },
+              {
+                "group": "SDKs",
+                "pages": [
+                  "reference/sdk",
+                  "reference/javascript-sdk",
+                  "reference/typescript-sdk",
+                  "reference/python-sdk",
+                  "reference/neondatabase-toolkit",
+                  {
+                    "title": "Go SDK (Neon API)",
+                    "href": "https://github.com/kislerdm/neon-sdk-go"
+                  },
+                  {
+                    "title": "Node.js / Deno SDK (Neon API)",
+                    "href": "https://github.com/paambaati/neon-js-sdk"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Local development",
+            "pages": [
+              "local/vscode-extension",
+              "local/neon-local"
+            ]
+          },
+          {
+            "group": "Integrations (3rd party)",
+            "pages": [
+              "guides/integrations",
+              {
+                "group": "Authentication",
+                "pages": [
+                  "guides/auth-auth0",
+                  "guides/auth-authjs",
+                  "guides/auth-clerk",
+                  "guides/auth-okta"
+                ]
+              },
+              {
+                "group": "Deploy",
+                "pages": [
+                  {
+                    "group": "Cloudflare",
+                    "pages": [
+                      "guides/cloudflare-pages",
+                      "guides/cloudflare-workers"
+                    ]
+                  },
+                  "guides/deno",
+                  "guides/heroku",
+                  "guides/koyeb",
+                  "guides/netlify-functions",
+                  "guides/railway",
+                  "guides/render",
+                  {
+                    "group": "Vercel",
+                    "pages": [
+                      "guides/vercel-overview",
+                      "guides/vercel-managed-integration",
+                      "guides/neon-managed-vercel-integration",
+                      "guides/vercel-manual",
+                      "guides/vercel-connection-methods",
+                      "guides/vercel-postgres-transition-guide"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Develop",
+                "pages": [
+                  "guides/convex-neon",
+                  "guides/neon-github-integration",
+                  "guides/knex",
+                  "guides/prisma",
+                  "guides/typeorm"
+                ]
+              },
+              {
+                "group": "File & media storage",
+                "pages": [
+                  "guides/file-storage",
+                  "guides/aws-s3",
+                  "guides/azure-blob-storage",
+                  "guides/backblaze-b2",
+                  "guides/cloudflare-r2",
+                  "guides/cloudinary",
+                  "guides/imagekit",
+                  "guides/uploadcare"
+                ]
+              },
+              {
+                "group": "Query",
+                "pages": [
+                  "guides/askyourdatabase",
+                  "guides/cloudflare-hyperdrive",
+                  "guides/draxlr",
+                  "guides/exograph",
+                  "guides/grafbase",
+                  "guides/hasura",
+                  "guides/postgrest",
+                  "guides/wundergraph"
+                ]
+              },
+              {
+                "group": "Replicate from Neon",
+                "pages": [
+                  "guides/logical-replication-airbyte",
+                  "guides/bemi",
+                  {
+                    "title": "ClickHouse",
+                    "href": "https://docs.peerdb.io/mirror/cdc-neon-clickhouse"
+                  },
+                  "guides/logical-replication-kafka-confluent",
+                  "guides/logical-replication-decodable",
+                  "guides/logical-replication-estuary-flow",
+                  "guides/logical-replication-fivetran",
+                  "guides/logical-replication-inngest",
+                  "guides/logical-replication-materialize",
+                  "guides/logical-replication-neon-to-neon",
+                  "guides/logical-replication-postgres",
+                  "guides/logical-replication-prisma-pulse",
+                  "guides/sequin",
+                  "guides/logical-replication-airbyte-snowflake"
+                ]
+              },
+              {
+                "group": "Replicate to Neon",
+                "pages": [
+                  "guides/logical-replication-alloydb",
+                  "guides/logical-replication-rds-to-neon",
+                  "guides/logical-replication-cloud-sql",
+                  "guides/logical-replication-neon-to-neon",
+                  "guides/logical-replication-postgres-to-neon",
+                  "import/migrate-from-azure-postgres",
+                  "guides/logical-replication-supabase-to-neon"
+                ]
+              },
+              {
+                "group": "Schema Migration",
+                "pages": [
+                  "guides/django-migrations",
+                  "guides/drizzle-migrations",
+                  "guides/entity-migrations",
+                  {
+                    "group": "Flyway",
+                    "pages": [
+                      "guides/flyway",
+                      "guides/flyway-multiple-environments"
+                    ]
+                  },
+                  "guides/laravel-migrations",
+                  {
+                    "group": "Liquibase",
+                    "pages": [
+                      "guides/liquibase",
+                      "guides/liquibase-workflow"
+                    ]
+                  },
+                  "guides/prisma-migrations",
+                  "guides/rails-migrations",
+                  "guides/sequelize",
+                  "guides/sqlalchemy-migrations"
+                ]
+              },
+              {
+                "group": "Serverless",
+                "pages": [
+                  "guides/aws-lambda",
+                  "guides/query-postgres-azure-functions",
+                  "serverless/serverless-driver",
+                  "guides/trigger-serverless-functions"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Workflows & CI/CD",
+            "pages": [
+              "guides/branching-neon-cli",
+              "guides/branching-neon-api",
+              "guides/branching-github-actions",
+              "reference/instagres",
+              "reference/terraform",
+              {
+                "group": "Neon Twin",
+                "pages": [
+                  "guides/neon-twin-intro",
+                  "guides/neon-twin-full-pg-dump-restore",
+                  "guides/neon-twin-partial-pg-dump-restore"
+                ]
+              },
+              {
+                "group": "Data anonymization",
+                "pages": [
+                  "workflows/data-anonymization",
+                  "workflows/data-anonymization-api",
+                  "workflows/data-anonymization-github-actions"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Tools & Workflows",
+            "pages": [
+              {
+                "title": "Templates",
+                "href": "https://neon.com/templates"
+              }
+            ]
+          },
+          {
+            "group": "Tools & Workflows",
+            "pages": [
+              {
+                "title": "Examples repo",
+                "href": "https://github.com/neondatabase/examples"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Manage",
+        "groups": [
+          {
+            "group": "Access & collaboration",
+            "pages": [
+              "manage/accounts",
+              "manage/user-permissions",
+              {
+                "group": "Organizations",
+                "pages": [
+                  "manage/organizations",
+                  "manage/orgs-manage",
+                  "manage/orgs-add-members-by-domain",
+                  "manage/orgs-project-transfer",
+                  {
+                    "group": "Organizations API",
+                    "pages": [
+                      "manage/orgs-api",
+                      "manage/orgs-api-consumption"
+                    ]
+                  },
+                  {
+                    "group": "CLI",
+                    "pages": [
+                      "manage/orgs-cli"
+                    ]
+                  }
+                ]
+              },
+              "guides/project-collaboration-guide",
+              "manage/database-access",
+              "manage/api-keys",
+              "manage/account-recovery"
+            ]
+          },
+          {
+            "group": "Projects & resources",
+            "pages": [
+              "manage/overview",
+              "manage/projects",
+              "guides/multitenancy",
+              "manage/branches",
+              "manage/computes",
+              "manage/roles",
+              "manage/databases",
+              "guides/tables",
+              "manage/integrations"
+            ]
+          },
+          {
+            "group": "Monitoring & observability",
+            "pages": [
+              "introduction/monitoring",
+              "introduction/monitoring-page",
+              "manage/operations",
+              "introduction/monitor-active-queries",
+              "introduction/monitor-query-performance",
+              {
+                "group": "Third-party monitoring",
+                "pages": [
+                  "guides/datadog",
+                  "guides/grafana-cloud",
+                  "guides/opentelemetry",
+                  "introduction/monitor-pgadmin",
+                  "introduction/monitor-pghero",
+                  "reference/metrics-logs"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Operations & maintenance",
+            "pages": [
+              "get-started/production-checklist",
+              {
+                "group": "Backup & restore",
+                "pages": [
+                  "guides/backup-restore",
+                  "introduction/restore-window",
+                  "introduction/branch-restore",
+                  "manage/backups",
+                  "manage/backup-pg-dump",
+                  {
+                    "group": "Automate pg_dump backups",
+                    "pages": [
+                      "manage/backup-pg-dump-automate",
+                      "manage/backups-aws-s3-backup-part-1",
+                      "manage/backups-aws-s3-backup-part-2"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Updates",
+                "pages": [
+                  "manage/maintenance-updates-overview",
+                  "manage/platform-maintenance",
+                  "manage/updates"
+                ]
+              },
+              "introduction/regions"
+            ]
+          },
+          {
+            "group": "Plans and billing",
+            "pages": [
+              "introduction/about-billing",
+              "introduction/plans",
+              "introduction/agent-plan",
+              "introduction/manage-billing",
+              "introduction/monitor-usage",
+              "introduction/cost-optimization",
+              "introduction/billing-aws-marketplace",
+              "introduction/billing-azure-marketplace"
+            ]
+          },
+          {
+            "group": "Neon on Azure",
+            "pages": [
+              "import/migrate-from-azure-native",
+              "azure/azure-deploy",
+              "azure/azure-manage",
+              "azure/azure-develop"
+            ]
+          },
+          {
+            "group": "Security & compliance",
+            "pages": [
+              "security/security-overview",
+              "security/security-reporting",
+              "security/compliance",
+              "security/hipaa",
+              "security/acceptable-use-policy",
+              "security/ai-use-in-neon"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Postgres",
+        "groups": [
+          {
+            "group": "Extensions",
+            "pages": [
+              "extensions/extension-explorer",
+              "extensions/postgresql-anonymizer",
+              "extensions/btree_gin",
+              "extensions/btree_gist",
+              "extensions/citext",
+              "extensions/cube",
+              "extensions/dblink",
+              "extensions/dict_int",
+              "extensions/earthdistance",
+              "extensions/fuzzystrmatch",
+              "extensions/hstore",
+              "extensions/intarray",
+              "extensions/ltree",
+              "extensions/neon",
+              "extensions/neon-utils",
+              "extensions/online_advisor",
+              "extensions/pgcrypto",
+              "extensions/pgvector",
+              "extensions/pgrag",
+              "extensions/pg_cron",
+              "extensions/pg_graphql",
+              "extensions/pg_mooncake",
+              "extensions/pg_partman",
+              "extensions/pg_prewarm",
+              "extensions/pg_session_jwt",
+              "extensions/pg_stat_statements",
+              "extensions/pg_repack",
+              "extensions/pg_search",
+              "extensions/pg_tiktoken",
+              "extensions/pg_trgm",
+              "extensions/pg_uuidv7",
+              "extensions/pgrowlocks",
+              "extensions/pgstattuple",
+              "extensions/postgis",
+              "extensions/postgis-related-extensions",
+              "extensions/postgres_fdw",
+              "extensions/tablefunc",
+              "extensions/timescaledb",
+              "extensions/unaccent",
+              "extensions/uuid-ossp",
+              "extensions/wal2json",
+              "extensions/xml2"
+            ]
+          },
+          {
+            "group": "Data types",
+            "pages": [
+              "data-types/introduction",
+              "data-types/array",
+              "data-types/boolean",
+              "data-types/date-and-time",
+              "data-types/character",
+              "data-types/json",
+              "data-types/decimal",
+              "data-types/floating-point",
+              "data-types/integer",
+              "data-types/tsvector",
+              "data-types/uuid"
+            ]
+          },
+          {
+            "group": "Functions",
+            "pages": [
+              "functions/introduction",
+              {
+                "group": "Aggregate functions",
+                "pages": [
+                  "functions/array_agg",
+                  "functions/avg",
+                  "functions/count",
+                  "functions/max",
+                  "functions/sum"
+                ]
+              },
+              {
+                "group": "Array functions",
+                "pages": [
+                  "functions/array_length"
+                ]
+              },
+              {
+                "group": "Date / Time functions",
+                "pages": [
+                  "functions/age",
+                  "functions/current_timestamp",
+                  "functions/date_trunc",
+                  "functions/extract",
+                  "functions/now"
+                ]
+              },
+              {
+                "group": "JSON functions",
+                "pages": [
+                  "functions/array_to_json",
+                  "functions/json",
+                  "functions/json_agg",
+                  "functions/json_array_elements",
+                  "functions/json_build_object",
+                  "functions/json_each",
+                  "functions/json_exists",
+                  "functions/json_extract_path",
+                  "functions/json_extract_path_text",
+                  "functions/json_object",
+                  "functions/json_populate_record",
+                  "functions/json_query",
+                  "functions/json_scalar",
+                  "functions/json_serialize",
+                  "functions/json_table",
+                  "functions/json_to_record",
+                  "functions/json_value",
+                  "functions/jsonb_array_elements",
+                  "functions/jsonb_each",
+                  "functions/jsonb_extract_path",
+                  "functions/jsonb_extract_path_text",
+                  "functions/jsonb_object",
+                  "functions/jsonb_populate_record",
+                  "functions/jsonb_to_record"
+                ]
+              },
+              {
+                "group": "Window functions",
+                "pages": [
+                  "functions/dense_rank",
+                  "functions/window-lag",
+                  "functions/window-lead",
+                  "functions/window-rank"
+                ]
+              },
+              {
+                "group": "String functions",
+                "pages": [
+                  "functions/concat",
+                  "functions/substring",
+                  "functions/lower",
+                  "functions/regexp_match",
+                  "functions/regexp_replace",
+                  "functions/trim"
+                ]
+              },
+              {
+                "group": "Math functions",
+                "pages": [
+                  "functions/math-abs",
+                  "functions/math-random",
+                  "functions/math-round"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Postgres guides",
+            "pages": [
+              "postgresql/index-types",
+              "postgresql/query-performance",
+              "postgresql/query-reference"
+            ]
+          },
+          {
+            "group": "Compatibility",
+            "pages": [
+              "reference/compatibility"
+            ]
+          },
+          {
+            "group": "Version support",
+            "pages": [
+              "postgresql/postgres-version-policy"
+            ]
+          },
+          {
+            "group": "Upgrade",
+            "pages": [
+              "postgresql/postgres-upgrade"
+            ]
+          },
+          {
+            "group": "PostgreSQL Tutorial",
+            "pages": [
+              {
+                "title": "PostgreSQL Tutorial",
+                "href": "https://neon.com/postgresql/tutorial"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Resources",
+        "groups": [
+          {
+            "group": "Status",
+            "pages": [
+              "introduction/status"
+            ]
+          },
+          {
+            "group": "Support",
+            "pages": [
+              "introduction/support"
+            ]
+          },
+          {
+            "group": "Changelog",
+            "pages": [
+              "changelog"
+            ]
+          },
+          {
+            "group": "Roadmap",
+            "pages": [
+              "introduction/roadmap"
+            ]
+          },
+          {
+            "group": "Early access",
+            "pages": [
+              "introduction/early-access"
+            ]
+          },
+          {
+            "group": "Community",
+            "pages": [
+              "community/community-intro",
+              "community/contribution-guide",
+              "community/mermaid-diagrams",
+              "community/component-guide",
+              "community/component-specialized",
+              "community/component-icon-guide",
+              "community/component-architecture",
+              "community/ai-tools"
+            ]
+          },
+          {
+            "group": "Glossary",
+            "pages": [
+              "reference/glossary"
+            ]
+          },
+          {
+            "group": "RSS feeds",
+            "pages": [
+              "reference/feeds"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Platform integration",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "guides/platform-integration-overview"
+            ]
+          },
+          {
+            "group": "OAuth integration",
+            "pages": [
+              "guides/oauth-integration"
+            ]
+          },
+          {
+            "group": "Embedded Postgres",
+            "pages": [
+              "guides/embedded-postgres",
+              "guides/consumption-limits",
+              "guides/consumption-metrics",
+              "guides/consumption-metrics-legacy"
+            ]
+          },
+          {
+            "group": "Neon for AI Agents",
+            "pages": [
+              "introduction/agent-plan",
+              "guides/ai-agent-integration"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "workflows/claimable-database-integration"
             ]
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
     "light": "/logo/light.svg",
@@ -102,21 +1219,22 @@
   },
   "contextual": {
     "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "x": "https://x.com/neaborase",
+      "github": "https://github.com/neondatabase",
+      "discord": "https://discord.gg/92vNTzKDGp",
+      "linkedin": "https://linkedin.com/company/neon-inc"
     }
   }
 }

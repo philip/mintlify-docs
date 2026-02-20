@@ -1,0 +1,619 @@
+---
+title: Component guide
+subtitle: Most commonly used components for documentation writers
+description: >-
+  Step-by-step guide for using common MDX components in Neon documentation,
+  including best practices, syntax, and prop usage for effective content
+  organization and presentation.
+---
+
+A practical guide for the most commonly used MDX components in Neon documentation. This guide focuses on components you'll use most frequently when writing documentation.
+
+**What you will learn:**
+
+<p>How to use common MDX components in Neon docs</p>
+<p>How to choose between different components</p>
+<p>Best practices</p>
+<p>Proper syntax and prop usage</p>
+
+**Related topics**
+
+<a href="/community/component-specialized">Component Specialized Guide</a>
+<a href="/community/component-icon-guide">Component Icon Guide</a>
+<a href="/community/component-architecture">Component Architecture</a>
+<a href="/community/contribution-guide">Documentation Contribution Guide</a>
+
+## Quick navigation
+
+- [Essential components](#essential-components) - Most commonly used
+- [Tabbed content](#tabbed-content) - CodeTabs and Tabs for organized content
+- [Content organization](#content-organization) - Structure and navigation components
+- [Interactive elements](#interactive-elements) - UI elements and forms
+- [Common shared components](#common-shared-components) - Reusable content
+
+---
+
+## Essential components
+
+These are the most frequently used components in Neon docs.
+
+### Admonition
+
+Callouts for notes, warnings, and tips. There are six types available: `note` (default), `important`, `tip`, `info`, `warning`, `comingSoon`.
+
+    ```mdx
+
+<Warning title="Important">
+  Critical information requiring immediate attention.
+</Warning>
+```
+
+**Live preview:**
+
+<Warning title="Important">
+Critical information requiring immediate attention.
+</Warning>
+
+**All Admonition types:**
+
+<Note title="Note">
+Highlights information that users should take into account.
+</Note>
+
+<Warning>
+Crucial information necessary for users to succeed.
+</Warning>
+
+<Tip title="Pro tip">
+Optional information to help a user be more successful.
+</Tip>
+
+<Info>
+Information that helps users understand things better.
+</Info>
+
+<Warning>
+Critical content demanding immediate user attention due to potential risks.
+</Warning>
+
+<Info title="Coming Soon">
+Information about features that are coming soon.
+</Info>
+
+---
+
+### Steps
+
+Numbered step-by-step instructions split by `h2` headings.
+
+```mdx
+<Steps>
+
+## Get a Glass
+
+Take a clean glass from the cabinet or dish rack.
+
+## Turn on Tap
+
+Adjust the faucet to your preferred temperature and flow rate.
+
+## Fill and Drink
+
+Fill the glass to desired level and enjoy your water.
+
+</Steps>
+```
+
+**Live preview:**
+
+<Steps>
+
+## Get a Glass
+
+Take a clean glass from the cabinet or dish rack.
+
+## Turn on Tap
+
+Adjust the faucet to your preferred temperature and flow rate.
+
+## Fill and Drink
+
+Fill the glass to desired level and enjoy your water.
+
+</Steps>
+
+---
+
+## Tabbed content
+
+Components for organizing content into tabs.
+
+### CodeTabs
+
+Multi-language code examples with tabs.
+
+````mdx
+<CodeGroup>
+
+```javascript JavaScript
+const { Client } = require('pg');
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+});
+await client.connect();
+```
+
+```python Python
+import psycopg2
+import os
+
+conn = psycopg2.connect(os.environ["DATABASE_URL"])
+cur = conn.cursor()
+```
+
+```go Go
+import (
+    "database/sql"
+    _ "github.com/lib/pq"
+)
+
+db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+```
+
+</CodeGroup>
+````
+
+**Live preview:**
+
+<CodeGroup>
+
+```javascript JavaScript
+const { Client } = require('pg');
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+});
+await client.connect();
+```
+
+```python Python
+import psycopg2
+import os
+
+conn = psycopg2.connect(os.environ["DATABASE_URL"])
+cur = conn.cursor()
+```
+
+```go Go
+import (
+    "database/sql"
+    _ "github.com/lib/pq"
+)
+
+db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+```
+
+</CodeGroup>
+
+---
+
+### Tabs
+
+General tabbed content (not just code). For code-specific tabs, use [CodeTabs](#codetabs) instead.
+
+````mdx
+<Tabs>
+<Tab title="Console">
+Create a database using the Neon Console by navigating to your project dashboard and clicking "Create Database".
+</Tab>
+<Tab title="CLI">
+Use the Neon CLI to create a database:
+
+```bash
+neon databases create --name my-database
+```
+
+</Tab>
+<Tab title="API">
+Use the API to create a database:
+
+```bash
+curl -X POST https://console.neon.tech/api/v2/projects/my-project/databases \
+  -H "Authorization: Bearer $NEON_API_KEY"
+```
+
+</Tab>
+</Tabs>
+````
+
+**Live preview:**
+
+<Tabs>
+<Tab title="Console">
+Create a database using the Neon Console by navigating to your project dashboard and clicking "Create Database".
+</Tab>
+<Tab title="CLI">
+Use the Neon CLI to create a database:
+
+```bash
+neon databases create --name my-database
+```
+
+</Tab>
+<Tab title="API">
+Use the API to create a database:
+
+```bash
+curl -X POST https://console.neon.tech/api/v2/projects/my-project/databases \
+  -H "Authorization: Bearer $NEON_API_KEY"
+```
+
+</Tab>
+</Tabs>
+
+---
+
+## Content organization
+
+Components for structuring and organizing page content.
+
+### TechCards / DetailIconCards
+
+Technology cards with icons, titles, and descriptions. These components use different [icon systems](/community/component-icon-guide) - see the [comparison table](#techcards-vs-detailiconcards-vs-docslist) below to choose the right one.
+
+#### TechCards
+
+Standard technology cards layout using [TechCards icons](/community/component-icon-guide#techcards-icons):
+
+```mdx
+<CardGroup>
+
+    <Card title="Node.js" />
+    <Card title="Python" />
+    <Card title="Next.js" />
+
+</CardGroup>
+```
+
+**Live preview:**
+
+<CardGroup>
+
+  <Card title="Node.js" />
+  <Card title="Python" />
+  <Card title="Next.js" />
+
+</CardGroup>
+
+---
+
+#### DetailIconCards
+
+Alternative layout using [DetailIconCards icons](/community/component-icon-guide#detailiconcards-icons):
+
+```mdx
+<CardGroup>
+
+  <a
+    href="/ai/openai"
+    title="OpenAI integration"
+    description="Build AI features with OpenAI"
+    icon="openai"
+  >
+    OpenAI Integration
+  </a>
+  <a
+    href="/ai/langchain"
+    title="LangChain integration"
+    description="Create AI workflows with LangChain"
+    icon="langchain"
+  >
+    LangChain Integration
+  </a>
+  <a
+    href="/development"
+    title="Code development"
+    description="Development tools and practices"
+    icon="code"
+  >
+    Code Development
+  </a>
+  <a
+    href="/cloud/aws"
+    title="AWS integration"
+    description="Deploy and scale with AWS"
+    icon="aws"
+  >
+    AWS Integration
+  </a>
+
+</CardGroup>
+```
+
+**Live preview:**
+
+<CardGroup>
+
+<a href="/ai/openai" title="OpenAI integration" description="Build AI features with OpenAI" icon="openai">OpenAI Integration</a>
+<a href="/ai/langchain" title="LangChain integration" description="Create AI workflows with LangChain" icon="langchain">LangChain Integration</a>
+<a href="/development" title="Code development" description="Development tools and practices" icon="code">Code Development</a>
+<a href="/cloud/aws" title="AWS integration" description="Deploy and scale with AWS" icon="aws">AWS Integration</a>
+
+</CardGroup>
+
+---
+
+> DetailIconCards uses a different [icon system](/community/component-icon-guide#detailiconcards-icons) than [TechCards](/community/component-icon-guide#techcards-icons), which is why different icons are available.\_
+
+#### TechCards vs DetailIconCards vs DocsList
+
+Quick comparison to help you choose the right component:
+
+| Component                               | Use For                        | Icon System                                                                             | Layout      |
+| --------------------------------------- | ------------------------------ | --------------------------------------------------------------------------------------- | ----------- |
+| **[TechCards](#techcards)**             | Technology/framework showcases | [Technology logos](/community/component-icon-guide#techcards-icons) (colorful)     | Card grid   |
+| **[DetailIconCards](#detailiconcards)** | Feature/service showcases      | [Detail icons](/community/component-icon-guide#detailiconcards-icons) (monochrome) | Card grid   |
+| **[DocsList](#docslist)**               | Documentation links            | Checkbox (default), docs, or repo icon                                                  | Simple list |
+
+### DefinitionList
+
+Accessible term/definition lists for defining technical terms and concepts.
+
+```mdx
+Database URL
+: Connection string for your Neon database
+: Format: `postgresql://user:password@host:port/database`
+
+Connection Pool
+: A cache of database connections
+: Improves performance by reusing connections
+
+Branch
+: An isolated copy of your database
+: Used for development and testing
+```
+
+**Live preview:**
+
+Database URL
+: Connection string for your Neon database
+: Format: `postgresql://user:password@host:port/database`
+
+Connection Pool
+: A cache of database connections
+: Improves performance by reusing connections
+
+Branch
+: An isolated copy of your database
+: Used for development and testing
+
+---
+
+### DocsList
+
+Simple, clean lists for documentation links with optional theming. DocsList provides a lightweight alternative to card-based components for presenting navigation links or content summaries.
+
+**Props:**
+
+- `title` (string) - Optional title for the list section
+- `theme` (string) - Visual theme: `"docs"` (document icon), `"repo"` (repository icon), or default (checkbox icon)
+
+**Default Theme (Checkbox Icon):**
+
+**MDX Code:**
+
+```mdx
+**Related documentation**
+
+<a href="/guides/node">Node.js Connection Guide</a>
+  <a href="/guides/python">Python Connection Guide</a>
+  <a href="/api-reference">API Reference</a>
+  <a href="/cli">CLI Documentation</a>
+```
+
+**Live preview:**
+
+**Related documentation**
+
+<a href="/guides/node">Node.js Connection Guide</a>
+<a href="/guides/python">Python Connection Guide</a>
+<a href="/api-reference">API Reference</a>
+<a href="/cli">CLI Documentation</a>
+
+---
+
+### InfoBlock
+
+InfoBlock creates a multi-column layout for organizing related content sections. It's particularly useful for creating "at-a-glance" summaries at the top of documentation pages, combining learning objectives with related resources. Use two columns.
+
+**Key Features:**
+
+- Commonly paired with DocsList for structured content presentation
+- Ideal for page introductions and overview sections
+
+**Basic Two-Column Layout:**
+
+```mdx
+**What you will learn:**
+
+<p>How to view and modify data in the console</p>
+<p>Create an isolated database copy per developer</p>
+<p>Reset your branch to production when ready to start new work</p>
+
+**Related topics**
+
+<a href="/introduction/branching">About branching</a>
+<a href="/get-started/workflow-primer">Branching workflows</a>
+<a href="/get-started/connect-neon">Connect Neon to your stack</a>
+```
+
+**Renders as:**
+
+**What you will learn:**
+
+<p>How to view and modify data in the console</p>
+<p>Create an isolated database copy per developer</p>
+<p>Reset your branch to production when ready to start new work</p>
+
+**Related topics**
+
+<a href="/introduction/branching">About branching</a>
+<a href="/get-started/workflow-primer">Branching workflows</a>
+<a href="/get-started/connect-neon">Connect Neon to your stack</a>
+
+---
+
+## Interactive elements
+
+Components for user engagement and interaction.
+
+### CheckList
+
+Interactive checklists for setup guides and tutorials. CheckList uses CheckItem components internally.
+
+```mdx
+- **Create Neon account** — Sign up for a free Neon account at console.neon.tech [Learn more](#signup)
+- **Install dependencies** — Install the required packages for your project [Learn more](#install)
+- **Configure environment** — Set up your database connection string [Learn more](#config)
+- **Test connection** — Verify your application can connect to Neon [Learn more](#test)
+```
+
+**Live preview:**
+
+- **Create Neon account** — Sign up for a free Neon account at console.neon.tech [Learn more](#signup)
+- **Install dependencies** — Install the required packages for your project [Learn more](#install)
+- **Configure environment** — Set up your database connection string [Learn more](#config)
+- **Test connection** — Verify your application can connect to Neon [Learn more](#test)
+
+---
+
+### CheckItem
+
+Individual checklist items used within CheckList components.
+
+```mdx
+<CheckItem title="Task name" href="#anchor">
+  Description of the task or requirement
+</CheckItem>
+```
+
+---
+
+**Usage Notes:**
+
+- Always used within a `<CheckList>` component
+- `title` prop is required
+- `href` prop is optional for anchor linking
+- Content is the description text
+
+### CTA (Call to Action)
+
+Prominent call-to-action buttons for important actions.
+
+```mdx
+<Card title="Try Neon free" href="https://console.neon.tech/signup">
+Start building with serverless Postgres today. No credit card required.
+</Card>
+```
+
+**Live preview:**
+
+<Card title="Try Neon free" href="https://console.neon.tech/signup">
+Start building with serverless Postgres today. No credit card required.
+</Card>
+
+---
+
+### NeedHelp
+
+Support widget for getting assistance.
+
+```mdx
+<Snippet file="need-help.mdx" />
+```
+
+**Live preview:**
+
+<Snippet file="need-help.mdx" />
+
+---
+
+---
+
+## Common shared components
+
+Reusable content components that load from shared templates.
+
+### LinkAPIKey
+
+Link to API key management in the console.
+
+```mdx
+<Snippet file="link-a-p-i-key.mdx" />
+```
+
+**Live preview:**
+
+<Snippet file="link-a-p-i-key.mdx" />
+
+---
+
+### FeatureBetaProps
+
+Status indicator for beta features with custom feature name.
+
+```mdx
+{/* MIGRATION_FLAG: FeatureBetaProps - Parameterized shared content, Mintlify snippets don't support props */}
+<FeatureBetaProps feature_name="OpenTelemetry integration" />
+```
+
+**Live preview:**
+
+{/* MIGRATION_FLAG: FeatureBetaProps - Parameterized shared content, Mintlify snippets don't support props */}
+<FeatureBetaProps feature_name="OpenTelemetry integration" />
+
+---
+
+---
+
+## Best practices
+
+### Component selection
+
+- **[Admonition](#admonition)** for important callouts
+- **[Steps](#steps)** for sequential instructions
+- **[CodeTabs](#codetabs)** for multi-language examples
+- **[TechCards](#techcards)** for technology showcases
+- **[CheckList](#checklist)** for setup guides
+- **[InfoBlock](#infoblock)** for page introductions with multiple content sections
+- **[DocsList](#docslist)** for simple navigation lists with theming options
+
+### Content organization tips
+
+- Use [InfoBlock](#infoblock) at the top of pages to provide quick orientation
+- For [TechCards](#techcards), always check that the SVG file exists in `/public/images/technology-logos/`
+- For [DetailIconCards](#detailiconcards), use only icon names that are mapped in the component code
+- Choose [DocsList](#docslist) themes based on content type: default for tasks, `docs` for documentation, `repo` for code
+- Use the [comparison table](#techcards-vs-detailiconcards-vs-docslist) to choose between [TechCards](#techcards), [DetailIconCards](#detailiconcards), and [DocsList](#docslist)
+
+---
+
+## Component summary
+
+This guide covers the most commonly used MDX components in Neon documentation. Each component includes:
+
+- **MDX syntax**: Copy-paste ready code examples
+- **Live rendering**: See exactly how components appear
+- **Props documentation**: Available parameters and options
+- **Best practices**: When and how to use each component
+
+### Component categories
+
+| **Category**                                              | **Components**                                                                                                                                                              | **Use Case**                           |
+| --------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
+| **[Essential](#essential-components)**                    | [Admonition](#admonition), [Steps](#steps)                                                                                                                                  | Most commonly used components          |
+| **[Tabbed Content](#tabbed-content)**                     | [CodeTabs](#codetabs), [Tabs](#tabs)                                                                                                                                        | Organizing content into tabs           |
+| **[Content organization](#content-organization)**         | [TechCards](#techcards--detailiconcards), [DetailIconCards](#techcards--detailiconcards), [DefinitionList](#definitionlist), [DocsList](#docslist), [InfoBlock](#infoblock) | Structure and navigation               |
+| **[Interactive elements](#interactive-elements)**         | [CheckList](#checklist), [CheckItem](#checkitem), [CTA](#cta-call-to-action), [NeedHelp](#needhelp)                                                                         | User engagement and interaction        |
+| **[Common shared components](#common-shared-components)** | [LinkAPIKey](#linkapikey), [FeatureBetaProps](#featurebetaprops)                                                                                                            | Reusable content and status indicators |
+
+For specialized components and specific use cases, see the [Component Specialized Guide](/community/component-specialized).

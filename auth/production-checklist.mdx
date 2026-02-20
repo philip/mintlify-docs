@@ -1,0 +1,65 @@
+---
+title: Auth production checklist
+subtitle: Required configuration before launching with Neon Auth
+description: >-
+  Step-by-step guide for configuring essential settings before launching an
+  application with Neon Auth, including trusted domains, custom email providers,
+  OAuth credentials, email verification, and security measures.
+---
+
+{/* MIGRATION_FLAG: FeatureBetaProps - Parameterized shared content, Mintlify snippets don't support props */}
+<FeatureBetaProps feature_name="Neon Auth with Better Auth" />
+
+Complete these steps before taking your application to production with Neon Auth.
+
+- **1. Configure trusted domains** — Add your production domain(s) to enable OAuth and email verification redirects. See [Configure trusted domains](/auth/guides/configure-domains). [Learn more](/auth/guides/configure-domains)
+- **2. Set up custom email provider** — Replace shared SMTP (`auth@mail.myneon.app`) with your own email service for reliable delivery and higher limits. A custom email provider is also required if you want to use verification links instead of verification codes. See [Email provider configuration](#email-provider) below. [Learn more](/auth/production-checklist#email-provider)
+- **3. Configure OAuth credentials (if using OAuth)** — Set up your own Google and GitHub OAuth apps to replace shared development keys. See [OAuth production setup](/auth/guides/setup-oauth#production-setup). [Learn more](/auth/guides/setup-oauth#production-setup)
+- **4. Enable email verification (recommended)** — **Email verification is not enabled by default.** Since anyone can sign up for your application, enabling email verification adds an important verification step to ensure users own their email address. See [Email verification guide](/auth/guides/email-verification). [Learn more](/auth/guides/email-verification)
+- **5. Disable localhost access** — Disable the "Allow Localhost" setting in your project's **Settings** → **Auth** page. This setting is enabled by default for development but should be disabled in production to improve security. See [Localhost access](#localhost-access) below. [Learn more](/auth/production-checklist#localhost-access)
+
+## Email provider (#email-provider)
+
+Neon Auth uses a shared SMTP provider (`auth@mail.myneon.app`) by default for development and testing. For production, configure your own email provider for better deliverability and higher sending limits.
+
+### Configure custom SMTP
+
+In your project's **Settings** → **Auth** page, configure your email provider:
+
+1. Select **Custom SMTP provider**
+2. Enter your SMTP credentials:
+   - **Host**: Your SMTP server hostname (for example, `smtp.gmail.com`)
+   - **Port**: SMTP port (typically `465` for SSL or `587` for TLS)
+   - **Username**: Your SMTP username
+   - **Password**: Your SMTP password or app-specific password
+   - **Sender email**: Email address to send from
+   - **Sender name**: Display name for sent emails
+3. Click **Save**
+
+### Email provider requirements
+
+- **Verification links**: Require a custom email provider
+- **Verification codes**: Work with shared or custom email providers
+- **Password reset**: Works with shared or custom email providers
+
+<Note>
+The shared email provider (`auth@mail.myneon.app`) is suitable for development and testing. For production applications, use a custom email provider for better deliverability and to avoid rate limits.
+</Note>
+
+## Localhost access (#localhost-access)
+
+The "Allow Localhost" setting in your project's **Settings** → **Auth** page is enabled by default to allow authentication requests from localhost during development.
+
+### Disable for production
+
+For production environments, disable this setting to improve security:
+
+1. Go to **Settings** → **Auth** in your Neon project
+2. Find the **Allow Localhost** toggle
+3. Disable the toggle
+
+<Warning>
+Only enable "Allow Localhost" for local development. Disabling this setting in production prevents unauthorized authentication requests from localhost, improving your application's security posture.
+</Warning>
+
+<Snippet file="need-help.mdx" />
