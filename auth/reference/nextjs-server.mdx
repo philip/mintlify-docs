@@ -12,7 +12,7 @@ Reference documentation for the Neon Auth Next.js server SDK (`@neondatabase/aut
 
 For client-side authentication, see the [Client SDK reference](/reference/javascript-sdk). For UI components, see the [UI Components reference](/auth/reference/ui-components).
 
-## Installation {#installation}
+## Installation
 
 Install the Neon Auth package in your Next.js project using npm, yarn, pnpm, or bun.
 
@@ -20,7 +20,7 @@ Install the Neon Auth package in your Next.js project using npm, yarn, pnpm, or 
 npm install @neondatabase/auth@latest
 ```
 
-## Environment variables {#environment-variables}
+## Environment variables
 
 Configure these environment variables in your `.env.local` file:
 
@@ -37,7 +37,7 @@ NEON_AUTH_BASE_URL=https://your-neon-auth-url.neon.tech
 NEON_AUTH_COOKIE_SECRET=your-secret-at-least-32-characters-long
 ```
 
-## createNeonAuth() {#createneonauth}
+## createNeonAuth()
 
 `createNeonAuth(config)`
 
@@ -71,7 +71,7 @@ export const auth = createNeonAuth({
 });
 ```
 
-## auth.handler() {#auth-handler}
+## auth.handler()
 
 `auth.handler()`
 
@@ -96,7 +96,7 @@ import { auth } from '@/lib/auth/server';
 export const { GET, POST } = auth.handler();
 ```
 
-## auth.middleware() {#auth-middleware}
+## auth.middleware()
 
 `auth.middleware(options)`
 
@@ -136,7 +136,7 @@ export const config = {
 };
 ```
 
-## auth.getSession() {#auth-getsession}
+## auth.getSession()
 
 `auth.getSession()`
 
@@ -207,7 +207,7 @@ export async function GET() {
 ```
 
 </CodeGroup>
-## auth.signIn.email() {#auth-signin-email}
+## auth.signIn.email()
 
 `auth.signIn.email(credentials)`
 
@@ -241,7 +241,7 @@ export async function signIn(formData: FormData) {
 }
 ```
 
-## auth.signIn.social() {#auth-signin-social}
+## auth.signIn.social()
 
 `auth.signIn.social(options)`
 
@@ -266,7 +266,7 @@ const { data, error } = await auth.signIn.social({
 });
 ```
 
-## auth.signIn.emailOtp() {#auth-signin-emailotp}
+## auth.signIn.emailOtp()
 
 `auth.signIn.emailOtp(credentials)`
 
@@ -291,7 +291,7 @@ const { data, error } = await auth.signIn.emailOtp({
 });
 ```
 
-## auth.signUp.email() {#auth-signup-email}
+## auth.signUp.email()
 
 `auth.signUp.email(credentials)`
 
@@ -318,7 +318,7 @@ const { data, error } = await auth.signUp.email({
 });
 ```
 
-## auth.signOut() {#auth-signout}
+## auth.signOut()
 
 `auth.signOut()`
 
@@ -335,7 +335,7 @@ export async function signOut() {
 }
 ```
 
-## auth.updateUser() {#auth-updateuser}
+## auth.updateUser()
 
 `auth.updateUser(data)`
 
@@ -360,7 +360,7 @@ const { data, error } = await auth.updateUser({
 });
 ```
 
-## auth.changePassword() {#auth-changepassword}
+## auth.changePassword()
 
 `auth.changePassword(passwords)`
 
@@ -387,7 +387,7 @@ const { data, error } = await auth.changePassword({
 });
 ```
 
-## auth.sendVerificationEmail() {#auth-sendverificationemail}
+## auth.sendVerificationEmail()
 
 `auth.sendVerificationEmail(options)`
 
@@ -410,7 +410,7 @@ const { data, error } = await auth.sendVerificationEmail({
 });
 ```
 
-## auth.deleteUser() {#auth-deleteuser}
+## auth.deleteUser()
 
 `auth.deleteUser()`
 
@@ -420,7 +420,7 @@ Delete the current user account. This action is irreversible.
 const { data, error } = await auth.deleteUser();
 ```
 
-## auth.emailOtp.sendVerificationOtp() {#auth-emailotp-sendverificationotp}
+## auth.emailOtp.sendVerificationOtp()
 
 `auth.emailOtp.sendVerificationOtp(options)`
 
@@ -443,7 +443,7 @@ const { data, error } = await auth.emailOtp.sendVerificationOtp({
 });
 ```
 
-## auth.emailOtp.verifyEmail() {#auth-emailotp-verifyemail}
+## auth.emailOtp.verifyEmail()
 
 `auth.emailOtp.verifyEmail(credentials)`
 
@@ -468,7 +468,7 @@ const { data, error } = await auth.emailOtp.verifyEmail({
 });
 ```
 
-## auth.listSessions() {#auth-listsessions}
+## auth.listSessions()
 
 `auth.listSessions()`
 
@@ -478,7 +478,7 @@ List all active sessions for the current user.
 const { data, error } = await auth.listSessions();
 ```
 
-## auth.revokeSession() {#auth-revokesession}
+## auth.revokeSession()
 
 `auth.revokeSession(options)`
 
@@ -501,7 +501,7 @@ const { data, error } = await auth.revokeSession({
 });
 ```
 
-## auth.revokeOtherSessions() {#auth-revokeothersessions}
+## auth.revokeOtherSessions()
 
 `auth.revokeOtherSessions()`
 
@@ -511,7 +511,7 @@ Revoke all sessions except the current one.
 const { data, error } = await auth.revokeOtherSessions();
 ```
 
-## auth.organization.create() {#auth-organization-create}
+## auth.organization.create()
 
 `auth.organization.create(data)`
 
@@ -536,7 +536,7 @@ const { data, error } = await auth.organization.create({
 });
 ```
 
-## auth.organization.list() {#auth-organization-list}
+## auth.organization.list()
 
 `auth.organization.list()`
 
@@ -546,7 +546,7 @@ List the current user's organizations.
 const { data, error } = await auth.organization.list();
 ```
 
-## auth.organization.inviteMember() {#auth-organization-invitemember}
+## auth.organization.inviteMember()
 
 `auth.organization.inviteMember(options)`
 
@@ -573,7 +573,7 @@ const { data, error } = await auth.organization.inviteMember({
 });
 ```
 
-## auth.admin.listUsers() {#auth-admin-listusers}
+## auth.admin.listUsers()
 
 `auth.admin.listUsers(options)`
 
@@ -598,7 +598,7 @@ const { data, error } = await auth.admin.listUsers({
 });
 ```
 
-## auth.admin.banUser() {#auth-admin-banuser}
+## auth.admin.banUser()
 
 `auth.admin.banUser(options)`
 
@@ -623,7 +623,7 @@ const { data, error } = await auth.admin.banUser({
 });
 ```
 
-## auth.admin.setRole() {#auth-admin-setrole}
+## auth.admin.setRole()
 
 `auth.admin.setRole(options)`
 
@@ -648,7 +648,7 @@ const { data, error } = await auth.admin.setRole({
 });
 ```
 
-## Performance features {#performance-features}
+## Performance features
 
 ### Session caching
 
@@ -676,7 +676,7 @@ const { data: session } = await auth.getSession();
 const { data: session2 } = await auth.getSession();
 ```
 
-## Configuration reference {#configuration-reference}
+## Configuration reference
 
 Complete configuration options for `createNeonAuth()`:
 
@@ -703,7 +703,7 @@ export const auth = createNeonAuth({
 });
 ```
 
-## Project structure {#project-structure}
+## Project structure
 
 Recommended file structure for Next.js with Neon Auth:
 

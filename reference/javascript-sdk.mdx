@@ -17,7 +17,7 @@ Authentication is provided through an adapter-based architecture, letting you wo
 
 Database query methods (`client.from()`, `.select()`, etc.) work the same regardless of which adapter you use.
 
-## Installation {#installation}
+## Installation
 
 Install the TypeScript SDK in your project using npm, yarn, pnpm, or bun.
 
@@ -25,7 +25,7 @@ Install the TypeScript SDK in your project using npm, yarn, pnpm, or bun.
 npm install @neondatabase/neon-js
 ```
 
-## Initialize the client {#initializing}
+## Initialize the client
 
 `createClient(), createAuthClient()`
 
@@ -96,7 +96,7 @@ const client = createClient({
 ```
 
 </CodeGroup>
-## Create a new user account {#auth-signup}
+## Create a new user account
 
 `auth.signUp.email()`
 
@@ -134,7 +134,7 @@ console.log('User created:', result.data.user)
 
 ```
 
-## Sign in with email and password {#auth-signinwithpassword}
+## Sign in with email and password
 
 `auth.signIn.email()`
 
@@ -170,7 +170,7 @@ console.log('Signed in:', result.data.user.email)
 
 ```
 
-## Sign in with OAuth provider {#auth-signinwithoauth}
+## Sign in with OAuth provider
 
 `auth.signIn.social()`
 
@@ -217,7 +217,7 @@ await client.auth.signIn.social({
 ```
 
 </CodeGroup>
-## Sign out {#auth-signout}
+## Sign out
 
 `auth.signOut()`
 
@@ -234,7 +234,7 @@ console.error('Sign out error:', error.message)
 
 ```
 
-## Get current session {#auth-getsession}
+## Get current session
 
 `auth.getSession()`
 
@@ -253,7 +253,7 @@ console.log('No active session')
 
 ```
 
-## Update user profile {#auth-updateuser}
+## Update user profile
 
 `auth.updateUser()`
 
@@ -277,7 +277,7 @@ const { data, error } = await client.auth.updateUser({
 })
 ```
 
-## Send verification OTP code {#auth-sendverificationotp}
+## Send verification OTP code
 
 `auth.emailOtp.sendVerificationOtp()`
 
@@ -308,7 +308,7 @@ console.error('Failed to send OTP:', error.message)
 
 ```
 
-## Sign in with OTP code {#auth-signinwithotp}
+## Sign in with OTP code
 
 `auth.signIn.emailOtp()`
 
@@ -341,7 +341,7 @@ console.log('Signed in:', data.user.email)
 
 ```
 
-## Verify email with OTP {#auth-verifyemailotp}
+## Verify email with OTP
 
 `auth.emailOtp.verifyEmail()`
 
@@ -374,7 +374,7 @@ console.log('Email verified successfully')
 
 ```
 
-## Check verification OTP code {#auth-checkverificationotp}
+## Check verification OTP code
 
 `auth.emailOtp.checkVerificationOtp()`
 
@@ -407,7 +407,7 @@ console.error('Invalid OTP code')
 
 ```
 
-## Send verification email {#auth-sendverificationemail}
+## Send verification email
 
 `auth.sendVerificationEmail()`
 
@@ -437,7 +437,7 @@ console.error('Failed to send verification email:', error.message)
 
 ```
 
-## Verify email address {#auth-verifyemail}
+## Verify email address
 
 `auth.verifyEmail()`
 
@@ -469,7 +469,7 @@ console.error('Email verification failed:', error.message)
 
 ```
 
-## Request password reset {#auth-requestpasswordreset}
+## Request password reset
 
 `auth.requestPasswordReset()`
 
@@ -499,7 +499,7 @@ console.error('Failed to send password reset email:', error.message)
 
 ```
 
-## Fetch data from a table {#select}
+## Fetch data from a table
 
 `from().select()`
 
@@ -526,7 +526,7 @@ const { data, error } = await client.from('todos').select('*, owner:users(*)');
 ```
 
 </CodeGroup>
-## Insert data into a table {#insert}
+## Insert data into a table
 
 `from().insert()`
 
@@ -554,7 +554,7 @@ const { data, error } = await client
 ```
 
 </CodeGroup>
-## Update existing rows {#update}
+## Update existing rows
 
 `from().update()`
 
@@ -569,7 +569,7 @@ const { data, error } = await client
   .select()
 ```
 
-## Delete rows from a table {#delete}
+## Delete rows from a table
 
 `from().delete()`
 
@@ -594,7 +594,7 @@ const { error } = await client
   .eq('id', 1)
 ```
 
-## Call a stored procedure {#rpc}
+## Call a stored procedure
 
 `.rpc()`
 
@@ -616,7 +616,7 @@ console.log('Stats:', data)
 
 ```
 
-## Column is equal to a value {#eq}
+## Column is equal to a value
 
 `.eq(column, value)`
 
@@ -630,7 +630,7 @@ const { data, error } = await client
   .eq('completed', true)
 ```
 
-## Column is not equal to a value {#neq}
+## Column is not equal to a value
 
 `.neq(column, value)`
 
@@ -644,7 +644,7 @@ const { data, error } = await client
   .neq('status', 'archived')
 ```
 
-## Column is greater than a value {#gt}
+## Column is greater than a value
 
 `.gt(column, value)`
 
@@ -658,7 +658,7 @@ const { data, error } = await client
   .gt('priority', 5)
 ```
 
-## Column is less than a value {#lt}
+## Column is less than a value
 
 `.lt(column, value)`
 
@@ -672,7 +672,7 @@ const { data, error } = await client
   .lt('priority', 10)
 ```
 
-## Order results by column {#order}
+## Order results by column
 
 `.order(column, options)`
 
@@ -696,7 +696,7 @@ const { data, error } = await client
 ```
 
 </CodeGroup>
-## Limit number of results {#limit}
+## Limit number of results
 
 `.limit(count)`
 
@@ -710,7 +710,7 @@ const { data, error } = await client
   .limit(10)
 ```
 
-## Column is greater than or equal to a value {#gte}
+## Column is greater than or equal to a value
 
 `.gte(column, value)`
 
@@ -724,7 +724,7 @@ const { data, error } = await client
   .gte('priority', 5)
 ```
 
-## Column is less than or equal to a value {#lte}
+## Column is less than or equal to a value
 
 `.lte(column, value)`
 
@@ -738,7 +738,7 @@ const { data, error } = await client
   .lte('priority', 10)
 ```
 
-## Column matches a pattern {#like}
+## Column matches a pattern
 
 `.like(column, pattern)`
 
@@ -753,7 +753,7 @@ const { data, error } = await client
   .like('title', '%groceries%')
 ```
 
-## Column matches a pattern (case-insensitive) {#ilike}
+## Column matches a pattern (case-insensitive)
 
 `.ilike(column, pattern)`
 
@@ -766,7 +766,7 @@ const { data, error } = await client
   .ilike('title', '%groceries%')
 ```
 
-## Column is null or not null {#is}
+## Column is null or not null
 
 `.is(column, value)`
 
@@ -784,7 +784,7 @@ const { data, error } = await client.from('todos').select('*').is('completed_at'
 ```
 
 </CodeGroup>
-## Column value is in an array {#in}
+## Column value is in an array
 
 `.in(column, array)`
 
@@ -798,7 +798,7 @@ const { data, error } = await client
   .in('status', ['pending', 'in-progress'])
 ```
 
-## Array or JSONB column contains value {#contains}
+## Array or JSONB column contains value
 
 `.contains(column, value)`
 
@@ -812,7 +812,7 @@ const { data, error } = await client
   .contains('tags', ['urgent'])
 ```
 
-## Column value is between two values {#range}
+## Column value is between two values
 
 `.range(column, start, end)`
 
