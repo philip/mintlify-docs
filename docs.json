@@ -5,6 +5,7 @@
   "seo": {
     "indexing": "all"
   },
+  "codeblocks": "system",
   "colors": {
     "primary": "#00E599",
     "light": "#00E599",
@@ -1285,12 +1286,14 @@
             ]
           },
           {
-            "group": "Null title bug",
+            "group": "Null title bug (auto-generated)",
+            "openapi": "bugs/openapi-bug-repro.json"
+          },
+          {
+            "group": "Null title bug (MDX approach)",
             "openapi": "bugs/openapi-bug-repro.json",
             "pages": [
-              "GET /plants",
-              "GET /plants/ghost",
-              "GET /plants/minimal"
+              "bugs/mdx-null-title"
             ]
           }
         ]
