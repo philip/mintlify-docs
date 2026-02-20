@@ -7,16 +7,17 @@ description: >-
   compute resources for Postgres instances.
 ---
 
-**What you will learn:**
-
-<p>How Neon's autoscaling architecture is structured</p>
-<p>The role of key components like the autoscaler-agent and Kubernetes scheduler</p>
-
-**Related topics**
-
-<a href="/introduction/autoscaling">Introduction to autoscaling</a>
-<a href="/guides/autoscaling-guide">Enabling autoscaling</a>
-<a href="/guides/autoscaling-algorithm">How the algorithm works</a>
+<CardGroup cols={2}>
+<Card title="What you will learn">
+- How Neon's autoscaling architecture is structured
+- The role of key components like the autoscaler-agent and Kubernetes scheduler
+</Card>
+<Card title="Related topics">
+- [Introduction to autoscaling](/introduction/autoscaling)
+- [Enabling autoscaling](/guides/autoscaling-guide)
+- [How the algorithm works](/guides/autoscaling-algorithm)
+</Card>
+</CardGroup>
 
 A Neon project can have one or more computes, each representing an individual Postgres instance. Storage is decoupled from these computes, meaning that the Postgres servers executing queries are physically separate from the data storage location. This separation offers numerous advantages, including enablement of Neon's autoscaling feature.
 

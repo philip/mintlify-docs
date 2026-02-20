@@ -7,15 +7,16 @@ description: >-
   ORM.
 ---
 
-**What you will learn:**
-
-<p>How the Data API uses Row-Level Security</p>
-
-**Related docs**
-
-<a href="/data-api/get-started">Data API</a>
-  <a href="/guides/rls-drizzle">Simplify RLS with Drizzle</a>
-  <a href="/postgresql/postgresql-administration/postgresql-row-level-security">Postgres RLS Tutorial</a>
+<CardGroup cols={2}>
+<Card title="What you will learn">
+- How the Data API uses Row-Level Security
+</Card>
+<Card title="Related docs">
+- [Data API](/data-api/get-started)
+- [Simplify RLS with Drizzle](/guides/rls-drizzle)
+- [Postgres RLS Tutorial](/postgresql/postgresql-administration/postgresql-row-level-security)
+</Card>
+</CardGroup>
 
 Row-Level Security (RLS) is a Postgres feature that controls access to individual rows in a table based on the current user. Here's a simple example that limits the `notes` a user can see by matching rows where their `user_id` matches the session's `auth.user_id()`:
 
