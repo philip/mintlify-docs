@@ -116,19 +116,34 @@ Some pages have massive multi-paragraph descriptions dumped into `llms.txt`, inc
 
 ### Root cause
 
-The `llms.txt` description comes from the **frontmatter `description` field**. For OpenAPI-generated pages, Mintlify populates this from the operation's `description` field in the OpenAPI spec. When spec authors put extensive Markdown content (with `###` headings, lists, etc.) in the operation `description`, it all ends up verbatim in `llms.txt`.
+Mintlify uses the OpenAPI operation's `description` field as the `llms.txt` description (the text after the colon on each line). When spec authors write extensive Markdown content (with `###` headings, lists, etc.) in the operation `description`, it all ends up verbatim in `llms.txt`.
 
 <Note>The OpenAPI `summary` field is already used as the page title (link text in llms.txt). The `description` field is used as the llms.txt description (text after the colon). These are separate concerns.</Note>
 
 ### How to reproduce
 
-Set a large frontmatter `description` containing Markdown structure:
+Add an operation with a verbose `description` to your OpenAPI spec:
 
 ```yaml
----
-title: "Webhook events"
-description: "Fires webhooks for all lifecycle events.\n\n### Event Types\n\n**Events**:\n- item.registered\n- item.match.found\n- item.match.confirmed\n\n### Webhook Signature Verification\nAll webhooks include cryptographic signatures.\n\n### Retry Policy\nFailed deliveries are retried with exponential backoff."
----
+paths:
+  /webhooks/subscriptions:
+    post:
+      summary: Create webhook subscription
+      description: >
+        Subscribe to real-time transfer status events.
+
+        ### Event Types
+
+        **Events**:
+        - item.registered
+        - item.match.found
+        - item.match.confirmed
+
+        ### Webhook Signature Verification
+        All webhooks include cryptographic signatures.
+
+        ### Retry Policy
+        Failed deliveries are retried with exponential backoff.
 ```
 
 The entire `description` value (including `###` headings, bullet lists, and multiple paragraphs) is dumped verbatim into `llms.txt` as a single line.
