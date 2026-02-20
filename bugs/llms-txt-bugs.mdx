@@ -205,18 +205,13 @@ client = mylib.Client(api_key="sk_live_abc123")
 Generated `.md` output:
 
 ````markdown
-```python Python theme={"system"}
+```python theme={null}
 import mylib
 client = mylib.Client(api_key="sk_live_abc123")
 ```
 ````
 
-The value changes based on `docs.json` configuration:
-
-- **No codeblocks config:** `theme={null}`
-- **With `"codeblocks": "system"`:** `theme={"system"}`
-
-The `.md` also inserts the language label (e.g., `Python`) into the info string. Tools consuming the output will see `python Python theme={"system"}` as the code fence info string, which can confuse language detection.
+Every code block in the `.md` output has `theme={null}` appended to the info string. Tools consuming the output will see `python theme={null}` as the code fence info string, which can confuse language detection.
 
 ### How to reproduce
 
