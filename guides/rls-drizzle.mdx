@@ -12,19 +12,20 @@ redirect_from:
   - /docs/guides/neon-rls-drizzle
 ---
 
-**What you'll learn**
-
-<p>How to simplify Row-Level Security using `crudPolicy`</p>
-<p>Common RLS patterns with Drizzle</p>
-<p>How to use custom Postgres roles with your policies</p>
-<p>How to use Drizzle RLS with the Data API</p>
-<p>How to use Drizzle RLS with the serverless driver</p>
-
-**Related docs**
-
-<a href="/guides/row-level-security">Row-Level Security with Neon</a>
-  <a href="/data-api/get-started">Data API</a>
-  <a href="https://orm.drizzle.team/docs/rls">RLS in Drizzle</a>
+<CardGroup cols={2}>
+<Card title="What you'll learn">
+- How to simplify Row-Level Security using `crudPolicy`
+- Common RLS patterns with Drizzle
+- How to use custom Postgres roles with your policies
+- How to use Drizzle RLS with the Data API
+- How to use Drizzle RLS with the serverless driver
+</Card>
+<Card title="Related docs">
+- [Row-Level Security with Neon](/guides/row-level-security)
+- [Data API](/data-api/get-started)
+- [RLS in Drizzle](https://orm.drizzle.team/docs/rls)
+</Card>
+</CardGroup>
 
 Row-Level Security (RLS) is an important last line of defense for protecting your data at the database level. It ensures that users can only access the data they are permitted to see. However, implementing RLS requires writing and maintaining separate SQL policies for each CRUD operation (Create, Read, Update, Delete), which can be both tedious and error-prone.
 

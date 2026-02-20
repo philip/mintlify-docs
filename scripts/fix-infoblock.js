@@ -7,35 +7,22 @@ const { execSync } = require('child_process');
 const ROOT = path.resolve(__dirname, '..');
 
 const files = execSync(
-  `rg -l "\\*\\*What you will learn" --glob "*.mdx" "${ROOT}"`,
+  `rg -l "\\*\\*What you" --glob "*.mdx" "${ROOT}"`,
   { encoding: 'utf8' }
 ).trim().split('\n').filter(Boolean);
 
 console.log(`Found ${files.length} files with InfoBlock pattern\n`);
 
-// Skip community component docs that document the old pattern
-const SKIP = [
-  'community/component-guide.mdx',
-  'community/component-icon-guide.mdx',
-  'community/component-architecture.mdx',
-  'community/component-specialized.mdx',
-];
-
 let changed = 0;
 
 for (const file of files) {
   const relPath = path.relative(ROOT, file);
-  if (SKIP.some(s => relPath === s)) {
-    console.log(`  Skipped (component docs): ${relPath}`);
-    continue;
-  }
-
   let content = fs.readFileSync(file, 'utf8');
   const original = content;
 
-  // Find the InfoBlock region: starts with **What you will learn
+  // Find the InfoBlock region: starts with **What you...** (various phrasings)
   // and ends before the next paragraph of regular text or ## heading
-  const infoBlockRegex = /(\*\*What you will learn:\*\*\n)([\s\S]*?)(?=\n[A-Z\[]|\n##|\n<(?!a |p>))/;
+  const infoBlockRegex = /(\*\*What you[^*]+\*\*\s*\n)([\s\S]*?)(?=\n[A-Z\[]|\n##|\n<(?!a |p>))/;
   const match = content.match(infoBlockRegex);
 
   if (!match) {
@@ -68,8 +55,8 @@ for (const file of files) {
   for (const section of sections) {
     const items = [];
 
-    // Extract <p> items (for "What you will learn")
-    const pRegex = /<p>([^<]+)<\/p>/g;
+    // Extract <p> items (for "What you will learn") - allow inline markdown
+    const pRegex = /<p>(.*?)<\/p>/g;
     let pMatch;
     while ((pMatch = pRegex.exec(section.body)) !== null) {
       items.push(`- ${pMatch[1].trim()}`);

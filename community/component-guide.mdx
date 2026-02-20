@@ -9,19 +9,20 @@ description: >-
 
 A practical guide for the most commonly used MDX components in Neon documentation. This guide focuses on components you'll use most frequently when writing documentation.
 
-**What you will learn:**
-
-<p>How to use common MDX components in Neon docs</p>
-<p>How to choose between different components</p>
-<p>Best practices</p>
-<p>Proper syntax and prop usage</p>
-
-**Related topics**
-
-<a href="/community/component-specialized">Component Specialized Guide</a>
-<a href="/community/component-icon-guide">Component Icon Guide</a>
-<a href="/community/component-architecture">Component Architecture</a>
-<a href="/community/contribution-guide">Documentation Contribution Guide</a>
+<CardGroup cols={2}>
+<Card title="What you will learn">
+- How to use common MDX components in Neon docs
+- How to choose between different components
+- Best practices
+- Proper syntax and prop usage
+</Card>
+<Card title="Related topics">
+- [Component Specialized Guide](/community/component-specialized)
+- [Component Icon Guide](/community/component-icon-guide)
+- [Component Architecture](/community/component-architecture)
+- [Documentation Contribution Guide](/community/contribution-guide)
+</Card>
+</CardGroup>
 
 ## Quick navigation
 
@@ -297,7 +298,7 @@ Alternative layout using [DetailIconCards icons](/community/component-icon-guide
     href="/ai/openai"
     title="OpenAI integration"
     description="Build AI features with OpenAI"
-    icon="openai"
+    icon="/images/icons/openai.svg"
   >
     OpenAI Integration
   </a>
@@ -305,7 +306,7 @@ Alternative layout using [DetailIconCards icons](/community/component-icon-guide
     href="/ai/langchain"
     title="LangChain integration"
     description="Create AI workflows with LangChain"
-    icon="langchain"
+    icon="/images/icons/langchain.svg"
   >
     LangChain Integration
   </a>
@@ -313,7 +314,7 @@ Alternative layout using [DetailIconCards icons](/community/component-icon-guide
     href="/development"
     title="Code development"
     description="Development tools and practices"
-    icon="code"
+    icon="/images/icons/code.svg"
   >
     Code Development
   </a>
@@ -321,7 +322,7 @@ Alternative layout using [DetailIconCards icons](/community/component-icon-guide
     href="/cloud/aws"
     title="AWS integration"
     description="Deploy and scale with AWS"
-    icon="aws"
+    icon="/images/icons/aws.svg"
   >
     AWS Integration
   </a>
@@ -333,10 +334,10 @@ Alternative layout using [DetailIconCards icons](/community/component-icon-guide
 
 <CardGroup>
 
-<a href="/ai/openai" title="OpenAI integration" description="Build AI features with OpenAI" icon="openai">OpenAI Integration</a>
-<a href="/ai/langchain" title="LangChain integration" description="Create AI workflows with LangChain" icon="langchain">LangChain Integration</a>
-<a href="/development" title="Code development" description="Development tools and practices" icon="code">Code Development</a>
-<a href="/cloud/aws" title="AWS integration" description="Deploy and scale with AWS" icon="aws">AWS Integration</a>
+<a href="/ai/openai" title="OpenAI integration" description="Build AI features with OpenAI" icon="/images/icons/openai.svg">OpenAI Integration</a>
+<a href="/ai/langchain" title="LangChain integration" description="Create AI workflows with LangChain" icon="/images/icons/langchain.svg">LangChain Integration</a>
+<a href="/development" title="Code development" description="Development tools and practices" icon="/images/icons/code.svg">Code Development</a>
+<a href="/cloud/aws" title="AWS integration" description="Deploy and scale with AWS" icon="/images/icons/aws.svg">AWS Integration</a>
 
 </CardGroup>
 
@@ -423,42 +424,39 @@ Simple, clean lists for documentation links with optional theming. DocsList prov
 
 ### InfoBlock
 
-InfoBlock creates a multi-column layout for organizing related content sections. It's particularly useful for creating "at-a-glance" summaries at the top of documentation pages, combining learning objectives with related resources. Use two columns.
-
-**Key Features:**
-
-- Commonly paired with DocsList for structured content presentation
-- Ideal for page introductions and overview sections
+Use `<CardGroup cols={2}>` with `<Card>` components to create a two-column intro layout at the top of documentation pages, combining learning objectives with related resources.
 
 **Basic Two-Column Layout:**
 
 ```mdx
-**What you will learn:**
-
-<p>How to view and modify data in the console</p>
-<p>Create an isolated database copy per developer</p>
-<p>Reset your branch to production when ready to start new work</p>
-
-**Related topics**
-
-<a href="/introduction/branching">About branching</a>
-<a href="/get-started/workflow-primer">Branching workflows</a>
-<a href="/get-started/connect-neon">Connect Neon to your stack</a>
+<CardGroup cols={2}>
+<Card title="What you will learn">
+- How to view and modify data in the console
+- Create an isolated database copy per developer
+- Reset your branch to production when ready to start new work
+</Card>
+<Card title="Related topics">
+- [About branching](/introduction/branching)
+- [Branching workflows](/get-started/workflow-primer)
+- [Connect Neon to your stack](/get-started/connect-neon)
+</Card>
+</CardGroup>
 ```
 
 **Renders as:**
 
-**What you will learn:**
-
-<p>How to view and modify data in the console</p>
-<p>Create an isolated database copy per developer</p>
-<p>Reset your branch to production when ready to start new work</p>
-
-**Related topics**
-
-<a href="/introduction/branching">About branching</a>
-<a href="/get-started/workflow-primer">Branching workflows</a>
-<a href="/get-started/connect-neon">Connect Neon to your stack</a>
+<CardGroup cols={2}>
+<Card title="What you will learn">
+- How to view and modify data in the console
+- Create an isolated database copy per developer
+- Reset your branch to production when ready to start new work
+</Card>
+<Card title="Related topics">
+- [About branching](/introduction/branching)
+- [Branching workflows](/get-started/workflow-primer)
+- [Connect Neon to your stack](/get-started/connect-neon)
+</Card>
+</CardGroup>
 
 ---
 
